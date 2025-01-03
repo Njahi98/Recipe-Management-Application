@@ -1,5 +1,5 @@
 {
-  "name": "recipe-crud-app",
+  "name": "Recipe-nodejs-app",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {

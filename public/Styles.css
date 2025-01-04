@@ -84,7 +84,7 @@ body {
   color: white;
   font-size: 3rem;
 }
-.recipeCenterImgText{
+.recipeCenterImgText {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -110%);
@@ -111,7 +111,7 @@ body {
 .notFoundText {
   text-align: center;
 }
-.para{
+.para {
   color: black;
   width: 70%;
   margin: 3rem auto;
@@ -120,6 +120,16 @@ body {
   border-radius: 2rem;
 }
 
-.recipes{
+.recipesBorder {
+  margin-top: 1rem;
+  border: 1px #3333337a solid;
+  border-radius: 1.5rem;
+  overflow-y: auto;
+  width: 100%;
   color: black;
+}
+.recipeStyle{
+  border: 1px #3333337a solid;
+  border-radius: 1.5rem;
+
 }

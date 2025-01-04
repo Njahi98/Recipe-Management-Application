@@ -10,7 +10,16 @@
           <div class="recipeCenterImgText">
             <p>RECIPES</p>
           </div>
-          <div class="recipes">test</div>
+          <div class="recipesBorder">
+          <%  if(recipes.length){ %>
+              <%   recipes.forEach((recipe)=>{ %>
+                <div class="recipeStyle">
+                  <p><%=recipe.title %></p>
+                </div>
+             <%  })  %>
+            <%} %>
+          
+          </div>
       </div>
 
     <%-include('../partials/footer.ejs')%>

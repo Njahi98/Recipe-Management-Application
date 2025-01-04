@@ -2,11 +2,17 @@ const Recipe = require('../models/recipe')
 
 
 const recipe_index = (req,res)=>{
-    res.render('recipes/index',{title:'recipes'})
+    Recipe.find()
+    .then((result)=>{
+        res.render('recipes/index',{title:'recipes',recipes:result})
+    }).catch((error)=>{
+        console.log(error);
+    })
+
 }
 
 const recipe_create_get = (req,res)=>{
-
+    res.render("recipes/create", { title: "create a new recipe" });
 }
 
 const recipe_create_post = (req,res) =>{

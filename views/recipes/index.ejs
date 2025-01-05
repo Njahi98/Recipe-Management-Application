@@ -10,6 +10,7 @@
           <div class="recipeCenterImgText">
             <p>RECIPES</p>
           </div>
+          <div class="newRecipe"><button class="newRecipeButton" >Add a new Recipe</button></div>
           <div class="recipesBorder">
           <%  if(recipes.length){ %>
               <%   recipes.forEach((recipe)=>{ %>
@@ -23,6 +24,5 @@
       </div>
 
     <%-include('../partials/footer.ejs')%>
-
   </body>
 </html>

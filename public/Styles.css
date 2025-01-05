@@ -122,14 +122,36 @@ body {
 
 .recipesBorder {
   margin-top: 1rem;
-  border: 1px #3333337a solid;
   border-radius: 1.5rem;
   overflow-y: auto;
   width: 100%;
   color: black;
+  display: grid;
+  grid: repeat(2,11rem)/repeat(3,1fr);
+  gap: 15px;
 }
 .recipeStyle{
-  border: 1px #3333337a solid;
+  border: 1px rgb(221, 218, 218) solid;
   border-radius: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+.recipeStyle:hover {
+  transform: translateY(-5px);
+}
 
+.newRecipe{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: end;
+}
+.newRecipeButton{
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }

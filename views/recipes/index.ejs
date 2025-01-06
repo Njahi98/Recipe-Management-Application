@@ -11,11 +11,21 @@
             <p>RECIPES</p>
           </div>
           <div class="newRecipe"><button class="newRecipeButton" >Add a new Recipe</button></div>
-          <div class="recipesBorder">
+          <div class="recipe-container">
           <%  if(recipes.length){ %>
               <%   recipes.forEach((recipe)=>{ %>
-                <div class="recipeStyle">
-                  <p><%=recipe.title %></p>
+                <div class="recipe-card">
+                  <p style="margin: 0; color: #333;"><%=recipe.title %></p>
+              <div style="display: flex;gap: 1rem;color: #666; ">
+                 <p style="text-align: start;">🕛 <%=recipe.cookingTime %>min</p>
+                  <p> <%=recipe.difficulty %></p>
+              </div> 
+                <p style="margin-top: 0; color: #555"><%=recipe.description %> <p>
+                <div style="display: flex; justify-content: space-between ;">
+                  <a href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
+                  <button class="deleteRecipeBtn" data-doc="<%= recipe._id %>">Delete</button>
+                </div>
+                
                 </div>
              <%  })  %>
             <%} %>

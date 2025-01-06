@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('../partials/head.ejs')%>
+  <body>
+    <%-include('../partials/nav.ejs')%>
+    <div class="page-container">
+      <div id="content-wrap">
+        <img src="/banner2.jpg" alt="">
+        <div class="recipeCenterImgText">
+          <p>RECIPES</p>
+        </div>
+        <div class="recipe-details">
+          <div class="recipe-header">
+            <h2><%= recipe.title %></h2>
+            <div class="recipe-meta">
+              <span>🕛 <%= recipe.cookingTime %> minutes</span>
+              <span>Difficulty: <%= recipe.difficulty %></span>
+            </div>
+          </div>
+
+          <div class="recipe-body">
+            <div class="recipe-section">
+              <h3>Description</h3>
+              <p><%= recipe.description %></p>
+            </div>
+
+            <div class="recipe-section">
+              <h3>Ingredients</h3>
+              <ul>
+                <% recipe.ingredients.forEach(ingredient => { %>
+                  <li><%= ingredient.amount %> <%= ingredient.unit %> <%= ingredient.item %></li>
+                <% }) %>
+              </ul>
+            </div>
+
+            <div class="recipe-section">
+              <h3>Instructions</h3>
+              <% recipe.instructions.forEach((instruction, index) => { %>
+                <div class="instruction-step">
+                  <span class="step-number"><%= index + 1 %></span>
+                  <p><%= instruction.text %></p>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <div class="recipe-actions">
+            <a href="/recipes" class="back-btn">Back to Recipes</a>
+            <button class="delete-btn" data-doc="<%= recipe._id %>">Delete Recipe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%-include('../partials/footer.ejs')%>
+
+    <script>
+      const deleteBtn = document.querySelector('.delete-btn');
+      
+      deleteBtn.addEventListener('click', async (e) => {
+        const endpoint = `/recipes/${deleteBtn.dataset.doc}`;
+        
+        try {
+          const response = await fetch(endpoint, {
+            method: 'DELETE'
+          });
+          
+          if(response.ok) {
+            window.location.href = '/recipes';
+          }
+        } catch(err) {
+          console.log(err);
+        }
+      });
+    </script>
+  </body>
+</html>

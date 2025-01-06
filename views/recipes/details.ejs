@@ -5,7 +5,7 @@
     <%-include('../partials/nav.ejs')%>
     <div class="page-container">
       <div id="content-wrap">
-        <img src="/banner2.jpg" alt="">
+        <img src="/banner2.jpg" alt="" />
         <div class="recipeCenterImgText">
           <p>RECIPES</p>
         </div>
@@ -28,7 +28,10 @@
               <h3>Ingredients</h3>
               <ul>
                 <% recipe.ingredients.forEach(ingredient => { %>
-                  <li><%= ingredient.amount %> <%= ingredient.unit %> <%= ingredient.item %></li>
+                <li>
+                  <%= ingredient.amount %> <%= ingredient.unit %> <%=
+                  ingredient.item %>
+                </li>
                 <% }) %>
               </ul>
             </div>
@@ -36,17 +39,19 @@
             <div class="recipe-section">
               <h3>Instructions</h3>
               <% recipe.instructions.forEach((instruction, index) => { %>
-                <div class="instruction-step">
-                  <span class="step-number"><%= index + 1 %></span>
-                  <p><%= instruction.text %></p>
-                </div>
+              <div class="instruction-step">
+                <span class="step-number"><%= index + 1 %></span>
+                <p><%= instruction.text %></p>
+              </div>
               <% }) %>
             </div>
           </div>
 
           <div class="recipe-actions">
             <a href="/recipes" class="back-btn">Back to Recipes</a>
-            <button class="delete-btn" data-doc="<%= recipe._id %>">Delete Recipe</button>
+            <button class="delete-btn" data-doc="<%= recipe._id %>">
+              Delete Recipe
+            </button>
           </div>
         </div>
       </div>
@@ -55,22 +60,17 @@
     <%-include('../partials/footer.ejs')%>
 
     <script>
-      const deleteBtn = document.querySelector('.delete-btn');
-      
-      deleteBtn.addEventListener('click', async (e) => {
-        const endpoint = `/recipes/${deleteBtn.dataset.doc}`;
-        
-        try {
-          const response = await fetch(endpoint, {
-            method: 'DELETE'
-          });
-          
-          if(response.ok) {
-            window.location.href = '/recipes';
-          }
-        } catch(err) {
-          console.log(err);
-        }
+      const trashcan = document.querySelector(".delete-btn");
+
+      trashcan.addEventListener("click", (e) => {
+        const endpoint = `/recipes/${trashcan.dataset.doc}`;
+
+        fetch(endpoint, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
+          .then((data) => (window.location.href = data.redirect))
+          .catch((err) => console.log(err));
       });
     </script>
   </body>

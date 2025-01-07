@@ -10,7 +10,10 @@
           <div class="recipeCenterImgText">
             <p>RECIPES</p>
           </div>
-          <div class="newRecipe"><button class="newRecipeButton" >Add a new Recipe</button></div>
+          <div class="newRecipe">
+            <a href="/recipes/create"><button class="newRecipeButton" >Add a new Recipe</button>
+            </a>
+          </div>
           <div class="recipe-container">
           <%  if(recipes.length){ %>
               <%   recipes.forEach((recipe)=>{ %>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('../partials/head.ejs')%>
+  <body>
+    <%-include('../partials/nav.ejs')%>
+    <div class="page-container">
+      <div id="content-wrap">
+        <img src="/banner2.jpg" alt="">
+        <div class="recipeCenterImgText">
+          <p>CREATE RECIPE</p>
+        </div>
+        
+        <form class="recipe-form" action="/recipes" method="POST">
+          <div class="form-section">
+            <label for="title">Recipe Title</label>
+            <input type="text" id="title" name="title" required>
+          </div>
+
+          <div class="form-section">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-section">
+              <label for="cookingTime">Cooking Time (minutes)</label>
+              <input type="number" id="cookingTime" name="cookingTime" required>
+            </div>
+
+            <div class="form-section">
+              <label for="difficulty">Difficulty</label>
+              <select id="difficulty" name="difficulty" required>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <label>Ingredients</label>
+            <div id="ingredients-container">
+              <div class="ingredient-row">
+                <input type="text" name="ingredients[0][item]" placeholder="Item" required>
+                <input type="text" name="ingredients[0][amount]" placeholder="Amount" required>
+                <input type="text" name="ingredients[0][unit]" placeholder="Unit" required>
+                <button type="button" class="remove-ingredient" style="display: none;">×</button>
+              </div>
+            </div>
+            <button type="button" id="add-ingredient" class="add-btn">Add Ingredient</button>
+          </div>
+
+          <div class="form-section">
+            <label>Instructions</label>
+            <div id="instructions-container">
+              <div class="instruction-row">
+                <span class="step-number">1</span>
+                <textarea name="instructions[0][text]" placeholder="Enter instruction step" required></textarea>
+                <button type="button" class="remove-instruction" style="display: none;">×</button>
+              </div>
+            </div>
+            <button type="button" id="add-instruction" class="add-btn">Add Step</button>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">Create Recipe</button>
+            <a href="/recipes" class="cancel-btn">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <%-include('../partials/footer.ejs')%>
+
+    <script>
+      let ingredientCount = 0;
+      const ingredientsContainer = document.getElementById('ingredients-container');
+      const addIngredientBtn = document.getElementById('add-ingredient');
+
+      addIngredientBtn.addEventListener('click', () => {
+        ingredientCount++;
+        const newRow = document.createElement('div');
+        newRow.className = 'ingredient-row';
+        newRow.innerHTML = `
+          <input type="text" name="ingredients[${ingredientCount}][item]" placeholder="Item" required>
+          <input type="text" name="ingredients[${ingredientCount}][amount]" placeholder="Amount" required>
+          <input type="text" name="ingredients[${ingredientCount}][unit]" placeholder="Unit" required>
+          <button type="button" class="remove-ingredient">×</button>
+        `;
+        ingredientsContainer.appendChild(newRow);
+      });
+
+      let instructionCount = 0;
+      const instructionsContainer = document.getElementById('instructions-container');
+      const addInstructionBtn = document.getElementById('add-instruction');
+
+      addInstructionBtn.addEventListener('click', () => {
+        instructionCount++;
+        const newRow = document.createElement('div');
+        newRow.className = 'instruction-row';
+        newRow.innerHTML = `
+          <span class="step-number">${instructionCount + 1}</span>
+          <textarea name="instructions[${instructionCount}][text]" placeholder="Enter instruction step" required></textarea>
+          <button type="button" class="remove-instruction">×</button>
+        `;
+        instructionsContainer.appendChild(newRow);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-ingredient')) {
+          e.target.parentElement.remove();
+          updateIngredientIndices();
+        }
+        if (e.target.classList.contains('remove-instruction')) {
+          e.target.parentElement.remove();
+          updateInstructionIndices();
+        }
+      });
+
+      function updateIngredientIndices() {
+        const rows = ingredientsContainer.getElementsByClassName('ingredient-row');
+        Array.from(rows).forEach((row, index) => {
+          row.querySelectorAll('input').forEach(input => {
+            const fieldName = input.name.match(/\[(item|amount|unit)\]/)[1];
+            input.name = `ingredients[${index}][${fieldName}]`;
+          });
+        });
+        ingredientCount = rows.length - 1;
+      }
+
+      function updateInstructionIndices() {
+        const rows = instructionsContainer.getElementsByClassName('instruction-row');
+        Array.from(rows).forEach((row, index) => {
+          row.querySelector('.step-number').textContent = index + 1;
+          row.querySelector('textarea').name = `instructions[${index}][text]`;
+        });
+        instructionCount = rows.length - 1;
+      }
+    </script>
+  </body>
+</html>

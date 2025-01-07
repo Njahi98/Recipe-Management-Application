@@ -262,3 +262,118 @@ body {
 .back-btn:hover {
   background-color: #3d8a9a;
 }
+.recipe-form {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: black;
+}
+
+.form-section {
+  margin-bottom: 1.5rem;
+}
+
+.form-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-section input,
+.form-section textarea,
+.form-section select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.ingredient-row,
+.instruction-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  align-items: start;
+}
+
+.ingredient-row input {
+  flex: 1;
+}
+
+.instruction-row textarea {
+  flex: 1;
+  height: 60px;
+}
+
+.step-number {
+  background: #4c9eaf;
+  color: white;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.remove-ingredient,
+.remove-instruction {
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.add-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.submit-btn {
+  background: #4c9eaf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #666;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 0.5rem 2rem;
+}

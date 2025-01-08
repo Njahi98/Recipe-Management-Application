@@ -114,7 +114,7 @@ body {
 .para {
   color: black;
   width: 70%;
-  margin: 3rem auto;
+  margin: 2rem auto;
   border: 1px solid #b2a8a8;
   padding: 1rem;
   border-radius: 2rem;
@@ -377,3 +377,21 @@ body {
   border-radius: 5px;
   padding: 0.5rem 2rem;
 }
+
+.emojis {
+  color: black;
+  width: 30%;
+  height: 30%;
+  margin: 0.1rem auto;
+  display: flex;
+}
+.emojis a{
+  transform: scale(0.3);
+  transition: transform 1s ease;
+}
+.emojis a :hover{
+  color:#666;
+  transform: translateY(-10px);
+}
+
+

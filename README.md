@@ -23,8 +23,8 @@ A server-side rendered web application for managing cooking recipes built with N
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Njahi98/Recipe-Nodejs-App.git
-cd recipe-nodejs-app
+git clone https://github.com/Njahi98/Recipe-Management-Application.git
+cd Recipe-Management-Application
 ```
 
 2. Install dependencies:

@@ -48,10 +48,26 @@ const recipe_delete = (req, res) => {
     }).catch(err=>console.log(err))
 };
 
+const recipe_update = (req,res) => {
+  const id=req.params.id;
+  Recipe.findByIdAndUpdate(id, req.body, { new: true })
+  .then((result) => {
+    res.render("recipes/details", {
+      recipe: result,
+      title: "Recipe Details",
+    });
+  })
+  .catch((err) => {
+    res.status(404).render("404", { title: "Recipe not found" });
+  });
+
+};
+
 module.exports = {
   recipe_index,
   recipe_create_get,
   recipe_create_post,
   recipe_details,
   recipe_delete,
+  recipe_update,
 };

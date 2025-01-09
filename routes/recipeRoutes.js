@@ -12,4 +12,6 @@ router.get('/:id',recipeController.recipe_details);
 
 router.delete('/:id',recipeController.recipe_delete)
 
+router.put('/:id',recipeController.recipe_update)
+
 module.exports=router;

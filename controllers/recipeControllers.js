@@ -15,7 +15,7 @@ const recipe_create_get = (req, res) => {
 };
 
 const recipe_create_post = (req, res) => {
-  const recipe = new Recipe();
+  const recipe = new Recipe(req.body);
   recipe
     .save()
     .then((result) => {

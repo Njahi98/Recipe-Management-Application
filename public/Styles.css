@@ -394,4 +394,19 @@ body {
   transform: translateY(-10px);
 }
 
+.contact-name,.contact-email{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 0.5rem;
+}
 
+.contact-name input,.contact-email input{
+  border: 1px solid #b2a8a8;
+  padding: 1rem;
+  border-radius: 2rem;
+}
+.contact-row{
+  display: flex;
+  gap: 0.5rem;
+}

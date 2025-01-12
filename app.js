@@ -41,6 +41,9 @@ app.get('/about',(req,res)=>{
 app.get('/contact',(req,res)=>{
     res.render('contact',{title:'Contact'})
 })
+app.post('/contact',(req,res)=>{
+    res.redirect('/recipes');
+})
 
 app.use("/recipes",recipeRoutes);
 

@@ -14,6 +14,20 @@ const recipe_create_get = (req, res) => {
   res.render("recipes/create", { title: "create a new recipe" });
 };
 
+const recipe_edit_get = ((req,res)=>{
+  const id = req.params.id;
+  Recipe.findById(id)
+    .then((result) => {
+      res.render("recipes/edit", {
+        recipe: result,
+        title: "recipe details",
+      });
+    })
+    .catch((err) => {
+      res.status(404).render("404", { title: "recipe not found" });
+    });
+})
+
 const recipe_create_post = (req, res) => {
   const recipe = new Recipe(req.body);
   recipe
@@ -67,6 +81,7 @@ module.exports = {
   recipe_index,
   recipe_create_get,
   recipe_create_post,
+  recipe_edit_get,
   recipe_details,
   recipe_delete,
   recipe_update,

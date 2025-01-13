@@ -10,8 +10,7 @@
           <p>CREATE RECIPE</p>
         </div>
         
-        <form class="recipe-form" action="/recipes/<%= recipe._id %>" method="post">
-          <div class="form-section">
+        <form id="editForm" class="recipe-form" action="/recipes/<%= recipe._id %>" method="post" data-id="<%= recipe._id %>">          <div class="form-section">
             <label for="title">Recipe Title</label>
             <input type="text" id="title" name="title" value="<%=recipe.title %>" required>
           </div>
@@ -81,9 +80,10 @@
         const ingredients = `<%- JSON.stringify(recipe.ingredients) %>`
 
         let ingredientsHTML=document.createElement('div');
-        let ingredientCount = 0;
+        let ingredientCount = -1;
 
         JSON.parse(ingredients).forEach((ingredient) => {
+          ingredientCount++;
         const newRow = document.createElement('div');
         newRow.className = 'ingredient-row';
         newRow.innerHTML = `
@@ -93,7 +93,6 @@
           <button type="button" class="remove-ingredient">×</button>
         `;
         ingredientsContainer.appendChild(newRow);
-        ingredientCount++;
         });
         
       const addIngredientBtn = document.getElementById('add-ingredient');
@@ -110,12 +109,14 @@
         ingredientsContainer.appendChild(newRow);
       });
 
-      let instructionCount = 0;
+      let instructionCount = -1;
       const instructionsContainer = document.getElementById('instructions-container');
       const addInstructionBtn = document.getElementById('add-instruction');
 
       const instructions = `<%- JSON.stringify(recipe.instructions) %>`
         JSON.parse(instructions).forEach((instruction)=>{
+          instructionCount++;
+
         const newRow = document.createElement('div');
         newRow.className = 'instruction-row';
         newRow.innerHTML = `
@@ -124,7 +125,6 @@
           <button type="button" class="remove-instruction">×</button>
         `;
         instructionsContainer.appendChild(newRow);
-        instructionCount++;
 
         })
 
@@ -170,6 +170,43 @@
         });
         instructionCount = rows.length - 1;
       }
+
+      document.getElementById('editForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const formObject = {};
+    
+    // Convert FormData to nested object structure
+    formData.forEach((value, key) => {
+        // Handle arrays like ingredients[0][item]
+        const matches = key.match(/^([^\[]+)(?:\[(\d+)\])?\[([^\]]+)\]$/);
+        if (matches) {
+            const [_, arrayName, index, property] = matches;
+            formObject[arrayName] = formObject[arrayName] || {};
+            formObject[arrayName][index] = formObject[arrayName][index] || {};
+            formObject[arrayName][index][property] = value;
+        } else {
+            formObject[key] = value;
+        }
+    });
+
+    fetch(`/recipes/${this.dataset.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formObject)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            window.location.href = '/recipes';
+        } else {
+            console.error('Update failed:', data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
     </script>
   </body>
 </html>

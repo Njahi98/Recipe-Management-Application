@@ -16,6 +16,8 @@ mongoose.connect(dbURI)
 
 //needed for POST requests
 app.use(express.urlencoded({ extended: true }));
+//needed for JSON requests
+app.use(express.json());
 //using ejs view templates
 app.set('view engine','ejs');
 //enable static files in a public folder

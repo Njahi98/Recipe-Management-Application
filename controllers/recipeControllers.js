@@ -63,18 +63,39 @@ const recipe_delete = (req, res) => {
 };
 
 const recipe_update = (req,res) => {
-  const id=req.params.id;
-  Recipe.findByIdAndUpdate(id, req.body, { new: true })
-  .then((result) => {
-    res.render("recipes/details", {
-      recipe: result,
-      title: "Recipe Details",
-    });
-  })
-  .catch((err) => {
-    res.status(404).render("404", { title: "Recipe not found" });
-  });
+  const id = req.params.id;
+  // Parse ingredients and instructions from the form data
+  const formData = req.body;
+  
+  // Convert ingredients array format
+  if (formData.ingredients) {
+    formData.ingredients = Object.keys(formData.ingredients)
+      .map(key => ({
+        item: formData.ingredients[key].item,
+        amount: formData.ingredients[key].amount,
+        unit: formData.ingredients[key].unit
+      }));
+  }
 
+  // Convert instructions array format
+  if (formData.instructions) {
+    formData.instructions = Object.keys(formData.instructions)
+      .map(key => ({
+        text: formData.instructions[key].text
+      }));
+  }
+
+  Recipe.findByIdAndUpdate(id, formData, { new: true })
+    .then(result => {
+      if (!result) {
+        return res.status(404).json({ error: 'Recipe not found' });
+      }
+      res.json({ success: true, recipe: result });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: 'Error updating recipe' });
+    });
 };
 
 module.exports = {

@@ -175,18 +175,16 @@
     e.preventDefault();
     const formData = new FormData(this);
     const formObject = {};
-    
+
     // Convert FormData to nested object structure
     formData.forEach((value, key) => {
-        // Handle arrays like ingredients[0][item]
-        const matches = key.match(/^([^\[]+)(?:\[(\d+)\])?\[([^\]]+)\]$/);
-        if (matches) {
-            const [_, arrayName, index, property] = matches;
-            formObject[arrayName] = formObject[arrayName] || {};
-            formObject[arrayName][index] = formObject[arrayName][index] || {};
-            formObject[arrayName][index][property] = value;
+        const [mainKey, index, subKey] = key.split(/[\[\]]/).filter(Boolean);
+        if (index !== undefined && subKey !== undefined) {
+            formObject[mainKey] = formObject[mainKey] || [];
+            formObject[mainKey][index] = formObject[mainKey][index] || {};
+            formObject[mainKey][index][subKey] = value;
         } else {
-            formObject[key] = value;
+            formObject[mainKey] = value;
         }
     });
 

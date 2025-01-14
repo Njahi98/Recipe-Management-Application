@@ -64,25 +64,14 @@ const recipe_delete = (req, res) => {
 
 const recipe_update = (req,res) => {
   const id = req.params.id;
-  // Parse ingredients and instructions from the form data
   const formData = req.body;
-  
-  // Convert ingredients array format
-  if (formData.ingredients) {
-    formData.ingredients = Object.keys(formData.ingredients)
-      .map(key => ({
-        item: formData.ingredients[key].item,
-        amount: formData.ingredients[key].amount,
-        unit: formData.ingredients[key].unit
-      }));
-  }
 
-  // Convert instructions array format
+  // Ensure ingredients and instructions are arrays
+  if (formData.ingredients) {
+    formData.ingredients = Object.values(formData.ingredients);
+  }
   if (formData.instructions) {
-    formData.instructions = Object.keys(formData.instructions)
-      .map(key => ({
-        text: formData.instructions[key].text
-      }));
+    formData.instructions = Object.values(formData.instructions);
   }
 
   Recipe.findByIdAndUpdate(id, formData, { new: true })

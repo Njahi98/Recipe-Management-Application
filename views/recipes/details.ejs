@@ -23,6 +23,16 @@
               <h3>Description</h3>
               <p><%= recipe.description %></p>
             </div>
+            <div class="recipe-section">
+              <% if (recipe.imageId) { %>
+                  <img 
+                      class="recipe-image"
+                      src="/recipes/image/<%= recipe.imageId %>" 
+                      alt="<%= recipe.title %>"
+                      loading="lazy"
+                  >
+              <% } %>
+          </div>
 
             <div class="recipe-section">
               <h3>Ingredients</h3>

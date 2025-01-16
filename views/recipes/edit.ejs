@@ -20,6 +20,17 @@
             <textarea id="description" name="description" rows="4" required><%=recipe.description %></textarea>
           </div>
 
+          <div class="form-section">
+            <label for="image">Recipe Image</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            <% if (recipe.imageId) { %>
+              <div class="current-image">
+                <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
+                <p>Current image</p>
+              </div>
+            <% } %>
+          </div>
+
           <div class="form-row">
             <div class="form-section">
               <label for="cookingTime">Cooking Time (minutes)</label>
@@ -174,37 +185,75 @@
       document.getElementById('editForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
-    const formObject = {};
-
-    // Convert FormData to nested object structure
+    
+    // Handle ingredients and instructions arrays
+    const ingredients = [];
+    const instructions = [];
+    
     formData.forEach((value, key) => {
-        const [mainKey, index, subKey] = key.split(/[\[\]]/).filter(Boolean);
-        if (index !== undefined && subKey !== undefined) {
-            formObject[mainKey] = formObject[mainKey] || [];
-            formObject[mainKey][index] = formObject[mainKey][index] || {};
-            formObject[mainKey][index][subKey] = value;
-        } else {
-            formObject[mainKey] = value;
+        if (key.startsWith('ingredients[')) {
+            const [_, index, field] = key.match(/ingredients\[(\d+)\]\[(\w+)\]/);
+            ingredients[index] = ingredients[index] || {};
+            ingredients[index][field] = value;
+        } else if (key.startsWith('instructions[')) {
+            const [_, index, field] = key.match(/instructions\[(\d+)\]\[(\w+)\]/);
+            instructions[index] = instructions[index] || {};
+            instructions[index][field] = value;
         }
     });
 
-    fetch(`/recipes/${this.dataset.id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formObject)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data.success) {
-            window.location.href = '/recipes';
-        } else {
-            console.error('Update failed:', data.error);
-        }
-    })
-    .catch(error => console.error('Error:', error));
+    // If there's a file, use FormData. Otherwise, use JSON
+    if (formData.get('image').size > 0) {
+        // Clean up arrays
+        formData.delete('ingredients');
+        formData.delete('instructions');
+        ingredients.forEach((ing, index) => {
+            Object.entries(ing).forEach(([key, value]) => {
+                formData.append(`ingredients[${index}][${key}]`, value);
+            });
+        });
+        instructions.forEach((inst, index) => {
+            formData.append(`instructions[${index}][text]`, inst.text);
+        });
+
+        fetch(`/recipes/${this.dataset.id}`, {
+            method: 'PUT',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(handleResponse)
+        .catch(handleError);
+    } else {
+        // No new image, send as JSON
+        const formObject = Object.fromEntries(formData);
+        formObject.ingredients = ingredients;
+        formObject.instructions = instructions;
+        delete formObject.image;
+
+        fetch(`/recipes/${this.dataset.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formObject)
+        })
+        .then(response => response.json())
+        .then(handleResponse)
+        .catch(handleError);
+    }
 });
+
+function handleResponse(data) {
+    if(data.success) {
+        window.location.href = '/recipes';
+    } else {
+        console.error('Update failed:', data.error);
+    }
+}
+
+function handleError(error) {
+    console.error('Error:', error);
+}
     </script>
   </body>
 </html>

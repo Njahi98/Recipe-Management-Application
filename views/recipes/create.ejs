@@ -10,7 +10,7 @@
           <p>CREATE RECIPE</p>
         </div>
         
-        <form class="recipe-form" action="/recipes" method="POST">
+        <form class="recipe-form" action="/recipes" method="POST" enctype="multipart/form-data">
           <div class="form-section">
             <label for="title">Recipe Title</label>
             <input type="text" id="title" name="title" required>
@@ -19,6 +19,10 @@
           <div class="form-section">
             <label for="description">Description</label>
             <textarea id="description" name="description" rows="4" required></textarea>
+          </div>
+          <div class="form-section">
+            <label for="image">upload image</label>
+            <input type="file" name="image" id="image">
           </div>
 
           <div class="form-row">

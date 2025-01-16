@@ -459,3 +459,10 @@ background-color: #4CAF50;
 text-decoration: none;
 color: white;
 }
+
+.recipe-image {
+  max-height: 20rem;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}

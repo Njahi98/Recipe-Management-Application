@@ -10,6 +10,12 @@ const recipeSchema = new Schema({
         type: String,
         required: true
     },
+    imageId: {
+        type: String
+    },
+    imageName: {
+        type: String
+    },
     ingredients: [{
         item: String,
         amount: String,

@@ -1,4 +1,7 @@
 const Recipe = require("../models/recipe");
+const { getGfs } = require("../middleware/uploadMiddleware");
+const mongoose = require("mongoose");
+
 
 const recipe_index = (req, res) => {
   Recipe.find()
@@ -29,7 +32,12 @@ const recipe_edit_get = ((req,res)=>{
 })
 
 const recipe_create_post = (req, res) => {
-  const recipe = new Recipe(req.body);
+  const recipeData = {
+    ...req.body,
+    imageId: req.file.id, // GridFS file ID
+    imageName: req.file.filename, // Uploaded file name
+  };
+  const recipe = new Recipe(recipeData);
   recipe
     .save()
     .then((result) => {
@@ -87,6 +95,28 @@ const recipe_update = (req,res) => {
     });
 };
 
+const recipe_image_get = async (req, res) => {
+  try {
+    const gfs = await getGfs(); // Ensure gfs is initialized
+    const fileId = req.params.id;
+
+    const file = await gfs.find({ _id: new mongoose.Types.ObjectId(fileId) }).toArray();
+
+    if (!file || file.length === 0) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
+    const readStream = gfs.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+    readStream.pipe(res);
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
 module.exports = {
   recipe_index,
   recipe_create_get,
@@ -95,4 +125,5 @@ module.exports = {
   recipe_details,
   recipe_delete,
   recipe_update,
+  recipe_image_get,
 };

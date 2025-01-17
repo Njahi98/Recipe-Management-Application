@@ -23,6 +23,8 @@
                  <p style="text-align: start;">🕛 <%=recipe.cookingTime %>min</p>
                   <p> <%=recipe.difficulty %></p>
               </div> 
+              <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
+
                 <p style="margin-top: 0; color: #555"><%=recipe.description %> <p>
                 <div style="display: flex; justify-content: space-between ;">
                   <a href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>

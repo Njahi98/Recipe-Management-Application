@@ -186,56 +186,87 @@
     e.preventDefault();
     const formData = new FormData(this);
     
-    // Handle ingredients and instructions arrays
+    // Create arrays to store ingredients and instructions
     const ingredients = [];
     const instructions = [];
     
-    formData.forEach((value, key) => {
+    // Group form data into proper objects
+    const formEntries = Array.from(formData.entries());
+    formEntries.forEach(([key, value]) => {
         if (key.startsWith('ingredients[')) {
-            const [_, index, field] = key.match(/ingredients\[(\d+)\]\[(\w+)\]/);
-            ingredients[index] = ingredients[index] || {};
-            ingredients[index][field] = value;
+            const matches = key.match(/ingredients\[(\d+)\]\[(\w+)\]/);
+            if (matches) {
+                const [_, index, field] = matches;
+                if (!ingredients[index]) {
+                    ingredients[index] = {};
+                }
+                ingredients[index][field] = value;
+            }
         } else if (key.startsWith('instructions[')) {
-            const [_, index, field] = key.match(/instructions\[(\d+)\]\[(\w+)\]/);
-            instructions[index] = instructions[index] || {};
-            instructions[index][field] = value;
+            const matches = key.match(/instructions\[(\d+)\]\[(\w+)\]/);
+            if (matches) {
+                const [_, index, field] = matches;
+                if (!instructions[index]) {
+                    instructions[index] = {};
+                }
+                instructions[index][field] = value;
+            }
         }
     });
 
-    // If there's a file, use FormData. Otherwise, use JSON
+    // Filter out any empty slots in arrays
+    const cleanIngredients = ingredients.filter(Boolean);
+    const cleanInstructions = instructions.filter(Boolean);
+
+    // If there's a file, use FormData
     if (formData.get('image').size > 0) {
-        // Clean up arrays
-        formData.delete('ingredients');
-        formData.delete('instructions');
-        ingredients.forEach((ing, index) => {
-            Object.entries(ing).forEach(([key, value]) => {
-                formData.append(`ingredients[${index}][${key}]`, value);
-            });
-        });
-        instructions.forEach((inst, index) => {
-            formData.append(`instructions[${index}][text]`, inst.text);
+        // Create new FormData with cleaned arrays
+        const cleanFormData = new FormData();
+        
+        // Add non-array fields
+        formEntries.forEach(([key, value]) => {
+            if (!key.startsWith('ingredients[') && !key.startsWith('instructions[')) {
+                cleanFormData.append(key, value);
+            }
         });
 
+        // Add cleaned arrays
+        cleanIngredients.forEach((ing, index) => {
+            cleanFormData.append(`ingredients[${index}][item]`, ing.item);
+            cleanFormData.append(`ingredients[${index}][amount]`, ing.amount);
+            cleanFormData.append(`ingredients[${index}][unit]`, ing.unit);
+        });
+
+        cleanInstructions.forEach((inst, index) => {
+            cleanFormData.append(`instructions[${index}][text]`, inst.text);
+        });
+
+        // Send request
         fetch(`/recipes/${this.dataset.id}`, {
             method: 'PUT',
-            body: formData
+            body: cleanFormData
         })
         .then(response => response.json())
         .then(handleResponse)
         .catch(handleError);
     } else {
         // No new image, send as JSON
-        const formObject = Object.fromEntries(formData);
-        formObject.ingredients = ingredients;
-        formObject.instructions = instructions;
-        delete formObject.image;
+        const jsonData = {
+            title: formData.get('title'),
+            description: formData.get('description'),
+            cookingTime: formData.get('cookingTime'),
+            category: formData.get('category'),
+            difficulty: formData.get('difficulty'),
+            ingredients: cleanIngredients,
+            instructions: cleanInstructions
+        };
 
         fetch(`/recipes/${this.dataset.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formObject)
+            body: JSON.stringify(jsonData)
         })
         .then(response => response.json())
         .then(handleResponse)

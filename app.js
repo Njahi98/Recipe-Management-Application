@@ -25,17 +25,10 @@ app.use(morgan('dev'));
 
 app.get('/',(req,res)=>{
     res.render('index',{title:'Welcome to Recipes'})
-    .then((result)=>{
-    }).catch((error)=>console.log(error));
 })
 
 app.get('/about',(req,res)=>{
     res.render('about',{title:'About Page'})
-    .then((result)=>{
-
-    }).catch((error)=>{
-        console.log(error);
-    })
 })
 
 app.get('/contact',(req,res)=>{

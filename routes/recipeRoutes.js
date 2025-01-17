@@ -17,6 +17,6 @@ router.get('/:id/edit',recipeController.recipe_edit_get)
 
 router.get("/image/:id", recipeController.recipe_image_get);
 
-router.put('/:id',recipeController.recipe_update)
+router.put('/:id', upload.single("image"), processImage, recipeController.recipe_update)
 
 module.exports=router;

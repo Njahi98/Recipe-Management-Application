@@ -62,37 +62,71 @@ const recipe_details = async (req, res) => {
     });
 };
 
-const recipe_delete = (req, res) => {
-    const id=req.params.id;
-    Recipe.findByIdAndDelete(id)
-    .then(result=>{
-        res.json({redirect:'/recipes'})
-    }).catch(err=>console.log(err))
+const recipe_delete = async (req, res) => {
+    const id = req.params.id;
+    try {
+        // First get the recipe to access the imageId
+        const recipe = await Recipe.findById(id);
+        
+        // If recipe has an image, delete it from GridFS
+        if (recipe && recipe.imageId) {
+            const gfs = await getGfs();
+            try {
+                await gfs.delete(new mongoose.Types.ObjectId(recipe.imageId));
+            } catch (err) {
+                console.log('Error deleting image:', err);
+            }
+        }
+
+        // Then delete the recipe
+        await Recipe.findByIdAndDelete(id);
+        res.json({ redirect: '/recipes' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Error deleting recipe' });
+    }
 };
 
-const recipe_update = (req,res) => {
+const recipe_update = async (req, res) => {
   const id = req.params.id;
   const formData = req.body;
 
-  // Ensure ingredients and instructions are arrays
-  if (formData.ingredients) {
-    formData.ingredients = Object.values(formData.ingredients);
-  }
-  if (formData.instructions) {
-    formData.instructions = Object.values(formData.instructions);
-  }
+  try {
+    // Handle arrays
+    if (formData.ingredients) {
+      formData.ingredients = Object.values(formData.ingredients);
+    }
+    if (formData.instructions) {
+      formData.instructions = Object.values(formData.instructions);
+    }
 
-  Recipe.findByIdAndUpdate(id, formData, { new: true })
-    .then(result => {
-      if (!result) {
-        return res.status(404).json({ error: 'Recipe not found' });
+    // If new image was uploaded
+    if (req.file) {
+      // Delete old image if exists
+      const oldRecipe = await Recipe.findById(id);
+      if (oldRecipe.imageId) {
+        const gfs = await getGfs();
+        try {
+          await gfs.delete(new mongoose.Types.ObjectId(oldRecipe.imageId));
+        } catch (err) {
+          console.log('Error deleting old image:', err);
+        }
       }
-      res.json({ success: true, recipe: result });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({ error: 'Error updating recipe' });
-    });
+
+      // Add new image details to formData
+      formData.imageId = req.file.id;
+      formData.imageName = req.file.filename;
+    }
+
+    const result = await Recipe.findByIdAndUpdate(id, formData, { new: true });
+    if (!result) {
+      return res.status(404).json({ error: 'Recipe not found' });
+    }
+    res.json({ success: true, recipe: result });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Error updating recipe' });
+  }
 };
 
 const recipe_image_get = async (req, res) => {

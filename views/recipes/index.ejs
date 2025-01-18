@@ -11,6 +11,7 @@
             <p>RECIPES</p>
           </div>
           <div class="newRecipe">
+            <div style="display: flex; align-items: center;"><p style="transform: translateX(120%);">🔍</p><input class="search-bar" type="text" name="search" placeholder="search..."></div>
             <a href="/recipes/create"><button class="newRecipeButton" >Add a new Recipe</button>
             </a>
           </div>
@@ -52,6 +53,28 @@ trashcan.addEventListener('click', (e) => {
   .then(data => window.location.href = data.redirect)
   .catch(err => console.log(err));
 });
+
+//search by title function
+  const recipes = `<%- JSON.stringify(recipes) %>`
+  const titles = JSON.parse(recipes).map(recipe =>recipe.title)
+  const searchBar = document.querySelector('.search-bar')
+
+  function findMatches(wordToMatch,titles){
+    return titles.filter((title)=>{
+     // find if the value of the input is matched or not
+     const regex = new RegExp(wordToMatch,'gi');
+     return title.match(regex) 
+    });
+  }
+
+  function displayMatches(){
+    const matchArray = findMatches(this.value,titles)
+    console.log(matchArray);
+  }
+
+  searchBar.addEventListener('keyup',displayMatches);
+  searchBar.addEventListener('change',displayMatches)
+
     </script>
   </body>
 </html>

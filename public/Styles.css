@@ -466,18 +466,39 @@ color: white;
   object-fit: cover;
   border-radius: 8px;
 }
+
+.filter-inputs{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .search-bar{
   border: 1px rgb(221, 218, 218) solid;
   border-radius: 0.5rem;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   height: 2rem;
   width: 16rem;
-  padding-left: 5%;
+  padding-left: 4%;
 }
 .difficulty-bar{
   border: 1px rgb(221, 218, 218) solid;
   border-radius: 0.5rem;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   height: 2rem;
-  width: 16rem;
+  width: 12rem;
+}
+.category-bar{
+  border: 1px rgb(221, 218, 218) solid;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  height: 2rem;
+  width: 12rem;
+}
+.cooking-time-range{
+  border: 1px rgb(221, 218, 218) solid;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  height: 2rem;
+  width: 12rem;
+  margin-top: 0;
 }

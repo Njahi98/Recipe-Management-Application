@@ -11,15 +11,25 @@
             <p>RECIPES</p>
           </div>
           <div class="newRecipe">
-            <div style="display: flex; align-items: center;">
-              <p style="transform: translateX(120%);">🔍</p>
+            <div class="filter-inputs">
+              <p style="transform: translateX(150%);">🔍</p>
               <input class="search-bar" type="text" name="search" placeholder="Search by title...">
+              <select style="margin-left: 1rem;" class="category-bar">
+                <option value="">category</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Snack">Snack</option>
+              </select>
               <select style="margin-left: 1rem;" class="difficulty-bar">
                 <option value="">difficulty</option>
                 <option value="Easy">Easy</option>
                 <option value="Medium">Medium</option>
                 <option value="Hard">Hard</option>
               </select>
+              <div><p class="cooking-times-range-text" style="color: #333; margin: 0">Cooking Time(mins)</p><input type="range" name="cookingTimeRange" class="cooking-time-range" min="1" max="240">
+              </div>
             </div>
             <a href="/recipes/create"><button class="newRecipeButton" >Add a new Recipe</button>
             </a>
@@ -30,8 +40,9 @@
                 <div class="recipe-card">
                   <p style="margin: 0; color: #333;" class="recipe-title"><%=recipe.title %></p>
               <div style="display: flex;gap: 1rem;color: #666; ">
-                 <p style="text-align: start;">🕛 <%=recipe.cookingTime %>min</p>
+                 <p class="cooking-times" style="text-align: start;">🕛 <%=recipe.cookingTime %>min</p>
                   <p class="recipe-difficulty"> <%=recipe.difficulty %></p>
+                  <p class="recipe-category"> <%=recipe.category %></p>
               </div> 
               <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
 
@@ -97,6 +108,29 @@
     }
   });
 }
+
+//filter by category
+const categorySelect = document.querySelector('.category-bar')
+const recipeCategories = document.querySelectorAll('.recipe-container .recipe-category')
+
+function filterByCategory(){
+  if(!this.value.trim()){
+    recipeCategories.forEach((recipeCategory)=>{
+      recipeCategory.parentElement.parentElement.style.display=""
+    })
+    return;
+  }
+  
+  recipeCategories.forEach((recipeCategory)=>{
+    if(recipeCategory.textContent.trim() ==this.value.trim()){
+      recipeCategory.parentElement.parentElement.style.display=""
+    }else{
+      recipeCategory.parentElement.parentElement.style.display="none"
+    }
+  })
+}
+
+
 //filter by difficulty
 const difficultySelect = document.querySelector('.difficulty-bar')
 const recipeDifficulties = document.querySelectorAll('.recipe-container .recipe-difficulty')
@@ -117,11 +151,43 @@ function filterByDifficulty(){
     }
   })
 }
+
+
+
+//filter by cooking time
+const cookingTimeRange= document.querySelector('.cooking-time-range');
+const cookingTimes = document.querySelectorAll('.recipe-container .cooking-times')
+const timetext = document.querySelector('.cooking-times-range-text')
+
+function ShowRangeValue(){
+let num=this.value;
+timetext.textContent=`Cooking Time(mins) ${num}`
+}
+function filterbyTime(){
+cookingTimes.forEach(cookingTime=>{
+  const num =cookingTime.textContent.replace(/[^0-9]/g, '');
+  if(parseInt(num)>1 && parseInt(num)<=this.value){
+    cookingTime.parentElement.parentElement.style.display="";
+  }else{
+    cookingTime.parentElement.parentElement.style.display="none";
+  }
+})
+}
+
+
+
   searchBar.addEventListener('keyup',filterByTitle);
   searchBar.addEventListener('change',filterByTitle)
 
   difficultySelect.addEventListener('change',filterByDifficulty)
+  categorySelect.addEventListener('change',filterByCategory)
 
+
+  cookingTimeRange.addEventListener('change',ShowRangeValue)
+  cookingTimeRange.addEventListener('mousemove',ShowRangeValue)
+  cookingTimeRange.addEventListener('change',filterbyTime)
+
+  
     </script>
   </body>
 </html>

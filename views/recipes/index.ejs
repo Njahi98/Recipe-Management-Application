@@ -11,7 +11,16 @@
             <p>RECIPES</p>
           </div>
           <div class="newRecipe">
-            <div style="display: flex; align-items: center;"><p style="transform: translateX(120%);">🔍</p><input class="search-bar" type="text" name="search" placeholder="search..."></div>
+            <div style="display: flex; align-items: center;">
+              <p style="transform: translateX(120%);">🔍</p>
+              <input class="search-bar" type="text" name="search" placeholder="Search by title...">
+              <select style="margin-left: 1rem;" class="difficulty-bar">
+                <option value="">difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
             <a href="/recipes/create"><button class="newRecipeButton" >Add a new Recipe</button>
             </a>
           </div>
@@ -19,10 +28,10 @@
           <%  if(recipes.length){ %>
               <%   recipes.forEach((recipe)=>{ %>
                 <div class="recipe-card">
-                  <p style="margin: 0; color: #333;"><%=recipe.title %></p>
+                  <p style="margin: 0; color: #333;" class="recipe-title"><%=recipe.title %></p>
               <div style="display: flex;gap: 1rem;color: #666; ">
                  <p style="text-align: start;">🕛 <%=recipe.cookingTime %>min</p>
-                  <p> <%=recipe.difficulty %></p>
+                  <p class="recipe-difficulty"> <%=recipe.difficulty %></p>
               </div> 
               <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
 
@@ -41,9 +50,9 @@
 
     <%-include('../partials/footer.ejs')%>
     <script>
-         const trashcan = document.querySelector('.deleteRecipeBtn ');
+    const trashcan = document.querySelector('.deleteRecipeBtn');
 
-trashcan.addEventListener('click', (e) => {
+  trashcan.addEventListener('click', (e) => {
   const endpoint = `/recipes/${trashcan.dataset.doc}`;
 
   fetch(endpoint, {
@@ -54,26 +63,64 @@ trashcan.addEventListener('click', (e) => {
   .catch(err => console.log(err));
 });
 
-//search by title function
-  const recipes = `<%- JSON.stringify(recipes) %>`
-  const titles = JSON.parse(recipes).map(recipe =>recipe.title)
+//filter by title function
+  const recipesString = `<%- JSON.stringify(recipes) %>`
+  const recipes = JSON.parse(recipesString).map(recipe=>recipe)
+
+  const titles = JSON.parse(recipesString).map(recipe =>recipe.title)
   const searchBar = document.querySelector('.search-bar')
+  const recipeNames = document.querySelectorAll('.recipe-container .recipe-title')
 
-  function findMatches(wordToMatch,titles){
-    return titles.filter((title)=>{
-     // find if the value of the input is matched or not
-     const regex = new RegExp(wordToMatch,'gi');
-     return title.match(regex) 
+  function filterByTitle() {
+  
+  const regex = new RegExp(this.value, 'i');
+
+  // If the search bar is empty, show all cards
+  if (!this.value.trim()) {
+    recipeNames.forEach((recipeName) => {
+      // Reset display
+      recipeName.parentElement.style.display = ""; 
     });
+    //return nothing to end the function execution
+    return;
   }
 
-  function displayMatches(){
-    const matchArray = findMatches(this.value,titles)
-    console.log(matchArray);
-  }
+  recipeNames.forEach((recipeName) => {
+    // Get card title and remove extra spaces
+    const title = recipeName.textContent.trim(); 
+    if (regex.test(title)) {
+      // Show matching cards
+      recipeName.parentElement.style.display = ""; 
+    } else {
+      // Hide non-matching cards
+      recipeName.parentElement.style.display = "none"; 
+    }
+  });
+}
+//filter by difficulty
+const difficultySelect = document.querySelector('.difficulty-bar')
+const recipeDifficulties = document.querySelectorAll('.recipe-container .recipe-difficulty')
 
-  searchBar.addEventListener('keyup',displayMatches);
-  searchBar.addEventListener('change',displayMatches)
+function filterByDifficulty(){
+  if(!this.value.trim()){
+    recipeDifficulties.forEach((recipeDifficulty)=>{
+      recipeDifficulty.parentElement.parentElement.style.display=""
+    })
+    return;
+  }
+  
+  recipeDifficulties.forEach((recipeDifficulty)=>{
+    if(recipeDifficulty.textContent.trim() ==this.value.trim()){
+      recipeDifficulty.parentElement.parentElement.style.display=""
+    }else{
+      recipeDifficulty.parentElement.parentElement.style.display="none"
+    }
+  })
+}
+  searchBar.addEventListener('keyup',filterByTitle);
+  searchBar.addEventListener('change',filterByTitle)
+
+  difficultySelect.addEventListener('change',filterByDifficulty)
 
     </script>
   </body>

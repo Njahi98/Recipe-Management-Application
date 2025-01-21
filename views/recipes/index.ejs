@@ -61,8 +61,8 @@
 
     <%-include('../partials/footer.ejs')%>
     <script>
-    const trashcan = document.querySelector('.deleteRecipeBtn');
-
+    //delete button's function
+  const trashcan = document.querySelector('.deleteRecipeBtn');
   trashcan.addEventListener('click', (e) => {
   const endpoint = `/recipes/${trashcan.dataset.doc}`;
 
@@ -74,89 +74,66 @@
   .catch(err => console.log(err));
 });
 
+//merged all filters in the same function
+let filters = {
+  title: "",
+  category: "",
+  difficulty: "",
+  cookingTime: null,
+};
+
+function applyFilters() {
+  recipeNames.forEach((recipeName) => {
+    const parentCard = recipeName.parentElement;
+    const matchesTitle = !filters.title || new RegExp(filters.title, 'i').test(recipeName.textContent.trim());
+    const matchesCategory = !filters.category || parentCard.querySelector('.recipe-category').textContent.trim() === filters.category;
+    const matchesDifficulty = !filters.difficulty || parentCard.querySelector('.recipe-difficulty').textContent.trim() === filters.difficulty;
+    const matchesTime = !filters.cookingTime || parseInt(parentCard.querySelector('.cooking-times').textContent.replace(/[^0-9]/g, '')) <= filters.cookingTime;
+
+    if (matchesTitle && matchesCategory && matchesDifficulty && matchesTime) {
+      parentCard.style.display = "";
+    } else {
+      parentCard.style.display = "none";
+    }
+  });
+}
 //filter by title function
   const recipesString = `<%- JSON.stringify(recipes) %>`
   const recipes = JSON.parse(recipesString).map(recipe=>recipe)
 
-  const titles = JSON.parse(recipesString).map(recipe =>recipe.title)
   const searchBar = document.querySelector('.search-bar')
   const recipeNames = document.querySelectorAll('.recipe-container .recipe-title')
 
   function filterByTitle() {
-  
-  const regex = new RegExp(this.value, 'i');
-
-  // If the search bar is empty, show all cards
-  if (!this.value.trim()) {
-    recipeNames.forEach((recipeName) => {
-      // Reset display
-      recipeName.parentElement.style.display = ""; 
-    });
-    //return nothing to end the function execution
-    return;
-  }
-
-  recipeNames.forEach((recipeName) => {
-    // Get card title and remove extra spaces
-    const title = recipeName.textContent.trim(); 
-    if (regex.test(title)) {
-      // Show matching cards
-      recipeName.parentElement.style.display = ""; 
-    } else {
-      // Hide non-matching cards
-      recipeName.parentElement.style.display = "none"; 
-    }
-  });
+   filters.title = this.value.trim();
+  applyFilters();
 }
+
+searchBar.addEventListener('keyup',filterByTitle);
+searchBar.addEventListener('change',filterByTitle);
 
 //filter by category
 const categorySelect = document.querySelector('.category-bar')
-const recipeCategories = document.querySelectorAll('.recipe-container .recipe-category')
 
 function filterByCategory(){
-  if(!this.value.trim()){
-    recipeCategories.forEach((recipeCategory)=>{
-      recipeCategory.parentElement.parentElement.style.display=""
-    })
-    return;
-  }
-  
-  recipeCategories.forEach((recipeCategory)=>{
-    if(recipeCategory.textContent.trim() ==this.value.trim()){
-      recipeCategory.parentElement.parentElement.style.display=""
-    }else{
-      recipeCategory.parentElement.parentElement.style.display="none"
-    }
-  })
+  filters.category = this.value.trim();
+  applyFilters();
 }
+categorySelect.addEventListener('change',filterByCategory)
 
 
 //filter by difficulty
 const difficultySelect = document.querySelector('.difficulty-bar')
-const recipeDifficulties = document.querySelectorAll('.recipe-container .recipe-difficulty')
 
 function filterByDifficulty(){
-  if(!this.value.trim()){
-    recipeDifficulties.forEach((recipeDifficulty)=>{
-      recipeDifficulty.parentElement.parentElement.style.display=""
-    })
-    return;
-  }
-  
-  recipeDifficulties.forEach((recipeDifficulty)=>{
-    if(recipeDifficulty.textContent.trim() ==this.value.trim()){
-      recipeDifficulty.parentElement.parentElement.style.display=""
-    }else{
-      recipeDifficulty.parentElement.parentElement.style.display="none"
-    }
-  })
+  filters.difficulty=this.value.trim();
+  applyFilters();
 }
-
+difficultySelect.addEventListener('change',filterByDifficulty)
 
 
 //filter by cooking time
 const cookingTimeRange= document.querySelector('.cooking-time-range');
-const cookingTimes = document.querySelectorAll('.recipe-container .cooking-times')
 const timetext = document.querySelector('.cooking-times-range-text')
 
 function ShowRangeValue(){
@@ -164,30 +141,14 @@ let num=this.value;
 timetext.textContent=`Cooking Time(mins) ${num}`
 }
 function filterbyTime(){
-cookingTimes.forEach(cookingTime=>{
-  const num =cookingTime.textContent.replace(/[^0-9]/g, '');
-  if(parseInt(num)>1 && parseInt(num)<=this.value){
-    cookingTime.parentElement.parentElement.style.display="";
-  }else{
-    cookingTime.parentElement.parentElement.style.display="none";
-  }
-})
+filters.cookingTime=this.value.trim();
+applyFilters();
 }
-
-
-
-  searchBar.addEventListener('keyup',filterByTitle);
-  searchBar.addEventListener('change',filterByTitle)
-
-  difficultySelect.addEventListener('change',filterByDifficulty)
-  categorySelect.addEventListener('change',filterByCategory)
-
 
   cookingTimeRange.addEventListener('change',ShowRangeValue)
   cookingTimeRange.addEventListener('mousemove',ShowRangeValue)
   cookingTimeRange.addEventListener('change',filterbyTime)
 
-  
     </script>
   </body>
 </html>

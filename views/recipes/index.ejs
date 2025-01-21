@@ -98,9 +98,6 @@ function applyFilters() {
   });
 }
 //filter by title function
-  const recipesString = `<%- JSON.stringify(recipes) %>`
-  const recipes = JSON.parse(recipesString).map(recipe=>recipe)
-
   const searchBar = document.querySelector('.search-bar')
   const recipeNames = document.querySelectorAll('.recipe-container .recipe-title')
 

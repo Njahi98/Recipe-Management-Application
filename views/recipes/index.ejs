@@ -37,7 +37,7 @@
           <div class="recipe-container">
           <%  if(recipes.length){ %>
               <%   recipes.forEach((recipe)=>{ %>
-                <div class="recipe-card">
+                <div class="recipe-card visible">
                   <p style="margin: 0; color: #333;" class="recipe-title"><%=recipe.title %></p>
               <div style="display: flex;gap: 1rem;color: #666; ">
                  <p class="cooking-times" style="text-align: start;">🕛 <%=recipe.cookingTime %>min</p>
@@ -74,6 +74,15 @@
   .catch(err => console.log(err));
 });
 
+//added a simple debounce function
+function debounce(func, delay) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
 //merged all filters in the same function
 let filters = {
   title: "",
@@ -91,20 +100,29 @@ function applyFilters() {
     const matchesTime = !filters.cookingTime || parseInt(parentCard.querySelector('.cooking-times').textContent.replace(/[^0-9]/g, '')) <= filters.cookingTime;
 
     if (matchesTitle && matchesCategory && matchesDifficulty && matchesTime) {
-      parentCard.style.display = "";
+      parentCard.classList.remove('hidden')
+      setTimeout(() => {
+        parentCard.style.display=""
+      }, 500);
     } else {
-      parentCard.style.display = "none";
+      parentCard.classList.add('hidden')
+      parentCard.classList.remove('visible')
+      setTimeout(() => {
+        parentCard.style.display="none"
+      }, 500);
     }
   });
 }
 //filter by title function
   const searchBar = document.querySelector('.search-bar')
   const recipeNames = document.querySelectorAll('.recipe-container .recipe-title')
+  const debouncedApplyFilters = debounce(applyFilters, 200);
+
 
   function filterByTitle() {
    filters.title = this.value.trim();
-  applyFilters();
-}
+   debouncedApplyFilters();
+  }
 
 searchBar.addEventListener('keyup',filterByTitle);
 searchBar.addEventListener('change',filterByTitle);
@@ -128,7 +146,6 @@ function filterByDifficulty(){
 }
 difficultySelect.addEventListener('change',filterByDifficulty)
 
-
 //filter by cooking time
 const cookingTimeRange= document.querySelector('.cooking-time-range');
 const timetext = document.querySelector('.cooking-times-range-text')
@@ -142,9 +159,14 @@ filters.cookingTime=this.value.trim();
 applyFilters();
 }
 
-  cookingTimeRange.addEventListener('change',ShowRangeValue)
-  cookingTimeRange.addEventListener('mousemove',ShowRangeValue)
-  cookingTimeRange.addEventListener('change',filterbyTime)
+const debouncedShowRangeValue = debounce(ShowRangeValue, 100);
+const debouncedFilterByTime = debounce(filterbyTime, 200);
+
+cookingTimeRange.addEventListener('mousemove', debouncedShowRangeValue);
+cookingTimeRange.addEventListener('change', debouncedShowRangeValue);
+cookingTimeRange.addEventListener('change', debouncedFilterByTime);
+
+
 
     </script>
   </body>

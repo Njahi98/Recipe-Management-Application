@@ -8,7 +8,10 @@ const app = express();
 const dbURI=process.env.dbURI
 mongoose.connect(dbURI)
 .then((result)=>{
-    app.listen(3000);
+    // Only listen directly when not running on Vercel
+    if (process.env.NODE_ENV !== 'production') {
+        app.listen(3000);
+    }   
 })
 .catch((error)=>console.log(error));
 
@@ -45,6 +48,7 @@ app.use((req,res)=>{
     res.status(404).render('404',{title:'404 Not found'})
 });
 
+module.exports = app;
 
 
 

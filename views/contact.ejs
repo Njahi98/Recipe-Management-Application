@@ -12,13 +12,13 @@
         </div>
         <div class="contact-container">
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet harum sequi neque rem optio minus ducimus explicabo quidem ratione a in, veritatis accusantium eaque id! Similique excepturi nobis nam recusandae.</p>
-          <form action="/contact" method="post">
+          <form action="/contact" method="post" class="contact-form">
             <div class="contact-row">
-              <div class="contact-name"><label for="name">Your name</label><input type="text" id="name" name="name" required></div>
-              <div class="contact-email"><label for="email">Your email</label><input type="text" id="email" name="email" required> </div>
+              <div class="contact-name"><label for="name">Your name</label><input type="text" id="name" name="name" ></div>
+              <div class="contact-email"><label for="email">Your email</label><input type="text" id="email" name="email" > </div>
             </div>
               <div class="contact-message">
-              <textarea  name="message" id="message" rows="4" required placeholder="Your message"></textarea>
+              <textarea  name="message" id="message" rows="4"  placeholder="Your message"></textarea>
             </div>
             <div class="contact-form-action">
               <button type="submit">Send Message</button>
@@ -28,6 +28,84 @@
     </div>
     
     <%-include('./partials/footer.ejs')%>
+
+    <script>
+      // simple input field validation
+      const nameInput=document.querySelector('.contact-name input');
+      const emailInput=document.querySelector('.contact-email input');
+      const messageInput=document.querySelector('.contact-message textarea');
+      const form= document.querySelector('.contact-form');
+      const clearErrors =() => {
+          document.querySelectorAll('.error').forEach(error => error.remove());
+        }
+
+      function ValidateAndSubmit(e){
+        e.preventDefault();
+        clearErrors();  
+        function displayError(input, message) {
+          const errorElement = document.createElement('p');
+          errorElement.textContent = message;
+          errorElement.style.color = "red";
+          errorElement.classList.add('error');
+          input.parentElement.appendChild(errorElement);
+          if (!focusApplied) {
+            input.focus();
+            focusApplied = true;
+           }
+        }
+    
+
+       const nameValidation =()=> {
+        try {
+          if(nameInput.value.split(" ").length<2){
+            displayError(nameInput,"Please provide a name with at least 2 words")
+          return false;
+        } 
+        return true;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+          const validateEmail=(email)=> {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        const emailValidation = ()=>{
+          try {
+            if(!validateEmail(emailInput.value)){
+              displayError(emailInput,"Please provide a valid email")
+          return false;
+          }
+          return true;
+          } catch (error) {
+            console.log(error);
+          }
+          
+      }
+        const messageValidation = ()=>{
+          try {
+            if(messageInput.value.split(" ").length<3){
+              displayError(messageInput,"you need to provide a name with at least three words")
+
+          return false;
+        }
+        return true;
+          } catch (error) {
+            console.log(error);
+          }       
+        }
+        if(nameValidation() && emailValidation() && messageValidation()){
+          console.log("submitted");
+        }else{
+          console.log("submit failed");
+        }
+      }
+      
+
+      form.addEventListener('submit',ValidateAndSubmit)
+
+
+</script>
 
   </body>
 </html>

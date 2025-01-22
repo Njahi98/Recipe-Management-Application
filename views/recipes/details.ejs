@@ -5,7 +5,7 @@
     <%-include('../partials/nav.ejs')%>
     <div class="page-container">
       <div id="content-wrap">
-        <img src="/banner2.jpg" alt="" />
+        <img src="/images/banner2.jpg" alt="" />
         <div class="recipeCenterImgText">
           <p>RECIPES</p>
         </div>
@@ -72,19 +72,6 @@
 
     <%-include('../partials/footer.ejs')%>
 
-    <script>
-      const trashcan = document.querySelector(".delete-btn");
-
-      trashcan.addEventListener("click", (e) => {
-        const endpoint = `/recipes/${trashcan.dataset.doc}`;
-
-        fetch(endpoint, {
-          method: "DELETE",
-        })
-          .then((response) => response.json())
-          .then((data) => (window.location.href = data.redirect))
-          .catch((err) => console.log(err));
-      });
-    </script>
+    <script src="/scripts/recipes-details.js"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@ const express = require('express');
 var morgan = require('morgan');
 const mongoose = require('mongoose');
 const recipeRoutes=require('./routes/recipeRoutes')
-
+const Contact = require('./models/contact')
 const app = express();
 
 const dbURI=process.env.dbURI
@@ -38,8 +38,16 @@ app.get('/contact',(req,res)=>{
     res.render('contact',{title:'Contact'})
 })
 app.post('/contact',(req,res)=>{
-    res.redirect('/recipes');
+    const contact = new Contact(req.body)
+    contact.save()
+    .then((result)=>{
+        res.redirect('/recipes');
+    }
+    ).catch((error)=>{
+        console.log(error);
+    })
 })
+
 
 app.use("/recipes",recipeRoutes);
 

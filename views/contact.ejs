@@ -29,95 +29,9 @@
     
     <%-include('./partials/footer.ejs')%>
 
-    <script>
-      // simple input field validation
-      const nameInput=document.querySelector('.contact-name input');
-      const emailInput=document.querySelector('.contact-email input');
-      const messageInput=document.querySelector('.contact-message textarea');
-      const form= document.querySelector('.contact-form');
-
-      const clearErrors =() => {
-          document.querySelectorAll('.error').forEach(error => error.remove());
-        }
-        let focusApplied = false;
-
-          function displayError(input, message) {
-          const errorElement = document.createElement('p');
-          errorElement.textContent = message;
-          errorElement.style.color = "red";
-          errorElement.classList.add('error');
-          input.parentElement.appendChild(errorElement);
-
-          if (!focusApplied) {
-            input.focus();
-            focusApplied = true;
-           }
-        }
-
-        const validateEmail=(email)=> {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-      function ValidateAndSubmit(e){
-        e.preventDefault();
-        focusApplied = false;
-        clearErrors();  
-
-        
-       const nameValidation =()=> {
-        try {
-          if (!nameInput.value.trim()) {
-          displayError(nameInput, "Name cannot be empty.");
-          return false;
-          }
-          if(nameInput.value.trim().split(" ").length<2){
-            displayError(nameInput,"Please provide a name with at least 2 words")
-          return false;
-        } 
-        return true;
-        } catch (error) {
-          console.log(error);
-        }
-      }
-       
-        const emailValidation = ()=>{
-          try {
-            if(!validateEmail(emailInput.value)){
-              displayError(emailInput,"Please provide a valid email")
-          return false;
-          }
-          return true;
-          } catch (error) {
-            console.log(error);
-          }
-          
-      }
-        const messageValidation = ()=>{
-          try {
-            if(messageInput.value.trim().split(" ").length<3){
-              displayError(messageInput,"you need to provide a name with at least three words")
-
-          return false;
-        }
-        return true;
-          } catch (error) {
-            console.log(error);
-          }       
-        }
-        if(nameValidation() && emailValidation() && messageValidation()){
-          console.log("submitted");
-          form.reset();
-        }else{
-          console.log("submit failed");
-        }
-      }
+    <script src="/scripts/contact.js">  
       
-
-      form.addEventListener('submit',ValidateAndSubmit)
-
-
-</script>
+    </script>
 
   </body>
 </html>

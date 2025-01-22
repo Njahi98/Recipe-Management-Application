@@ -1,14 +1,19 @@
- //delete button's function
- const trashcan = document.querySelector('.deleteRecipeBtn');
- trashcan.addEventListener('click', (e) => {
- const endpoint = `/recipes/${trashcan.dataset.doc}`;
+ //delete buttons' function
+/*since we have multiple recipe cards,
+ we need to select all delete buttons using querySelectorAll and attach the event listener to each one. */
 
- fetch(endpoint, {
-   method: 'DELETE',
- })
- .then(response => response.json())
- .then(data => window.location.href = data.redirect)
- .catch(err => console.log(err));
+ const trashcans = document.querySelectorAll('.deleteRecipeBtn');
+ trashcans.forEach(trashcan => {
+  trashcan.addEventListener('click', (e) => {
+    const endpoint = `/recipes/${trashcan.dataset.doc}`;
+
+    fetch(endpoint, {
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => window.location.href = data.redirect)
+    .catch(err => console.log(err));
+  });
 });
 
 //added a simple debounce function

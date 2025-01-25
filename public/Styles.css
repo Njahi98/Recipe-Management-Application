@@ -129,13 +129,13 @@ body {
   width: 100%;
   color: black;
   display: grid;
-  grid: repeat(2,1fr)/repeat(3,23rem);  gap: 15px;
-
+  grid: repeat(2, 1fr) / repeat(3, 23rem);
+  gap: 15px;
 }
-.recipe-card{
+.recipe-card {
   border: 1px rgb(221, 218, 218) solid;
   border-radius: 1.5rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   padding: 0.5rem 0.5rem;
 }
@@ -143,18 +143,21 @@ body {
   transform: translateY(-5px);
 }
 
-.newRecipe{
+.newRecipe {
   margin-top: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
-.newRecipeButton{
-  background-color: #4CAF50;
+.newRecipeButton {
+  background-color: #4caf50;
   color: white;
   text-decoration: none;
 }
 
-.viewRecipeBtn, .deleteRecipeBtn, .newRecipeButton,.edit-recipe-btn {
+.viewRecipeBtn,
+.deleteRecipeBtn,
+.newRecipeButton,
+.edit-recipe-btn {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   border: none;
@@ -181,7 +184,7 @@ body {
   padding: 2rem;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   overflow-wrap: break-word;
 }
@@ -268,7 +271,7 @@ body {
   padding: 2rem;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   color: black;
 }
 
@@ -345,7 +348,7 @@ body {
 }
 
 .add-btn {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -385,16 +388,16 @@ body {
   margin: 0.1rem auto;
   display: flex;
 }
-.emojis a{
+.emojis a {
   transform: scale(0.3);
   transition: transform 1s ease;
 }
-.emojis a :hover{
-  color:#666;
+.emojis a :hover {
+  color: #666;
   transform: translateY(-10px);
 }
 
-.contact-container{
+.contact-container {
   color: black;
   width: 70%;
   margin: 2rem auto;
@@ -403,39 +406,41 @@ body {
   border-radius: 0.5rem;
 }
 
-.contact-name,.contact-email{
+.contact-name,
+.contact-email {
   display: flex;
   flex-direction: column;
   width: 50%;
 }
 
-.contact-name input,.contact-email input{
+.contact-name input,
+.contact-email input {
   border: 1px solid #b2a8a8;
   padding: 0.5rem;
   border-radius: 0.5rem;
 }
-.contact-row{
+.contact-row {
   display: flex;
   gap: 0.5rem;
 }
-.contact-message{
+.contact-message {
   color: black;
   margin: 2rem auto;
   padding: 0;
   border-radius: 0.5rem;
 }
-.contact-message textarea{
+.contact-message textarea {
   width: 99.5%;
   height: 100%;
   border: 1px solid #b2a8a8;
-  border-radius: 0.5rem
+  border-radius: 0.5rem;
 }
-  .contact-form-action{
+.contact-form-action {
   display: flex;
   justify-content: flex-end;
   padding-right: 1rem;
 }
-.contact-form-action button{
+.contact-form-action button {
   background-color: #4a90e2;
   color: white;
   border: none;
@@ -446,7 +451,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.contact-name input:focus, 
+.contact-name input:focus,
 .contact-email input:focus,
 .contact-message textarea:focus {
   outline: none;
@@ -454,10 +459,10 @@ body {
   box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
 }
 
-.edit-recipe-btn{
-background-color: #4CAF50;
-text-decoration: none;
-color: white;
+.edit-recipe-btn {
+  background-color: #4caf50;
+  text-decoration: none;
+  color: white;
 }
 
 .recipe-image {
@@ -467,37 +472,37 @@ color: white;
   border-radius: 8px;
 }
 
-.filter-inputs{
+.filter-inputs {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.search-bar{
+.search-bar {
   border: 1px rgb(221, 218, 218) solid;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 2rem;
   width: 16rem;
   padding-left: 4%;
 }
-.difficulty-bar{
+.difficulty-bar {
   border: 1px rgb(221, 218, 218) solid;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 2rem;
   width: 12rem;
 }
-.category-bar{
+.category-bar {
   border: 1px rgb(221, 218, 218) solid;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 2rem;
   width: 12rem;
 }
-.cooking-time-range{
+.cooking-time-range {
   border: 1px rgb(221, 218, 218) solid;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 2rem;
   width: 12rem;
   margin-top: 0;
@@ -514,54 +519,260 @@ color: white;
   transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
-.modal-backdrop{
-  background-color: rgba(0, 0, 0, 0.5); 
-  z-index: 1040; 
+/* Modal Backdrop */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 1040;
   position: fixed;
-  top: -10;
+  top: 0;
   left: 0;
   height: 100vh;
-  width: 100vw;    
-  max-width: 100%;                                                                          
+  width: 100vw;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
+  backdrop-filter: blur(4px); 
 }
 
-.modal-container{
+.modal-container {
   background: white;
-  border-radius: 1rem;
-  opacity: 1;
-  border: 1px solid #666;
-  width: 60%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  z-index: 1041;
+  border-radius: 12px; 
+  width: 400px; 
+  max-width: 90%;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
 }
-.modal-actions{
-  display: flex;
-  justify-content: space-between;
+
+.modal-container h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
 }
+
+.modal-container p {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 1rem; 
+}
+
+.modal-confirm-action,
 .modal-cancel-action {
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  background-color: #4c9eaf;
-  color: white;
-  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
+
 .modal-confirm-action {
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
   background-color: #ff4444;
   color: white;
-  text-decoration: none;
+}
+
+.modal-confirm-action:hover {
+  background-color: #cc0000;
+  transform: translateY(-2px); 
+}
+
+.modal-cancel-action {
+  background-color: #4c9eaf;
+  color: white;
+}
+
+.modal-cancel-action:hover {
+  background-color: #3a7a8a;
+  transform: translateY(-2px); 
+}
+
+/* Close Button */
+.modal-close-action {
+  background: #ff4444;
+  color: white;
   border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   transition: background-color 0.3s ease;
+}
+
+.modal-close-action:hover {
+  background-color: #cc0000;
+}
+
+/* Spinner Animation */
+
+.lds-default,
+.lds-default div {
+  box-sizing: border-box;
+}
+.lds-default {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-default div {
+  color: #4c9eaf;
+  position: absolute;
+  width: 6.4px;
+  height: 6.4px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: lds-default 1.2s linear infinite;
+}
+.lds-default div:nth-child(1) {
+  animation-delay: 0s;
+  top: 36.8px;
+  left: 66.24px;
+}
+.lds-default div:nth-child(2) {
+  animation-delay: -0.1s;
+  top: 22.08px;
+  left: 62.29579px;
+}
+.lds-default div:nth-child(3) {
+  animation-delay: -0.2s;
+  top: 11.30421px;
+  left: 51.52px;
+}
+.lds-default div:nth-child(4) {
+  animation-delay: -0.3s;
+  top: 7.36px;
+  left: 36.8px;
+}
+.lds-default div:nth-child(5) {
+  animation-delay: -0.4s;
+  top: 11.30421px;
+  left: 22.08px;
+}
+.lds-default div:nth-child(6) {
+  animation-delay: -0.5s;
+  top: 22.08px;
+  left: 11.30421px;
+}
+.lds-default div:nth-child(7) {
+  animation-delay: -0.6s;
+  top: 36.8px;
+  left: 7.36px;
+}
+.lds-default div:nth-child(8) {
+  animation-delay: -0.7s;
+  top: 51.52px;
+  left: 11.30421px;
+}
+.lds-default div:nth-child(9) {
+  animation-delay: -0.8s;
+  top: 62.29579px;
+  left: 22.08px;
+}
+.lds-default div:nth-child(10) {
+  animation-delay: -0.9s;
+  top: 66.24px;
+  left: 36.8px;
+}
+.lds-default div:nth-child(11) {
+  animation-delay: -1s;
+  top: 62.29579px;
+  left: 51.52px;
+}
+.lds-default div:nth-child(12) {
+  animation-delay: -1.1s;
+  top: 51.52px;
+  left: 62.29579px;
+}
+@keyframes lds-default {
+  0%, 20%, 80%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+  
+
+/* Checkmark Animation */
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #7ac142;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  margin: 10% auto;
+  box-shadow: inset 0px 0px 0px #7ac142;
+  animation: fill 0.4s ease-in-out 0.4s forwards,
+    scale 0.3s ease-in-out 0.9s both;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px #7ac142;
+  }
 }

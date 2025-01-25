@@ -81,6 +81,25 @@
 
     <%-include('../partials/footer.ejs')%>
 
+    <script>
+      /*
+      JS variables like <%= recipe.category %> are processed on the server-side and only exist in the .ejs file before
+       the HTML is sent to the browser.Once the browser receives the HTML, these variables are
+        no longer available—they've already been replaced by their values.
+
+        We need a way to pass the required data
+        (e.g., recipe.category, recipe.difficulty, recipe.ingredients) to JavaScript in the browser.
+        
+        We decided to inject Data Using a <script> Block
+        We Directly embed a <script> block in EJS to pass variables to the external script
+  */
+      const recipeData = {
+        category: "<%= recipe.category %>",
+        difficulty: "<%= recipe.difficulty %>",
+        ingredients: `<%- JSON.stringify(recipe.ingredients) %>`,
+        instructions:`<%- JSON.stringify(recipe.instructions) %>`
+      };
+    </script>
     <script src="/scripts/recipes-edit.js"></script>
     
   </body>

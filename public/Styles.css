@@ -1,6 +1,76 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
+
+:root {
+  /* Background Colors */
+  --base-color: #fff;
+  --base-variant: white;
+
+  /* Text Colors */
+  --text-color: #333;
+  --secondary-text: #555;
+  --emoji-color:black;
+
+  /* Primary Colors */
+  --primary-color: #4a90e2;
+  --primary-variant: #357abd;
+
+  /* Accent/Error Colors */
+  --accent-color: #4caf50;
+  --error-color: #ff4444;
+
+  /* Additional Colors */
+  --success-color: #7ac142;
+  --info-color: #4c9eaf;
+  --warning-color: #cc0000;
+}
+.darkmode {
+  /* Background Colors */
+  --base-color: #070b1d;
+  --base-variant: #101425;
+
+  /* Text Colors */
+  --text-color: #fff;
+  --secondary-text: #a4a5b8;
+  --emoji-color:white;
+
+  /* Primary Colors */
+  --primary-color: #4a90e2;
+  --primary-variant: #357abd;
+
+  /* Accent/Error Colors */
+  --accent-color: #4caf50;
+  --error-color: #ff4444;
+
+  /* Additional Colors */
+  --success-color: #7ac142;
+  --info-color: #4c9eaf;
+  --warning-color: #cc0000;
+}
+#theme-switch{
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: var(--base-variant);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+#theme-switch svg{
+  fill: var(--primary-color);
+}
+#theme-switch svg:last-child{
+  display: none;
+}
+.darkmode #theme-switch svg:first-child{
+  display: none;
+}
+.darkmode #theme-switch svg:last-child{
+  display: block;
+}
 body {
   max-width: 1200px;
   margin: 0 auto;
@@ -9,6 +79,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--base-color);
 }
 
 .navbar {
@@ -18,7 +89,7 @@ body {
   align-items: center;
   border-bottom: 1px solid #ddd;
   padding: 1rem 2rem; 
-  background-color: #fff;
+  background-color: var(--base-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
 }
 
@@ -35,16 +106,20 @@ body {
   font-style: normal;
   font-variation-settings: "wdth" 100;
 }
+.navbar ul li{
+  display: flex;
+  align-items: center;
+}
 
 .Navitems a {
   text-decoration: none;
-  color: #333; 
+  color: var(--text-color); 
   font-weight: 500; 
   transition: color 0.3s ease, transform 0.2s ease; 
 }
 
 .Navitems a:hover {
-  color: #ff4444;
+  color: var(--error-color);
   transform: translateY(-2px);
 }
 
@@ -65,7 +140,7 @@ body {
   flex-direction: column;
   position: relative;
   text-align: center;
-  color: white;
+  color: var(--base-variant);
 }
 
 .page-container img {
@@ -80,6 +155,7 @@ body {
   flex: 1;
 }
 
+
 .indexCenterImgText {
   position: absolute;
   top: 50%;
@@ -88,7 +164,7 @@ body {
 }
 
 .indexCenterImgText :first-child {
-  border-bottom: white solid 1px;
+  border-bottom: var(--base-variant) solid 1px;
   font-size: 3rem;
   font-weight: 100;
   margin-bottom: 0.5rem;
@@ -100,7 +176,7 @@ body {
   transform: translate(-50%, -120%);
 }
 .aboutCenterImgText :first-child {
-  color: white;
+  color: var(--base-variant);
   font-size: 3rem;
 }
 .recipeCenterImgText {
@@ -109,7 +185,7 @@ body {
   transform: translate(-50%, -110%);
 }
 .recipeCenterImgText :first-child {
-  color: white;
+  color: var(--base-variant);
   font-size: 3rem;
 }
 
@@ -119,7 +195,7 @@ body {
   display: flex;
   height: 3rem;
   justify-content: center;
-  color: black;
+  color: var(--text-color);
   border-top: 1px solid #ddd;
 }
 .notFoundImg {
@@ -131,16 +207,14 @@ body {
   text-align: center;
 }
 .para {
-  color: black;
   width: 70%;
-  margin: 2rem auto;
+  margin: 0rem auto;
   padding: 2rem;
   border-radius: 1rem; 
-  background-color: #fff; 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #555; 
+  color: var(--secondary-text); 
 }
 
 .recipe-container {
@@ -150,7 +224,7 @@ body {
   overflow-y: auto;
   overflow-wrap: break-word;
   width: 100%;
-  color: black;
+  color: var(--text-color);
   display: grid;
   grid: repeat(2, 1fr) / repeat(3, 23rem);
   gap: 15px;
@@ -162,6 +236,19 @@ body {
   transition: transform 0.3s ease;
   padding: 0.5rem 0.5rem;
 }
+.recipe-title{
+  margin: 0;
+   color: var(--text-color);
+}
+.recipe-description{
+  margin-top: 0;
+   color: var(--secondary-text)
+}
+.recipe-info{
+  display: flex;
+  gap: 1rem;
+  color: var(--secondary-text);
+}
 .recipe-card:hover {
   transform: translateY(-5px);
 }
@@ -172,8 +259,8 @@ body {
   justify-content: space-between;
 }
 .newRecipeButton {
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--accent-color);
+  color: var(--base-variant);
   text-decoration: none;
 }
 
@@ -188,24 +275,24 @@ body {
   transition: background-color 0.3s ease;
 }
 .viewRecipeBtn {
-  background-color: #4c9eaf;
-  color: white;
+  background-color: var(--info-color);
+  color: var(--base-variant);
   text-decoration: none;
   margin-left: 1rem;
 }
 
 .deleteRecipeBtn {
-  background-color: #ff4444;
-  color: white;
+  background-color: var(--error-color);
+  color: var(--base-variant);
   margin-right: 1rem;
 }
 
 .recipe-details {
-  color: black;
+  color: var(--text-color);
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background: white;
+  background: var(--base-variant);
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
@@ -219,14 +306,14 @@ body {
 
 .recipe-header h2 {
   margin: 0 0 1rem 0;
-  color: #333;
+  color: var(--text-color);
 }
 
 .recipe-meta {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  color: #666;
+  color: var(--secondary-text);
 }
 
 .recipe-section {
@@ -247,8 +334,8 @@ body {
 }
 
 .step-number {
-  background: #4c9eaf;
-  color: white;
+  background: var(--info-color);
+  color: var(--base-variant);
   width: 25px;
   height: 25px;
   display: flex;
@@ -267,8 +354,8 @@ body {
 .back-btn {
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  background-color: #4c9eaf;
-  color: white;
+  background-color: var(--info-color);
+  color: var(--base-variant);
   text-decoration: none;
   border: none;
   cursor: pointer;
@@ -277,8 +364,8 @@ body {
 .delete-btn {
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  background-color: #ff4444;
-  color: white;
+  background-color: var(--error-color);
+  color: var(--base-variant);
   text-decoration: none;
   border: none;
   cursor: pointer;
@@ -292,10 +379,10 @@ body {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background: white;
+  background: var(--base-variant);
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  color: black;
+  color: var(--text-color);
 }
 
 .form-section {
@@ -306,7 +393,7 @@ body {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #333;
+  color: var(--text-color);
 }
 
 .form-section input,
@@ -344,8 +431,8 @@ body {
 }
 
 .step-number {
-  background: #4c9eaf;
-  color: white;
+  background: var(--info-color);
+  color: var(--base-variant);
   width: 25px;
   height: 25px;
   display: flex;
@@ -357,8 +444,8 @@ body {
 
 .remove-ingredient,
 .remove-instruction {
-  background: #ff4444;
-  color: white;
+  background: var(--error-color);
+  color: var(--base-variant);
   border: none;
   border-radius: 50%;
   width: 25px;
@@ -371,8 +458,8 @@ body {
 }
 
 .add-btn {
-  background: #4caf50;
-  color: white;
+  background: var(--accent-color);
+  color: var(--base-variant);
   border: none;
   border-radius: 5px;
   padding: 0.5rem 1rem;
@@ -388,8 +475,8 @@ body {
 }
 
 .submit-btn {
-  background: #4c9eaf;
-  color: white;
+  background: var(--info-color);
+  color: var(--base-variant);
   border: none;
   border-radius: 5px;
   padding: 0.5rem 2rem;
@@ -397,8 +484,8 @@ body {
 }
 
 .cancel-btn {
-  background: #666;
-  color: white;
+  background: var(--secondary-text);
+  color: var(--base-variant);
   text-decoration: none;
   border-radius: 5px;
   padding: 0.5rem 2rem;
@@ -418,16 +505,16 @@ body {
   opacity: 0.8; 
 }
 
-.emojis img {
+.emojis svg {
+  fill: var(--emoji-color);
   width: 40px; 
   height: 40px;
-  filter: grayscale(100%); 
   transition: filter 0.3s ease;
 }
-.emojis img:hover {
+.emojis svg:hover {
   filter: grayscale(0%); 
 }
-.emojis img {
+.emojis svg {
   animation: float 3s ease-in-out infinite;
 }
 
@@ -441,21 +528,21 @@ body {
 }
 
 .contact-container {
-  color: black;
+  color: var(--text-color);
   width: 70%;
   max-width: 800px; 
   margin: 2rem auto;
   border: 1px solid #ddd;
   padding: 2rem;
   border-radius: 1rem; 
-  background-color: #fff; 
+  background-color: var(--base-color); 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
 }
 
 .contact-container p {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #555;
+  color: var(--secondary-text);
   margin-bottom: 2rem;
 }
 
@@ -476,7 +563,7 @@ body {
 .contact-name label,
 .contact-email label {
   font-size: 0.9rem;
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 0.5rem;
 }
 
@@ -492,7 +579,7 @@ body {
 .contact-name input:focus,
 .contact-email input:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
@@ -513,7 +600,7 @@ body {
 
 .contact-message textarea:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
@@ -523,8 +610,8 @@ body {
 }
 
 .contact-form-action button {
-  background-color: #4a90e2;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--base-variant);
   border: none;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
@@ -534,14 +621,14 @@ body {
 }
 
 .contact-form-action button:hover {
-  background-color: #357abd;
+  background-color: var(--primary-variant);
   transform: translateY(-2px); 
 }
 
 .edit-recipe-btn {
-  background-color: #4caf50;
+  background-color: var(--accent-color);
   text-decoration: none;
-  color: white;
+  color: var(--base-variant);
 }
 
 .recipe-image {
@@ -586,6 +673,10 @@ body {
   width: 12rem;
   margin-top: 0;
 }
+.cooking-times-range-text{
+  color: var(--text-color);
+   margin: 0;
+}
 
 .hidden {
   visibility: hidden;
@@ -614,7 +705,7 @@ body {
 }
 
 .modal-container {
-  background: white;
+  background: var(--base-variant);
   border-radius: 12px; 
   width: 400px; 
   max-width: 90%;
@@ -627,13 +718,13 @@ body {
 .modal-container h3 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
-  color: #333;
+  color: var(--text-color);
   font-weight: 600;
 }
 
 .modal-container p {
   margin: 0 0 1.5rem 0;
-  color: #666;
+  color: var(--secondary-text);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -656,18 +747,18 @@ body {
 }
 
 .modal-confirm-action {
-  background-color: #ff4444;
-  color: white;
+  background-color: var(--error-color);
+  color: var(--base-variant);
 }
 
 .modal-confirm-action:hover {
-  background-color: #cc0000;
+  background-color: var(--warning-color);
   transform: translateY(-2px); 
 }
 
 .modal-cancel-action {
-  background-color: #4c9eaf;
-  color: white;
+  background-color: var(--info-color);
+  color: var(--base-variant);
 }
 
 .modal-cancel-action:hover {
@@ -677,8 +768,8 @@ body {
 
 /* Close Button */
 .modal-close-action {
-  background: #ff4444;
-  color: white;
+  background: var(--error-color);
+  color: var(--base-variant);
   border: none;
   border-radius: 50%;
   width: 30px;
@@ -695,7 +786,7 @@ body {
 }
 
 .modal-close-action:hover {
-  background-color: #cc0000;
+  background-color: var(--warning-color);
 }
 
 /* Spinner Animation */
@@ -711,7 +802,7 @@ body {
   height: 80px;
 }
 .lds-default div {
-  color: #4c9eaf;
+  color: var(--info-color);
   position: absolute;
   width: 6.4px;
   height: 6.4px;
@@ -796,7 +887,7 @@ body {
   stroke-dashoffset: 166;
   stroke-width: 2;
   stroke-miterlimit: 10;
-  stroke: #7ac142;
+  stroke: var(--success-color);
   fill: none;
   animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
@@ -807,10 +898,10 @@ body {
   border-radius: 50%;
   display: block;
   stroke-width: 2;
-  stroke: #fff;
+  stroke: var(--base-color);
   stroke-miterlimit: 10;
   margin: 10% auto;
-  box-shadow: inset 0px 0px 0px #7ac142;
+  box-shadow: inset 0px 0px 0px var(--success-color);
   animation: fill 0.4s ease-in-out 0.4s forwards,
     scale 0.3s ease-in-out 0.9s both;
 }
@@ -852,6 +943,6 @@ body {
 
 @keyframes fill {
   100% {
-    box-shadow: inset 0px 0px 0px 30px #7ac142;
+    box-shadow: inset 0px 0px 0px 30px var(--success-color);
   }
 }

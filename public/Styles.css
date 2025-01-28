@@ -161,10 +161,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -100%);
+  color: white;
 }
 
 .indexCenterImgText :first-child {
-  border-bottom: var(--base-variant) solid 1px;
+  border-bottom: white solid 1px;
   font-size: 3rem;
   font-weight: 100;
   margin-bottom: 0.5rem;
@@ -176,7 +177,7 @@ body {
   transform: translate(-50%, -120%);
 }
 .aboutCenterImgText :first-child {
-  color: var(--base-variant);
+  color: white;
   font-size: 3rem;
 }
 .recipeCenterImgText {
@@ -185,7 +186,7 @@ body {
   transform: translate(-50%, -110%);
 }
 .recipeCenterImgText :first-child {
-  color: var(--base-variant);
+  color: white;
   font-size: 3rem;
 }
 

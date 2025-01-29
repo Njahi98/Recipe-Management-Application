@@ -219,7 +219,8 @@ body {
 }
 
 .recipe-container {
-  margin-top: 1rem;
+  margin: 2rem auto;
+  padding-top: 2rem;
   border-radius: 1.5rem;
   height: 23rem;
   overflow-y: auto;

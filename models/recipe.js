@@ -38,8 +38,29 @@ const recipeSchema = new Schema({
         type: String,
         enum: ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack'],
         required: true
-    }
+    },
+    reviews: [
+        {
+          userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+          },
+          rating: { type: Number, required: true, min: 1, max: 5 },
+          comment: { type: String },
+        }],
 }, { timestamps: true });
+
+//Virtual for average rating
+recipeSchema.virtual('averageRating').get(function(){
+    if(this.reviews.length === 0 )return 0; //no reviews yet
+    const total = this.reviews.reduce((total,review)=>{sum+review.rating,0});
+    return total/this.reviews.length;
+});
+
+/* we created a schema for the recipes then created a model based on the schema
+ the 'recipe' name must be singular as mongoose will automatically pluralize it and 
+look for the collection recipes inside */
 
 const Recipe = mongoose.model('Recipe',recipeSchema);
 

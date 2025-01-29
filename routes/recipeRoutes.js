@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const recipeController = require('../controllers/recipeControllers')
 const { upload,processImage } = require("../middleware/uploadMiddleware");
+const auth = require('../middleware/auth')
 
 router.get('/',recipeController.recipe_index);
 
@@ -18,5 +19,7 @@ router.get('/:id/edit',recipeController.recipe_edit_get)
 router.get("/image/:id", recipeController.recipe_image_get);
 
 router.put('/:id', upload.single("image"), processImage, recipeController.recipe_update)
+
+router.put('/:id/reviews',auth,recipeController.recipe_add_review)
 
 module.exports=router;

@@ -148,6 +148,25 @@ const recipe_image_get = async (req, res) => {
   }
 };
 
+const recipe_add_review = async(req,res)=>{
+  try {
+    const {rating,comment}=req.body;
+    const recipe = await Recipe.findById(req.params.id);
+
+    if(!recipe){
+      return res.status(404).json({error:'Recipe not found'});
+    }
+
+    //add review
+    recipe.reviews.push({userId:req.userId,rating,comment});
+    await recipe.save();
+
+    res.json({message:'Review added successfully',recipe});
+  } catch (error) {
+    res.status(500).json({error:'Error adding review'});
+  }
+}
+
 
 
 
@@ -160,4 +179,5 @@ module.exports = {
   recipe_delete,
   recipe_update,
   recipe_image_get,
+  recipe_add_review,
 };

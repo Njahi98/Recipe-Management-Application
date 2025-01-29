@@ -2,6 +2,7 @@ const express = require('express');
 var morgan = require('morgan');
 const mongoose = require('mongoose');
 const recipeRoutes=require('./routes/recipeRoutes')
+const auth=require('./routes/auth')
 const Contact = require('./models/contact')
 const app = express();
 
@@ -48,9 +49,8 @@ app.post('/contact',(req,res)=>{
     })
 })
 
-
 app.use("/recipes",recipeRoutes);
-
+app.use("/auth",auth);
 
 app.use((req,res)=>{
     res.status(404).render('404',{title:'404 Not found'})

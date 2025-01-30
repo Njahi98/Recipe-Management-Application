@@ -206,6 +206,7 @@ body {
 }
 .notFoundText {
   text-align: center;
+  color: var(--text-color);
 }
 .para {
   width: 70%;

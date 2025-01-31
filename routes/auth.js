@@ -57,6 +57,18 @@ router.post('/login',async(req,res)=>{
     }
 })
 
+router.get('/login',(req,res)=>{
+    res.render('auth/login',{title:'login page'})
+})
+router.get('/register',(req,res)=>{
+    res.render('auth/register',{title:'register page'})
+})
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/');
+});
+
 router.get('/protected',auth,(req,res)=>{
     res.json({message:'This is a protected Route',userId:req.userId});
 });

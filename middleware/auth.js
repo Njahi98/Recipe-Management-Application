@@ -1,14 +1,16 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
-const auth = (req, res, next) => {
-  //  we get the token from the request header named 'Authorization'
+const auth = async(req, res, next) => {
+  //  we check the token from the request header named 'Authorization' or we check for the token in cookies  
   // The ?.replace removes the word 'Bearer' from the token if it exists
-  // we add space after the word 'Bearer ' to avoid token extraction issue
-  const token = req.header("Authorization")?.replace("Bearer ", "");
+  const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
 
-  //  If no token is found, return 401 (Unauthorized)
+  //  If no token is found, the user is not authenticated
+  // We attach `user = null` to `res.locals` so templates know no user is logged in
   if (!token) {
-    return res.status(401).json({ error: "Access denied. No token provided." });
+    res.locals.user = null; // No user is logged in
+    return next();
   }
 
   try {
@@ -16,14 +18,17 @@ const auth = (req, res, next) => {
     // If it's valid, it decodes the token that contains the userId
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // we add the userId to the request so the next route can use it
-    req.userId = decoded.userId;
+    // Step 4: Fetch the user from the database
+    // - Use the `userId` from the decoded token to find the user
+    // - If the user doesn't exist, treat it as an invalid token
+    const user = await User.findById(decoded.userId);
 
     //we continue to the next middleware/route handler
     next();
   } catch (error) {
-    //If the token is invalid, we return 400 (Bad Request)
-    res.status(400).json({ error: "Invalid token" });
+    // No user is logged in
+    res.locals.user = null; 
+    next();
   }
 };
 

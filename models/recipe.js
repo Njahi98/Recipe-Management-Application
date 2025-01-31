@@ -54,7 +54,7 @@ const recipeSchema = new Schema({
 //Virtual for average rating
 recipeSchema.virtual('averageRating').get(function(){
     if(this.reviews.length === 0 )return 0; //no reviews yet
-    const total = this.reviews.reduce((total,review)=>{sum+review.rating,0});
+    const total = this.reviews.reduce((sum,review)=>{sum+review.rating,0});
     return total/this.reviews.length;
 });
 

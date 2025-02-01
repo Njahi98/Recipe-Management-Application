@@ -50,28 +50,34 @@ router.post('/login',async(req,res)=>{
 
         //if the password match we create a JWT token valid for one hour
         const token = jwt.sign({userId:user._id},process.env.JWT_SECRET,{expiresIn:'1h'});
-        res.json({token});
 
+        // we set the token in a cookie
+        res.cookie('token', token, {
+        httpOnly: true, // Prevents JavaScript access
+        secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
+        maxAge: 3600000, // 1 hour
+      });
+  
+    return res.redirect('/');
+  
     } catch (error) {
         res.status(500).json({error:'Error logging in'});
     }
 })
 
+router.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    return res.redirect('/');
+  });
+
 router.get('/login',(req,res)=>{
-    res.render('auth/login',{title:'login page'})
+    res.render('auth/login',{title:'Login Page'})
 })
 router.get('/register',(req,res)=>{
-    res.render('auth/register',{title:'register page'})
+    res.render('auth/register',{title:'Register Page'})
 })
 
-router.get('/logout', (req, res) => {
-  res.clearCookie('token');
-  res.redirect('/');
-});
 
-router.get('/protected',auth,(req,res)=>{
-    res.json({message:'This is a protected Route',userId:req.userId});
-});
 
 
 module.exports=router;

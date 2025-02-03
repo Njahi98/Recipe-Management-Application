@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 
 
 const recipe_index = (req, res) => {
-  Recipe.find()
+  // we populate the field creator with the creator's username instead of their id
+  Recipe.find().populate('creator', 'username')
     .then((result) => {
       res.render("recipes/index", { title: "recipes", recipes: result });
     })
@@ -32,19 +33,47 @@ const recipe_edit_get = ((req,res)=>{
 })
 
 const recipe_create_post = (req, res) => {
-  const recipeData = {
-    ...req.body,
-    imageId: req.file.id, // GridFS file ID
-    imageName: req.file.filename, // Uploaded file name
-  };
-  const recipe = new Recipe(recipeData);
+  const { title, description, ingredients, instructions, cookingTime, difficulty, category } = req.body;
+
+  let creator = null;
+  let isGuest = false;
+
+  if (req.userId) {
+    // logged-in user
+    creator = req.userId; 
+  } else {
+    // mark as a guest user
+    isGuest = true; 
+  }
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+
+  const imageId = req.file.id; // GridFS file ID
+  const imageName = req.file.filename; // Uploaded file name
+
+  // Create the recipe object
+  const recipe = new Recipe({
+    title,
+    description,
+    imageId,
+    imageName,
+    ingredients,
+    instructions,
+    cookingTime,
+    difficulty,
+    category,
+    creator, //it'll be null if it's a guest
+    isGuest, //it'll be true if it's a guest
+  });
   recipe
     .save()
     .then((result) => {
-      res.redirect("/recipes");
+      res.redirect('/recipes');
     })
     .catch((error) => {
-      console.log(error);
+      console.error('Error saving recipe:', error);
+      res.status(500).json({ error: 'Error saving recipe' });
     });
 };
 

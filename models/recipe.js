@@ -49,7 +49,10 @@ const recipeSchema = new Schema({
           rating: { type: Number, required: true, min: 1, max: 5 },
           comment: { type: String },
         }],
-}, { timestamps: true });
+        creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        // we track if the creator is a guest
+        isGuest: { type: Boolean, default: false }, 
+        }, { timestamps: true });
 
 //Virtual for average rating
 recipeSchema.virtual('averageRating').get(function(){

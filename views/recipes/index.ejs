@@ -44,6 +44,17 @@
                   <p class="recipe-difficulty"> <%=recipe.difficulty %></p>
                   <p class="recipe-category"> <%=recipe.category %></p>
               </div> 
+              <div class="recipe-creator-info">
+                <p class="recipe-creator">Created by:
+                  <% if (recipe.creator) { %>
+                    <a style="color: var(--success-color);" href="/profile/<%= recipe.creator._id %>"><%= recipe.creator.username %></a>
+                  <% } else if (recipe.isGuest) { %>
+                    Guest
+                  <% } else { %>
+                    Unknown
+                  <% } %>
+                </p>
+             </div>
               <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
 
                 <p class="recipe-description"><%=recipe.description %> <p>

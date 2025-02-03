@@ -250,6 +250,22 @@ body {
   gap: 1rem;
   color: var(--secondary-text);
 }
+.recipe-creator-info {
+  display: flex;
+  color: var(--text-color);
+}
+.recipe-creator-info a{
+  text-decoration: none;
+  color: inherit;
+}
+.recipe-creator-info a:hover{
+  text-decoration: underline;
+}
+
+.recipe-creator-info p {
+  margin-top: 0;
+  padding-left: 5px;
+}
 .recipe-card:hover {
   transform: translateY(-5px);
 }

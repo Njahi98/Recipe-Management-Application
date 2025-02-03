@@ -20,6 +20,8 @@
           <div class="wheel" style="display: flex; justify-content: center; display: none;">
             <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
+            <svg style="display: none;" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
         </form>
         <div class="notification"></div>
 
@@ -36,6 +38,7 @@
     const submitBtn = loginForm.querySelector('button');
     const loadingSpinner = loginForm.querySelector('.lds-default').parentElement;
     const notification = document.querySelector('.notification');
+    const checkmark = loginForm.querySelector('.checkmark');
 
 // Function to show notification
 function showNotification(message) {
@@ -75,15 +78,21 @@ loginForm.addEventListener('submit', async function(e) {
         if (!response.ok) {
             const errorData = await response.json();
             showNotification(errorData.error);
+            setTimeout(() => {
+              submitBtn.style.display = 'block';
+              loadingSpinner.style.display = 'none';
+            }, 1000);
         } else {
-            window.location.href = '/';
-            //return to stop execution
+            loadingSpinner.style.display='none';
+            checkmark.style.display='block'
+            setTimeout(() => {
+              window.location.href = '/';
+              //return to stop execution
+            }, 2000);
             return; 
         }
     } catch (error) {
         showNotification('An unexpected error occurred');
-    } finally {
-        // Reset form state if we haven't redirected
         submitBtn.style.display = 'block';
         loadingSpinner.style.display = 'none';
     }

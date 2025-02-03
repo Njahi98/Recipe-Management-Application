@@ -21,11 +21,85 @@
             <input type="password" id="password" name="password" required>
           </div>
           <button type="submit">Register</button>
-        </form>
+          <div class="wheel" style="display: flex; justify-content: center; display: none;">
+            <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+            <svg style="display: none;" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+        </form>    
         <p>Already have an account? <a href="/auth/login">Login here</a>.</p>
+        <div class="notification"></div>
       </div>
     </div>
 
     <%- include('../partials/footer.ejs') %>
+    <script>
+            const registerForm = document.querySelector('.auth-form form')
+            const usernameInput=registerForm.querySelector('input[name="username"]');
+            const emailInput=registerForm.querySelector('input[type="email"]');
+            const passwordInput=registerForm.querySelector('input[type="password"]');
+            const submitBtn = registerForm.querySelector('button')
+            const loadingSpinner = registerForm.querySelector('.wheel');
+            const checkmark = registerForm.querySelector('.checkmark');
+            const notification = document.querySelector('.notification');
+
+            function showNotification(message) {
+            notification.textContent = message;
+            notification.style.display = 'block';
+            // Force reflow
+            notification.offsetHeight;
+            notification.style.opacity = '1';
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.style.display = 'none', 300);
+            }, 3000);
+        }
+
+            registerForm.addEventListener('submit', async function(e) {
+              e.preventDefault();
+
+              const formData = {
+                username:usernameInput.value,
+                email: emailInput.value,
+                password: passwordInput.value
+            }
+
+              submitBtn.style.display = 'none';
+              loadingSpinner.style.display = 'flex';
+
+              try {
+                if (formData.password.length < 6) {
+                  showNotification('Password must be at least 6 characters');
+                  return;
+              }
+                const response = await fetch('/auth/register', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            showNotification(errorData.error);
+        } else {
+          loadingSpinner.style.display = 'none';
+          submitBtn.style.display = 'none';
+          checkmark.style.display="block"
+          setTimeout(() => {
+            window.location.href = '/auth/login';
+            return;
+          }, 2000);
+        }
+      } catch (error) {
+        showNotification('An unexpected error occurred');
+    } finally {
+        // Reset form state if we haven't redirected
+        submitBtn.style.display = 'block';
+        loadingSpinner.style.display = 'none';
+    }
+});
+    </script>
   </body>
 </html>

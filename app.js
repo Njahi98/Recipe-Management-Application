@@ -3,6 +3,7 @@ var morgan = require('morgan');
 const mongoose = require('mongoose');
 const recipeRoutes=require('./routes/recipeRoutes')
 const authRoutes=require('./routes/authRoutes')
+const contactRoutes=require('./routes/contactRoutes')
 const auth=require('./middleware/auth')
 const Contact = require('./models/contact')
 const app = express();
@@ -51,21 +52,7 @@ app.get('/about',(req,res)=>{
     })
 })
 
-app.get('/contact',(req,res)=>{
-    res.render('contact',{title:'Contact'
-    })
-})
-app.post('/contact',(req,res)=>{
-    const contact = new Contact(req.body)
-    contact.save()
-    .then((result)=>{
-        res.redirect('/recipes');
-    }
-    ).catch((error)=>{
-        console.log(error);
-    })
-})
-
+app.use("/contact",contactRoutes);
 app.use("/recipes",recipeRoutes);
 app.use("/auth",authRoutes);
 

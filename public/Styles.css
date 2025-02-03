@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
-
 :root {
   /* Background Colors */
   --base-color: #fff;
@@ -10,7 +9,7 @@
   /* Text Colors */
   --text-color: #333;
   --secondary-text: #555;
-  --emoji-color:black;
+  --emoji-color: black;
 
   /* Primary Colors */
   --primary-color: #4a90e2;
@@ -33,7 +32,7 @@
   /* Text Colors */
   --text-color: #fff;
   --secondary-text: #a4a5b8;
-  --emoji-color:white;
+  --emoji-color: white;
 
   /* Primary Colors */
   --primary-color: #4a90e2;
@@ -48,7 +47,7 @@
   --info-color: #4c9eaf;
   --warning-color: #cc0000;
 }
-#theme-switch{
+#theme-switch {
   height: 50px;
   width: 50px;
   padding: 0;
@@ -59,16 +58,16 @@
   align-items: center;
   cursor: pointer;
 }
-#theme-switch svg{
+#theme-switch svg {
   fill: var(--primary-color);
 }
-#theme-switch svg:last-child{
+#theme-switch svg:last-child {
   display: none;
 }
-.darkmode #theme-switch svg:first-child{
+.darkmode #theme-switch svg:first-child {
   display: none;
 }
-.darkmode #theme-switch svg:last-child{
+.darkmode #theme-switch svg:last-child {
   display: block;
 }
 body {
@@ -88,34 +87,34 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  padding: 1rem 2rem; 
+  padding: 1rem 2rem;
   background-color: var(--base-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .navbar ul {
   display: flex;
   flex: 2;
   justify-content: flex-end;
-  gap: 2rem; 
+  gap: 2rem;
   list-style-type: none;
-  margin: 0; 
+  margin: 0;
   padding: 0;
   font-family: "Noto Sans", serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings: "wdth" 100;
 }
-.navbar ul li{
+.navbar ul li {
   display: flex;
   align-items: center;
 }
 
 .Navitems a {
   text-decoration: none;
-  color: var(--text-color); 
-  font-weight: 500; 
-  transition: color 0.3s ease, transform 0.2s ease; 
+  color: var(--text-color);
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .Navitems a:hover {
@@ -125,8 +124,8 @@ body {
 
 .navbar img {
   height: 50px;
-  width: auto; 
-  transition: transform 0.3s ease; 
+  width: auto;
+  transition: transform 0.3s ease;
 }
 
 .navbar img:hover {
@@ -154,7 +153,6 @@ body {
 .content-wrap {
   flex: 1;
 }
-
 
 .indexCenterImgText {
   position: absolute;
@@ -212,11 +210,11 @@ body {
   width: 70%;
   margin: 0rem auto;
   padding: 2rem;
-  border-radius: 1rem; 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   font-size: 1.1rem;
   line-height: 1.6;
-  color: var(--secondary-text); 
+  color: var(--secondary-text);
 }
 
 .recipe-container {
@@ -239,15 +237,15 @@ body {
   transition: transform 0.3s ease;
   padding: 0.5rem 0.5rem;
 }
-.recipe-title{
+.recipe-title {
   margin: 0;
-   color: var(--text-color);
+  color: var(--text-color);
 }
-.recipe-description{
+.recipe-description {
   margin-top: 0;
-   color: var(--secondary-text)
+  color: var(--secondary-text);
 }
-.recipe-info{
+.recipe-info {
   display: flex;
   gap: 1rem;
   color: var(--secondary-text);
@@ -497,32 +495,33 @@ body {
 .emojis {
   display: flex;
   justify-content: center;
-  gap: 2rem; 
+  gap: 2rem;
   margin: 2rem 0;
 }
 .emojis a {
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 .emojis a:hover {
-  transform: translateY(-5px); 
-  opacity: 0.8; 
+  transform: translateY(-5px);
+  opacity: 0.8;
 }
 
 .emojis svg {
   fill: var(--emoji-color);
-  width: 40px; 
+  width: 40px;
   height: 40px;
   transition: filter 0.3s ease;
 }
 .emojis svg:hover {
-  filter: grayscale(0%); 
+  filter: grayscale(0%);
 }
 .emojis svg {
   animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -533,13 +532,13 @@ body {
 .contact-container {
   color: var(--text-color);
   width: 70%;
-  max-width: 800px; 
+  max-width: 800px;
   margin: 2rem auto;
   border: 1px solid #ddd;
   padding: 2rem;
-  border-radius: 1rem; 
-  background-color: var(--base-color); 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+  border-radius: 1rem;
+  background-color: var(--base-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .contact-container p {
@@ -552,7 +551,7 @@ body {
 /* Form Row */
 .contact-row {
   display: flex;
-  gap: 1rem; 
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -597,7 +596,7 @@ body {
   border-radius: 0.5rem;
   padding: 0.75rem;
   font-size: 1rem;
-  resize: vertical; 
+  resize: vertical;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -625,7 +624,7 @@ body {
 
 .contact-form-action button:hover {
   background-color: var(--primary-variant);
-  transform: translateY(-2px); 
+  transform: translateY(-2px);
 }
 
 .edit-recipe-btn {
@@ -676,9 +675,9 @@ body {
   width: 12rem;
   margin-top: 0;
 }
-.cooking-times-range-text{
+.cooking-times-range-text {
   color: var(--text-color);
-   margin: 0;
+  margin: 0;
 }
 
 .hidden {
@@ -694,7 +693,7 @@ body {
 
 /* Modal Backdrop */
 .modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 1040;
   position: fixed;
   top: 0;
@@ -704,16 +703,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(4px); 
+  backdrop-filter: blur(4px);
 }
 
 .modal-container {
   background: var(--base-variant);
-  border-radius: 12px; 
-  width: 400px; 
+  border-radius: 12px;
+  width: 400px;
   max-width: 90%;
   padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-in-out;
   position: relative;
 }
@@ -734,8 +733,8 @@ body {
 
 .modal-actions {
   display: flex;
-  justify-content: flex-end; 
-  gap: 1rem; 
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .modal-confirm-action,
@@ -756,7 +755,7 @@ body {
 
 .modal-confirm-action:hover {
   background-color: var(--warning-color);
-  transform: translateY(-2px); 
+  transform: translateY(-2px);
 }
 
 .modal-cancel-action {
@@ -766,7 +765,7 @@ body {
 
 .modal-cancel-action:hover {
   background-color: #3a7a8a;
-  transform: translateY(-2px); 
+  transform: translateY(-2px);
 }
 
 /* Close Button */
@@ -874,15 +873,16 @@ body {
   left: 62.29579px;
 }
 @keyframes lds-default {
-  0%, 20%, 80%, 100% {
+  0%,
+  20%,
+  80%,
+  100% {
     transform: scale(1);
   }
   50% {
     transform: scale(1.5);
   }
 }
-
-  
 
 /* Checkmark Animation */
 .checkmark__circle {
@@ -1013,4 +1013,16 @@ body {
 
 .auth-form a:hover {
   text-decoration: underline;
+}
+.notification {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  background: var(--warning-color);
+  color: white;
+  opacity: 0;
+  transition: opacity 1s ease;
 }

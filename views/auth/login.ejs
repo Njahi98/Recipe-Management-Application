@@ -17,11 +17,77 @@
             <input type="password" id="password" name="password" required>
           </div>
           <button type="submit">Login</button>
+          <div class="wheel" style="display: flex; justify-content: center; display: none;">
+            <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
         </form>
+        <div class="notification"></div>
+
+
         <p>Don't have an account? <a href="/auth/register">Register here</a>.</p>
       </div>
     </div>
 
     <%- include('../partials/footer.ejs') %>
+    <script>
+     const loginForm = document.querySelector('.auth-form form');
+    const emailInput = loginForm.querySelector('input[type="email"]');
+    const passwordInput = loginForm.querySelector('input[type="password"]');
+    const submitBtn = loginForm.querySelector('button');
+    const loadingSpinner = loginForm.querySelector('.lds-default').parentElement;
+    const notification = document.querySelector('.notification');
+
+// Function to show notification
+function showNotification(message) {
+    notification.textContent = message;
+    notification.style.display = 'block';
+    // Force reflow
+    notification.offsetHeight;
+    notification.style.opacity = '1';
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => notification.style.display = 'none', 300);
+    }, 3000);
+}
+
+loginForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = {
+                email: emailInput.value,
+                password: passwordInput.value
+            }
+    
+    // Show loading state
+    submitBtn.style.display = 'none';
+    loadingSpinner.style.display = 'flex';
+    
+    try {
+        const response = await fetch('/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            showNotification(errorData.error);
+        } else {
+            window.location.href = '/';
+            //return to stop execution
+            return; 
+        }
+    } catch (error) {
+        showNotification('An unexpected error occurred');
+    } finally {
+        // Reset form state if we haven't redirected
+        submitBtn.style.display = 'block';
+        loadingSpinner.style.display = 'none';
+    }
+});
+       </script>
   </body>
 </html>

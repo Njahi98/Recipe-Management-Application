@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const recipeRoutes=require('./routes/recipeRoutes')
 const authRoutes=require('./routes/authRoutes')
 const contactRoutes=require('./routes/contactRoutes')
+const profileRoutes= require('./routes/profileRoutes')
 const auth=require('./middleware/auth')
 const Contact = require('./models/contact')
 const app = express();
@@ -52,6 +53,7 @@ app.get('/about',(req,res)=>{
     })
 })
 
+app.use("/profile",profileRoutes)
 app.use("/contact",contactRoutes);
 app.use("/recipes",recipeRoutes);
 app.use("/auth",authRoutes);

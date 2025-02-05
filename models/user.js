@@ -17,7 +17,28 @@ email:{
 password:{
     type:String,
     required:true,
-}
+},
+bio: {
+    type: String,
+    default: '',
+  },
+  profilePicture: {
+    type: String,
+    default: '/images/default-profile.png', // Default profile picture
+  },
+  location: {
+    type: String,
+    default: '',
+  },
+  website: {
+    type: String,
+    default: '',
+  },
+  socialMedia: {
+    twitter: { type: String, default: '' },
+    instagram: { type: String, default: '' },
+    facebook: { type: String, default: '' },
+  },
 
 },{timestamps:true});
 

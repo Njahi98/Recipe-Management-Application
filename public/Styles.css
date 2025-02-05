@@ -1042,3 +1042,137 @@ body {
   opacity: 0;
   transition: opacity 1s ease;
 }
+
+/* profile page design */
+.profile-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--base-variant);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.profile-header h1 {
+  color: var(--text-color);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.bio {
+  font-size: 1rem;
+  color: var(--secondary-text);
+  margin-bottom: 1rem;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-link {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.profile-details {
+  margin-top: 2rem;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.detail .label {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.detail .value {
+  color: var(--secondary-text);
+}
+
+.edit-profile-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--accent-color);
+  color: white;
+  text-align: center;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  margin-top: 2rem;
+}
+
+.edit-profile-btn:hover {
+  background-color: var(--primary-color);
+}
+
+/* edit profile page */
+.edit-profile-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--base-variant);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edit-profile-container h1 {
+  color: var(--text-color);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 0.25rem;
+  background-color: var(--base-color);
+  color: var(--text-color);
+}
+
+.save-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: var(--primary-color);
+}

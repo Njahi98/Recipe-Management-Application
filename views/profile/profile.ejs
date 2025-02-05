@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+
+    <div class="profile-container">
+      <div class="profile-header">
+        <img src="<%= profile.profilePicture %>" alt="Profile Picture" class="profile-picture">
+        <h1><%= profile.username %></h1>
+        <p class="bio"><%= profile.bio || 'No bio yet.' %></p>
+        <div class="social-links">
+          <% if (profile.socialMedia.twitter) { %>
+            <a href="<%= profile.socialMedia.twitter %>" target="_blank" class="social-link">Twitter</a>
+          <% } %>
+          <% if (profile.socialMedia.instagram) { %>
+            <a href="<%= profile.socialMedia.instagram %>" target="_blank" class="social-link">Instagram</a>
+          <% } %>
+          <% if (profile.socialMedia.facebook) { %>
+            <a href="<%= profile.socialMedia.facebook %>" target="_blank" class="social-link">Facebook</a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="profile-details">
+        <div class="detail">
+          <span class="label">Location:</span>
+          <span class="value"><%= profile.location || 'Not specified' %></span>
+        </div>
+        <div class="detail">
+          <span class="label">Website:</span>
+          <span class="value">
+            <% if (profile.website) { %>
+              <a href="<%= profile.website %>" target="_blank"><%= profile.website %></a>
+            <% } else { %>
+              Not specified
+            <% } %>
+          </span>
+        </div>
+      </div>
+
+      <!-- only visible to the profile owner -->
+      <% if (locals.user && locals.user._id.toString() === profile._id.toString()) { %>
+        <a href="/profile/<%= profile._id %>/edit" class="edit-profile-btn">Edit Profile</a>
+      <% } %>
+    </div>
+
+    <%- include('../partials/footer.ejs') %>
+  </body>
+</html>

@@ -15,19 +15,6 @@ const contact_post = (req,res)=>{
     })
 }
 
-const contact_posting = async (req,res) =>{
-    try {
-        const contact = new Contact(req.body);
-        const response = await contact.save()
-        if(response.ok){
-            res.redirect('/recipes');
-        }else{
-            res.json({message:'error occured'})
-        }
-    } catch (error) {
-        res.json({error:'error:',error})
-    }
-}
 
 
 

@@ -65,7 +65,11 @@
             value="<%= profile.socialMedia.facebook %>"
           />
         </div>
+        <div style="display: flex; gap: 10px;">
+          <a href="/profile/<%=profile._id %>"></a>
+        <button type="submit" class="edit-back-btn">Back to profile</button>
         <button type="submit" class="save-btn">Save Changes</button>
+      </div>
       </form>
     </div>
 

@@ -254,11 +254,11 @@ body {
   display: flex;
   color: var(--text-color);
 }
-.recipe-creator-info a{
+.recipe-creator-info a {
   text-decoration: none;
   color: inherit;
 }
-.recipe-creator-info a:hover{
+.recipe-creator-info a:hover {
   text-decoration: underline;
 }
 
@@ -1172,7 +1172,19 @@ body {
   border-radius: 0.25rem;
   cursor: pointer;
 }
+.edit-back-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--secondary-text);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
 
 .save-btn:hover {
+  background-color: var(--primary-color);
+}
+.edit-back-btn:hover {
   background-color: var(--primary-color);
 }

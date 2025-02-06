@@ -17,16 +17,21 @@ router.get("/:id", async (req, res) => {
 });
 //we protect this route by adding auth
 //only the logged in user should be able to update his profile
-router.get("/:id/edit",async(req,res)=>{
+router.get("/:id/edit",auth,async(req,res)=>{
     try {
-        const profileId=req.params.id
-        const profile = await User.findById(profileId).select('-password');
+        const userId=req.params.id;
+        if (userId !== req.userId) {
+          return res
+            .status(403)
+            .json({ error: "You are not authorized to update this profile" });
+        }
+        const profile = await User.findById(userId).select('-password');
         if(!profile){
             return res.status(404).json({ error: "user does not exist" });
         }
         res.render("profile/edit",{title:'Edit Profile',profile});
-    } catch (error) {
-        
+    } catch (error) { 
+        res.json('error:',error);
     }
    
 })

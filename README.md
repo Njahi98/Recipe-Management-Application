@@ -1,6 +1,6 @@
 # Recipe Management Application
 
-A server-side rendered web application for managing cooking recipes, built with Node.js, Express, and MongoDB. This application allows users to create, share, and review recipes, with role-based access control for managing content.
+A server-side rendered web application for managing cooking recipes, built with Node.js, Express,EJS templates and MongoDB. This application allows users to create, share, and review recipes, with role-based access control for managing content.
 
 ## Features
 

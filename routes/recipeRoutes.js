@@ -4,6 +4,7 @@ const recipeController = require('../controllers/recipeControllers')
 const { upload,processImage } = require("../middleware/uploadMiddleware");
 const auth = require('../middleware/auth');
 const isRecipeOwner = require('../middleware/isRecipeOwner');
+const isReviewOwner = require('../middleware/isReviewOwner');
 
 router.get('/',recipeController.recipe_index);
 
@@ -21,10 +22,10 @@ router.get("/image/:id", recipeController.recipe_image_get);
 
 router.put('/:id',auth,isRecipeOwner,upload.single("image"), processImage, recipeController.recipe_update)
 
-router.put('/:id/reviews',auth,isRecipeOwner,recipeController.recipe_add_review)
+router.put('/:id/reviews',auth,recipeController.recipe_add_review)
 
-router.put(':id1/reviews/:id2',auth,isRecipeOwner,recipeController.recipe_update_review)
+router.put(':recipeId/reviews/:reviewId',auth,isReviewOwner,recipeController.recipe_update_review)
 
-router.delete('/:id1/reviews/:id2',auth,isRecipeOwner,recipeController.recipe_delete_review)
+router.delete('/:recipeId/reviews/:reviewId',auth,isReviewOwner,recipeController.recipe_delete_review)
 
 module.exports=router;

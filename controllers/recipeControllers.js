@@ -2,10 +2,10 @@ const Recipe = require("../models/recipe");
 const { getGfs } = require("../middleware/uploadMiddleware");
 const mongoose = require("mongoose");
 
-
 const recipe_index = (req, res) => {
   // we populate the field creator with the creator's username instead of their id
-  Recipe.find().populate('creator', 'username')
+  Recipe.find()
+    .populate("creator", "username")
     .then((result) => {
       res.render("recipes/index", { title: "recipes", recipes: result });
     })
@@ -18,7 +18,7 @@ const recipe_create_get = (req, res) => {
   res.render("recipes/create", { title: "create a new recipe" });
 };
 
-const recipe_edit_get = ((req,res)=>{
+const recipe_edit_get = (req, res) => {
   const id = req.params.id;
   Recipe.findById(id)
     .then((result) => {
@@ -30,23 +30,31 @@ const recipe_edit_get = ((req,res)=>{
     .catch((err) => {
       res.status(404).render("404", { title: "recipe not found" });
     });
-})
+};
 
 const recipe_create_post = (req, res) => {
-  const { title, description, ingredients, instructions, cookingTime, difficulty, category } = req.body;
+  const {
+    title,
+    description,
+    ingredients,
+    instructions,
+    cookingTime,
+    difficulty,
+    category,
+  } = req.body;
 
   let creator = null;
   let isGuest = false;
 
   if (req.userId) {
     // logged-in user
-    creator = req.userId; 
+    creator = req.userId;
   } else {
     // mark as a guest user
-    isGuest = true; 
+    isGuest = true;
   }
   if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded' });
+    return res.status(400).json({ error: "No file uploaded" });
   }
 
   const imageId = req.file.id; // GridFS file ID
@@ -69,11 +77,11 @@ const recipe_create_post = (req, res) => {
   recipe
     .save()
     .then((result) => {
-      res.redirect('/recipes');
+      res.redirect("/recipes");
     })
     .catch((error) => {
-      console.error('Error saving recipe:', error);
-      res.status(500).json({ error: 'Error saving recipe' });
+      console.error("Error saving recipe:", error);
+      res.status(500).json({ error: "Error saving recipe" });
     });
 };
 
@@ -92,28 +100,28 @@ const recipe_details = async (req, res) => {
 };
 
 const recipe_delete = async (req, res) => {
-    const id = req.params.id;
-    try {
-        // First get the recipe to access the imageId
-        const recipe = await Recipe.findById(id);
-        
-        // If recipe has an image, delete it from GridFS
-        if (recipe && recipe.imageId) {
-            const gfs = await getGfs();
-            try {
-                await gfs.delete(new mongoose.Types.ObjectId(recipe.imageId));
-            } catch (err) {
-                console.log('Error deleting image:', err);
-            }
-        }
+  const id = req.params.id;
+  try {
+    // First get the recipe to access the imageId
+    const recipe = await Recipe.findById(id);
 
-        // Then delete the recipe
-        await Recipe.findByIdAndDelete(id);
-        res.json({ redirect: '/recipes' });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Error deleting recipe' });
+    // If recipe has an image, delete it from GridFS
+    if (recipe && recipe.imageId) {
+      const gfs = await getGfs();
+      try {
+        await gfs.delete(new mongoose.Types.ObjectId(recipe.imageId));
+      } catch (err) {
+        console.log("Error deleting image:", err);
+      }
     }
+
+    // Then delete the recipe
+    await Recipe.findByIdAndDelete(id);
+    res.json({ redirect: "/recipes" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Error deleting recipe" });
+  }
 };
 
 const recipe_update = async (req, res) => {
@@ -138,7 +146,7 @@ const recipe_update = async (req, res) => {
         try {
           await gfs.delete(new mongoose.Types.ObjectId(oldRecipe.imageId));
         } catch (err) {
-          console.log('Error deleting old image:', err);
+          console.log("Error deleting old image:", err);
         }
       }
 
@@ -149,12 +157,12 @@ const recipe_update = async (req, res) => {
 
     const result = await Recipe.findByIdAndUpdate(id, formData, { new: true });
     if (!result) {
-      return res.status(404).json({ error: 'Recipe not found' });
+      return res.status(404).json({ error: "Recipe not found" });
     }
     res.json({ success: true, recipe: result });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'Error updating recipe' });
+    res.status(500).json({ error: "Error updating recipe" });
   }
 };
 
@@ -163,13 +171,17 @@ const recipe_image_get = async (req, res) => {
     const gfs = await getGfs(); // Ensure gfs is initialized
     const fileId = req.params.id;
 
-    const file = await gfs.find({ _id: new mongoose.Types.ObjectId(fileId) }).toArray();
+    const file = await gfs
+      .find({ _id: new mongoose.Types.ObjectId(fileId) })
+      .toArray();
 
     if (!file || file.length === 0) {
       return res.status(404).json({ message: "File not found" });
     }
 
-    const readStream = gfs.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+    const readStream = gfs.openDownloadStream(
+      new mongoose.Types.ObjectId(fileId)
+    );
     readStream.pipe(res);
   } catch (error) {
     console.error("Error fetching image:", error);
@@ -177,33 +189,34 @@ const recipe_image_get = async (req, res) => {
   }
 };
 
-const recipe_add_review = async(req,res)=>{
+const recipe_add_review = async (req, res) => {
   try {
-    const {rating,comment}=req.body;
+    const { rating, comment } = req.body;
     const recipe = await Recipe.findById(req.params.id);
 
-    if(!recipe){
-      return res.status(404).json({error:'Recipe not found'});
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found" });
     }
 
     //add review
-    recipe.reviews.push({userId:req.userId,rating,comment});
+    recipe.reviews.push({ userId: req.userId, rating, comment });
     await recipe.save();
 
-    res.json({message:'Review added successfully',recipe});
+    res.json({ message: "Review added successfully", recipe });
   } catch (error) {
-    res.status(500).json({error:'Error adding review'});
+    res.status(500).json({ error: "Error adding review" });
   }
-}
+};
 
-const recipe_update_review = async (req,res)=>{
+const recipe_update_review = async (req, res) => {
   try {
-    const formData=req.body;
-    let recipe = await Recipe.findById(req.params.id1);
-    if(!recipe){
-      return res.status(404).json({error:'Recipe not found'})
+    const { rating, comment } = req.body;
+    const recipe = await Recipe.findById(req.params.recipeId);
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found" });
     }
-    const reviewId = req.params.id2;
+    /*
+I tried to do this using manual array operations
     const index = recipe.reviews.findIndex(review=>{return review._id.toString()===reviewId  });
     if (index !== -1) {
      // recipe.reviews.splice(index, 1,formData);
@@ -213,37 +226,50 @@ const recipe_update_review = async (req,res)=>{
      //Object.assign() copies its own properties from a source (formData) and return the new object (review with modified values)
       await recipe.save();
       return res.status(200).json({ message: 'Review updated successfully' });
-    }else{
-      return res.status(404).json({ error: 'Review not found' });
+
+      Now i will do it with mongoose methods which is way simpler
+*/
+    const review = recipe.reviews.id(req.params.reviewId);
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
     }
+    review.rating = rating;
+    review.comment = comment;
+    await review.save();
+    res.json({ message: "Review updated successfully", recipe });
   } catch (error) {
-    return res.status(500).json({error:'Error updating review'})
+    return res.status(500).json({ error: "Error updating review" });
   }
-}
+};
 
-const recipe_delete_review = async(req,res)=>{
+const recipe_delete_review = async (req, res) => {
   try {
-    let recipe = await Recipe.findById(req.params.id1);
-    if(!recipe){
-      return res.status(404).json({error:'Recipe not found'})
+    const recipe = await Recipe.findById(req.params.recipeId);
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found" });
     }
-    const reviewId = req.params.id2;
-
-    const index = recipe.reviews.findIndex(review=>{return review._id.toString()===reviewId  });
+/*
+same thing we will simplify this logic by using mongoose methods instead of manual array methods
+    const index = recipe.reviews.findIndex((review) => {
+      return review._id.toString() === reviewId;
+    });
     if (index !== -1) {
       recipe.reviews.splice(index, 1);
       await recipe.save();
-      return res.status(200).json({ message: 'Review deleted successfully' });
-    }else{
-      return res.status(404).json({ error: 'Review not found' });
+      return res.status(200).json({ message: "Review deleted successfully" });
+*/
+  const review = recipe.reviews.id(recipe.params.reviewId);
+    if(!review){
+      return res.status(404).json({ error: "Review not found" });
     }
+    review.remove();
+    await recipe.save();
+    return res.status(200).json({ message: "Review deleted successfully",recipe });
+
   } catch (error) {
-    return res.status(500).json({error:'Error deleting review'})
+    return res.status(500).json({ error: "Error deleting review" });
   }
-}
-
-
-
+};
 
 module.exports = {
   recipe_index,

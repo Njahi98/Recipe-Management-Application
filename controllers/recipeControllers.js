@@ -196,6 +196,52 @@ const recipe_add_review = async(req,res)=>{
   }
 }
 
+const recipe_update_review = async (req,res)=>{
+  try {
+    const formData=req.body;
+    let recipe = await Recipe.findById(req.params.id1);
+    if(!recipe){
+      return res.status(404).json({error:'Recipe not found'})
+    }
+    const reviewId = req.params.id2;
+    const index = recipe.reviews.findIndex(review=>{return review._id.toString()===reviewId  });
+    if (index !== -1) {
+     // recipe.reviews.splice(index, 1,formData);
+     //we are replacing the entire review object with formData, but it might not contain ._id and other necessary fields.
+     // so instead we update specific fields instead of replacing the whole object.
+     Object.assign(recipe.reviews[index], formData);
+     //Object.assign() copies its own properties from a source (formData) and return the new object (review with modified values)
+      await recipe.save();
+      return res.status(200).json({ message: 'Review updated successfully' });
+    }else{
+      return res.status(404).json({ error: 'Review not found' });
+    }
+  } catch (error) {
+    return res.status(500).json({error:'Error updating review'})
+  }
+}
+
+const recipe_delete_review = async(req,res)=>{
+  try {
+    let recipe = await Recipe.findById(req.params.id1);
+    if(!recipe){
+      return res.status(404).json({error:'Recipe not found'})
+    }
+    const reviewId = req.params.id2;
+
+    const index = recipe.reviews.findIndex(review=>{return review._id.toString()===reviewId  });
+    if (index !== -1) {
+      recipe.reviews.splice(index, 1);
+      await recipe.save();
+      return res.status(200).json({ message: 'Review deleted successfully' });
+    }else{
+      return res.status(404).json({ error: 'Review not found' });
+    }
+  } catch (error) {
+    return res.status(500).json({error:'Error deleting review'})
+  }
+}
+
 
 
 
@@ -209,4 +255,6 @@ module.exports = {
   recipe_update,
   recipe_image_get,
   recipe_add_review,
+  recipe_update_review,
+  recipe_delete_review,
 };

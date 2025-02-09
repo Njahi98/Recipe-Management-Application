@@ -1,4 +1,5 @@
 import { createModal } from "./modal.js";
+import { createReviewModal } from "./reviewModal.js";
 
 /* delete buttons' function
   since we have multiple recipe cards,
@@ -44,7 +45,17 @@ trashcans.forEach((trashcan) => {
   });
 });
 
-//added a simple debounce function
+//review Button and review Logic
+const reviews = document.querySelectorAll('.reviewRecipeBtn');
+
+reviews.forEach(review=>{
+  review.addEventListener('click',(e)=>{
+    e.preventDefault();
+    createReviewModal()
+  })
+})
+
+//added a simple debounce function for the filters
 function debounce(func, delay) {
   let timeout;
   return function (...args) {

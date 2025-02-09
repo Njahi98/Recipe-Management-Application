@@ -12,7 +12,7 @@
           </div>
           <div class="newRecipe">
             <div class="filter-inputs">
-              <p style="transform: translateX(150%);">🔍</p>
+              <p style="transform: translateX(250%);">🔍</p>
               <input class="search-bar" type="text" name="search" placeholder="Search by title...">
               <select style="margin-left: 1rem;" class="category-bar">
                 <option value="">category</option>
@@ -55,14 +55,17 @@
                   <% } %>
                 </p>
              </div>
+             <div style="display: flex; justify-content: center;">
               <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
-
+            </div>  
                 <p class="recipe-description"><%=recipe.description %> <p>
-                <div style="display: flex; justify-content: space-between ;">
-                  <a href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
+                <div style="display: flex; justify-content: space-between ; gap: 10px;">
+                  <a style="text-decoration: none;" href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
                   <% if(locals.user){ %>
+                    <button class="reviewRecipeBtn" data-doc="<%= recipe._id %>">Review</button>
                     <button class="deleteRecipeBtn" data-doc="<%= recipe._id %>">Delete</button>
                   <% }else { %>
+                    <button class="reviewRecipeBtnDisabled" style="opacity: 0.6;" disabled >Review</button>
                     <button class="deleteRecipeBtnDisabled" style="opacity: 0.6;" disabled>Delete</button>
                   <% }  %>
 

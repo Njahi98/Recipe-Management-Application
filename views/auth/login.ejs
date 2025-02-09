@@ -62,7 +62,7 @@
 
         if (!response.ok) {
             const errorData = await response.json();
-            showNotification(errorData.error);
+            showNotification(errorData.error,'var(--error-color)');
             setTimeout(() => {
               submitBtn.style.display = 'block';
               loadingSpinner.style.display = 'none';
@@ -77,7 +77,7 @@
             return; 
         }
     } catch (error) {
-        showNotification('An unexpected error occurred');
+        showNotification('An unexpected error occurred','var(--error-color)');
         submitBtn.style.display = 'block';
         loadingSpinner.style.display = 'none';
     }

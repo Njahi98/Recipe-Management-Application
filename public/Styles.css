@@ -91,6 +91,10 @@ body {
   background-color: var(--base-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+.nav-main-titles{
+display: flex;
+gap: 2rem;
+}
 
 .navbar ul {
   display: flex;

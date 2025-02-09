@@ -1,3 +1,4 @@
+import {createModal} from '../scripts/modal.js'
 // simple input field validation
 const nameInput = document.querySelector(".contact-name input");
 const emailInput = document.querySelector(".contact-email input");
@@ -27,7 +28,7 @@ const validateEmail = (email) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
 };
-// we use async await because we're using e.preventDefault so we
+// we use async await because we're using e.preventDefault() so we
 // have to manually pass the input data into the request to be fetched to the backend
 async function ValidateAndSubmit(e) {
   e.preventDefault();
@@ -84,26 +85,48 @@ async function ValidateAndSubmit(e) {
       email: emailInput.value.trim(),
       message: messageInput.value.trim(),
     };
+    createModal(
+      "Are you sure?",
+      "This action cannot be cancelled.",
+      async() => {
+        try {
+          const response = await fetch("/contact", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+          if (response.ok) {
+            const modal = document.querySelector('.modal-backdrop'); 
+            setTimeout(() => {
+              modal.innerHTML = `
+                      <div class="modal-container">
+                          <div style="display: flex; justify-content: center;">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                      </svg>
+                      </div>
+                        `;
+            }, 1000);
+            setTimeout(() => {
+              form.reset();
+              modal.remove();
+              showNotification('Message sent successfully. redirecting to Home Page.','var(--success-color)');
+            }, 1500);
+            setTimeout(() => {
+              window.location.href = '/'
+            }, 3000);
+          } else {
+            modal.remove();
+            form.reset();
+            showNotification("Failed to send your message. Please try again later.",'var(--error-color)');
+          }
+        } catch (error) {
+          console.log("error submitting:", error);
+        }
+      })
     //await method to pass formData into the POST request and into the backend
-    try {
-      const response = await fetch("/contact", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        alert("Your message has been sent. We will get back to you soon!");
-        form.reset();
-      } else {
-        alert("Failed to send your message. Please try again later.");
-      }
-    } catch (error) {
-      console.log("error submitting:", error);
-    }
-  } else {
-    console.log("submit failed");
+  
   }
 }
 

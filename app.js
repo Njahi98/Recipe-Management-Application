@@ -42,7 +42,6 @@ app.use(morgan('dev'));
 // we put auth middleware in the beginning so it runs on ALL routes
 app.use(auth);
 
-//need to pass user to all routes
 app.get('/',(req,res)=>{
     res.render('index',{title:'Welcome to Recipes'
     })

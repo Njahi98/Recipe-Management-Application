@@ -34,10 +34,10 @@ trashcans.forEach((trashcan) => {
           }else{
             modal.remove();
             const errorData = await response.json();
-            showNotification(errorData.error);
+            showNotification(errorData.error,'var(--error-color)');
           }
         } catch (error) {
-          showNotification(error);
+          showNotification(error,'var(--error-color)');
         }
       }
     );

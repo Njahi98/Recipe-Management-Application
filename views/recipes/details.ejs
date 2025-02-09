@@ -61,10 +61,17 @@
 
           <div class="recipe-actions">
             <a href="/recipes" class="back-btn">Back to Recipes</a>
+            <% if(locals.user){ %>
             <a href="/recipes/<%= recipe._id %>/edit" class="edit-recipe-btn">Edit Recipe</a>
             <button class="delete-btn" data-doc="<%= recipe._id %>">
               Delete Recipe
             </button>
+            <% }else{ %>
+              <a href="#" class="edit-recipe-btn" style="opacity: 0.6; cursor: default; pointer-events: none;">Edit Recipe</a>
+              <button class="delete-btn" disabled style="opacity: 0.6;">
+                Delete Recipe
+              </button>
+            <% } %>
           </div>
         </div>
       </div>

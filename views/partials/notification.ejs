@@ -3,9 +3,10 @@
     //notification popup to show errors
 const notification = document.querySelector('.notification');
 // Function to show notification
-function showNotification(message) {
+function showNotification(message,color) {
   notification.textContent = message;
   notification.style.display = 'block';
+  notification.style.background =color;
   // Force reflow
   notification.offsetHeight;
   notification.style.opacity = '1';

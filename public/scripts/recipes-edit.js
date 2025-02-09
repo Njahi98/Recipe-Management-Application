@@ -193,10 +193,10 @@ function handleResponse(data) {
 if(data.success) {
 window.location.href = '/recipes';
 } else {
-  showNotification(data.error);
+  showNotification(data.error,'var(--error-color)');
 }
 }
 
 function handleError(error) {
-showNotification(error);
+showNotification(error,'var(--error-color)');
 }

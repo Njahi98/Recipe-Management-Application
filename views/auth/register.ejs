@@ -56,7 +56,7 @@
 
               try {
                 if (formData.password.length < 6) {
-                  showNotification('Password must be at least 6 characters');
+                  showNotification('Password must be at least 6 characters','var(--error-color)');
                   return;
               }
                 const response = await fetch('/auth/register', {
@@ -68,7 +68,7 @@
         });
         if (!response.ok) {
             const errorData = await response.json();
-            showNotification(errorData.error);
+            showNotification(errorData.error,'var(--error-color)');
         } else {
           loadingSpinner.style.display = 'none';
           submitBtn.style.display = 'none';
@@ -79,7 +79,7 @@
           }, 2000);
         }
       } catch (error) {
-        showNotification('An unexpected error occurred');
+        showNotification('An unexpected error occurred','var(--error-color)');
     } finally {
         // Reset form state if we haven't redirected
         submitBtn.style.display = 'block';

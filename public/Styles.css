@@ -284,7 +284,8 @@ body {
 .viewRecipeBtn,
 .deleteRecipeBtn,
 .newRecipeButton,
-.edit-recipe-btn {
+.edit-recipe-btn,
+.deleteRecipeBtnDisabled {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   border: none;
@@ -298,7 +299,8 @@ body {
   margin-left: 1rem;
 }
 
-.deleteRecipeBtn {
+.deleteRecipeBtn,
+.deleteRecipeBtnDisabled  {
   background-color: var(--error-color);
   color: var(--base-variant);
   margin-right: 1rem;

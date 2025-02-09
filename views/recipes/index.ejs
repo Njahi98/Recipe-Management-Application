@@ -60,7 +60,12 @@
                 <p class="recipe-description"><%=recipe.description %> <p>
                 <div style="display: flex; justify-content: space-between ;">
                   <a href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
-                  <button class="deleteRecipeBtn" data-doc="<%= recipe._id %>">Delete</button>
+                  <% if(locals.user){ %>
+                    <button class="deleteRecipeBtn" data-doc="<%= recipe._id %>">Delete</button>
+                  <% }else { %>
+                    <button class="deleteRecipeBtnDisabled" style="opacity: 0.6;" disabled>Delete</button>
+                  <% }  %>
+
                 </div>
                 
                 </div>
@@ -69,6 +74,7 @@
           
           </div>
       </div>
+      <div class="notification"></div>
 
     <%-include('../partials/footer.ejs')%>
     <script type="module" src="/scripts/recipes-index.js"></script>

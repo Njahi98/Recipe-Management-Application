@@ -3,24 +3,6 @@ import { createModal } from "./modal.js";
 /* delete buttons' function
   since we have multiple recipe cards,
   we need to select all delete buttons using querySelectorAll and attach the event listener to each one. */
-
-
-//notification popup to show errors
-const notification = document.querySelector('.notification');
-// Function to show notification
-function showNotification(message) {
-  notification.textContent = message;
-  notification.style.display = 'block';
-  // Force reflow
-  notification.offsetHeight;
-  notification.style.opacity = '1';
-  
-  setTimeout(() => {
-      notification.style.opacity = '0';
-      setTimeout(() => notification.style.display = 'none', 300);
-  }, 3000);
-}
-
 const trashcans = document.querySelectorAll(".deleteRecipeBtn");
 
 trashcans.forEach((trashcan) => {
@@ -53,10 +35,9 @@ trashcans.forEach((trashcan) => {
             modal.remove();
             const errorData = await response.json();
             showNotification(errorData.error);
-            console.log(errorData.error);
           }
         } catch (error) {
-          console.log(error);
+          showNotification(error);
         }
       }
     );

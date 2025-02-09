@@ -2,22 +2,6 @@
 document.getElementById('category').value=recipeData.category;
 document.getElementById('difficulty').value=recipeData.difficulty;
 
-//notification popup to show errors
-const notification = document.querySelector('.notification');
-// Function to show notification
-function showNotification(message) {
-  notification.textContent = message;
-  notification.style.display = 'block';
-  // Force reflow
-  notification.offsetHeight;
-  notification.style.opacity = '1';
-  
-  setTimeout(() => {
-      notification.style.opacity = '0';
-      setTimeout(() => notification.style.display = 'none', 300);
-  }, 3000);
-}
-
 const ingredientsContainer = document.getElementById('ingredients-container');
 const ingredients = recipeData.ingredients;
 

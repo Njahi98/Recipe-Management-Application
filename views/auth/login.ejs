@@ -23,7 +23,7 @@
             <svg style="display: none;" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
             </svg>
         </form>
-        <div class="notification"></div>
+        <%-include('../partials/notification.ejs')%>
 
 
         <p>Don't have an account? <a href="/auth/register">Register here</a>.</p>
@@ -37,24 +37,9 @@
     const passwordInput = loginForm.querySelector('input[type="password"]');
     const submitBtn = loginForm.querySelector('button');
     const loadingSpinner = loginForm.querySelector('.lds-default').parentElement;
-    const notification = document.querySelector('.notification');
     const checkmark = loginForm.querySelector('.checkmark');
 
-// Function to show notification
-function showNotification(message) {
-    notification.textContent = message;
-    notification.style.display = 'block';
-    // Force reflow
-    notification.offsetHeight;
-    notification.style.opacity = '1';
-    
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        setTimeout(() => notification.style.display = 'none', 300);
-    }, 3000);
-}
-
-loginForm.addEventListener('submit', async function(e) {
+  loginForm.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const formData = {

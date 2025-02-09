@@ -28,9 +28,9 @@
             </svg>
         </form>    
         <p>Already have an account? <a href="/auth/login">Login here</a>.</p>
-        <div class="notification"></div>
       </div>
     </div>
+    <%-include('../partials/notification.ejs')%>
 
     <%- include('../partials/footer.ejs') %>
     <script>
@@ -41,21 +41,7 @@
             const submitBtn = registerForm.querySelector('button')
             const loadingSpinner = registerForm.querySelector('.wheel');
             const checkmark = registerForm.querySelector('.checkmark');
-            const notification = document.querySelector('.notification');
-
-            function showNotification(message) {
-            notification.textContent = message;
-            notification.style.display = 'block';
-            // Force reflow
-            notification.offsetHeight;
-            notification.style.opacity = '1';
             
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => notification.style.display = 'none', 300);
-            }, 3000);
-        }
-
             registerForm.addEventListener('submit', async function(e) {
               e.preventDefault();
 

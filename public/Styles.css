@@ -235,7 +235,7 @@ gap: 2rem;
   border-radius: 1.5rem;
   max-height: 80vh;
   overflow-y: auto;
-  width: 100%;
+  max-width: 1200px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
@@ -360,7 +360,7 @@ gap: 2rem;
 .deleteRecipeBtn,
 .reviewRecipeBtnDisabled,
 .deleteRecipeBtnDisabled {
-  padding: 0.75rem 1.5rem;
+  padding: 0.2rem 1.5rem;
   border-radius: 0.75rem;
   border: none;
   cursor: pointer;
@@ -863,8 +863,7 @@ gap: 2rem;
   backdrop-filter: blur(4px);
 }
 
-.modal-container,
-.review-modal-container {
+.modal-container,.review-modal-container{
   background: var(--base-variant);
   border-radius: 12px;
   width: 400px;
@@ -875,34 +874,47 @@ gap: 2rem;
   position: relative;
 }
 .review-modal-container{
-  width: 800px;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 500px;
 }
-.review-modal-group{
-display: flex;
-gap: 1rem;
+.review-modal-container h3 {
+  color: var(--text-color);
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
 }
-.review-modal-group textarea {
-  width: 80%;
-  height: 130px;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  margin: 0.75rem;
-  font-size: 1rem;
-  resize: vertical;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.review-modal-container p {
+  color: var(--secondary-text);
+  margin-bottom: 1rem;
+}
+.review-modal-group {
+  margin-bottom: 1.5rem;
 }
 
-.modal-container h3,
-.review-modal-container h3 {
+.review-modal-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--secondary-text);
+  border-radius: 0.5rem;
+  background: var(--base-variant);
+  color: var(--text-color);
+  resize: vertical;
+  font-family: inherit;
+  }
+.review-modal-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+}
+
+.modal-container h3{
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
   color: var(--text-color);
   font-weight: 600;
 }
 
-.modal-container p,
-.review-modal-container p {
+.modal-container p{
   margin: 0 0 1.5rem 0;
   color: var(--secondary-text);
   font-size: 1rem;
@@ -913,6 +925,8 @@ gap: 1rem;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  margin-top: 2rem;
+
 }
 
 .modal-confirm-action,
@@ -968,6 +982,35 @@ gap: 1rem;
 .modal-close-action:hover {
   background-color: var(--warning-color);
 }
+
+/* Star Rating Styles */
+.star-rating {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.2s ease;
+}
+
+.star:hover,
+.star.active {
+  color: #ffd700;
+}
+
+.rating-text {
+  text-align: center;
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+
 
 /* Spinner Animation */
 

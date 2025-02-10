@@ -51,7 +51,47 @@ const reviews = document.querySelectorAll('.reviewRecipeBtn');
 reviews.forEach(review=>{
   review.addEventListener('click',(e)=>{
     e.preventDefault();
-    createReviewModal()
+    createReviewModal(async(reviewData) => {
+            try {
+              const formData={
+                rating:reviewData.rating,
+                comment:reviewData.comment}
+              const response = await fetch(`/recipes/${review.dataset.doc}/reviews`,{
+                method:'POST',
+                headers:{'content-type':'application/json'},
+                body: JSON.stringify(formData),
+              },
+            );
+            const modal = document.querySelector('.modal-backdrop'); 
+            if(response.ok){
+              setTimeout(() => {
+                modal.innerHTML = `
+                        <div class="modal-container">
+                            <div style="display: flex; justify-content: center;">
+                          <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        </div>
+                          `;
+              }, 1000);
+              setTimeout(() => {
+                modal.remove();
+                showNotification('Review added successfully. redirecting to Recipe page','var(--success-color)');
+              }, 1500);
+              setTimeout(() => {
+                window.location.href = '/recipes'
+              }, 3000);
+            }else{
+              modal.remove();
+              const errorData = await response.json();
+              showNotification(errorData.error,'var(--error-color)');
+            }
+            } catch (error) {
+              const modal = document.querySelector('.modal-backdrop'); 
+              modal.remove();
+              showNotification(error,'var(--error-color)');
+            }
+          
+  });
   })
 })
 

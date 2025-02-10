@@ -122,7 +122,7 @@ async function ValidateAndSubmit(e) {
             showNotification("Failed to send your message. Please try again later.",'var(--error-color)');
           }
         } catch (error) {
-          console.log("error submitting:", error);
+          showNotification(error,'var(--error-color)');
         }
       })
     //await method to pass formData into the POST request and into the backend

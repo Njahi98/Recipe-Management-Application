@@ -22,7 +22,7 @@ router.get("/image/:id", recipeController.recipe_image_get);
 
 router.put('/:id',auth,isRecipeOwner,upload.single("image"), processImage, recipeController.recipe_update)
 
-router.put('/:id/reviews',auth,recipeController.recipe_add_review)
+router.post('/:id/reviews',auth,recipeController.recipe_add_review)
 
 router.put(':recipeId/reviews/:reviewId',auth,isReviewOwner,recipeController.recipe_update_review)
 

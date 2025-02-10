@@ -1,44 +1,110 @@
+// Star rating implementation with modal
 export function createReviewModal(confirmCallback) {
   const modal = document.createElement("div");
   modal.classList.add("modal-backdrop");
+  
   modal.innerHTML = `
     <div class="review-modal-container">
-    <div style="display: flex; justify-content: flex-end;">
-         <button class="modal-close-action">×</button>  
+      <div style="display: flex; justify-content: flex-end;">
+        <button class="modal-close-action">×</button>
+      </div>
+      <h3>Review</h3>
+      <p>Please fill in the review below.</p>
+      <div class="review-modal-group">
+        <p>Rating:</p>
+        <div class="star-rating">
+          <span class="star" data-rating="1">★</span>
+          <span class="star" data-rating="2">★</span>
+          <span class="star" data-rating="3">★</span>
+          <span class="star" data-rating="4">★</span>
+          <span class="star" data-rating="5">★</span>
+        </div>
+        <p class="rating-text">0 out of 5</p>
+      </div>
+      <div class="review-modal-group">
+        <p style="margin-top:0.75rem;">Comment:</p>
+        <textarea name="comment" id="comment" rows="4" placeholder="Your Comment"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-confirm-action">Confirm</button>
+        <button class="modal-cancel-action">Cancel</button>
+      </div>
     </div>
-    <h3>Review</h3>
-    <p>Please fill in the review below.</p>
-    <div class="review-modal-group">
-    <p>Rating:</p>
-    </div>
-    <div class="review-modal-group">
-    <p style="margin-top:0.75rem;">Comment:</p>
-    <textarea name="comment" id="comment" rows="4" placeholder="Your Comment"></textarea>
-    </div>
+  `;
 
-  <div class="modal-actions">
-    <button class="modal-confirm-action">Confirm</button>
-    <button class="modal-cancel-action">Cancel</button>
-  </div>
-  </div>
-    `;
   document.body.appendChild(modal);
+
+  // Get DOM elements
   const closeModal = modal.querySelector(".modal-close-action");
   const confirmBtn = modal.querySelector(".modal-confirm-action");
   const cancelBtn = modal.querySelector(".modal-cancel-action");
+  const stars = modal.querySelectorAll(".star");
+  const ratingText = modal.querySelector(".rating-text");
+  const commentInput = modal.querySelector("#comment");
 
+  // Initialize rating
+  let currentRating = 0;
+
+  // Star rating functionality
+  stars.forEach(star => {
+    // Hover effect
+    star.addEventListener("mouseover", () => {
+      const rating = parseInt(star.dataset.rating);
+      highlightStars(rating);
+    });
+
+    // Click handler
+    star.addEventListener("click", () => {
+      currentRating = parseInt(star.dataset.rating);
+      highlightStars(currentRating);
+      updateRatingText(currentRating);
+    });
+  });
+
+  // Remove highlight when mouse leaves star rating container
+  const starContainer = modal.querySelector(".star-rating");
+  starContainer.addEventListener("mouseleave", () => {
+    highlightStars(currentRating);
+  });
+
+  // Function to highlight stars
+  function highlightStars(rating) {
+    stars.forEach(star => {
+      const starRating = parseInt(star.dataset.rating);
+      star.classList.toggle("active", starRating <= rating);
+    });
+  }
+
+  // Function to update rating text
+  function updateRatingText(rating) {
+    ratingText.textContent = `${rating} out of 5`;
+  }
+
+  // Modified confirm button handler
   confirmBtn.addEventListener("click", () => {
+    if (currentRating === 0) {
+      alert("Please select a rating before submitting.");
+      return;
+    }
+
+    const reviewData = {
+      rating: currentRating,
+      comment: commentInput.value.trim()
+    };
+
     modal.innerHTML = `
-          <div class="modal-container">
-              <div style="display: flex; justify-content: center;">
-            <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            </div></div>
-            `;
-            confirmCallback();
+      <div class="modal-container">
+        <div style="display: flex; justify-content: center;">
+          <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+      </div>
+    `;
+    
+    // Pass the review data to the callback
+    confirmCallback(reviewData);
   });
 
   const closesModal = () => {
-    confirmBtn.removeEventListener("click", confirmCallback);
     modal.remove();
   };
 

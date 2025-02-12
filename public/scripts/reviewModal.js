@@ -83,7 +83,15 @@ export function createReviewModal(confirmCallback) {
   // Modified confirm button handler
   confirmBtn.addEventListener("click", () => {
     if (currentRating === 0) {
-      alert("Please select a rating before submitting.");
+      const notification = document.querySelector('.notification');
+      notification.style.zIndex=1500;
+      showNotification("Please select a rating before submitting.",'var(--error-color)'); 
+      return;
+    }
+    if(currentRating < 3 && !commentInput.value.trim()){
+      const notification = document.querySelector('.notification');
+      notification.style.zIndex=1500;
+      showNotification("You chose less than three stars, please provide a comment.",'var(--error-color)'); 
       return;
     }
 

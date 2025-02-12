@@ -58,7 +58,24 @@
              <div style="display: flex; justify-content: center;">
               <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
             </div>  
-                <p class="recipe-description"><%=recipe.description %> <p>
+                <p class="recipe-description"><%=recipe.description %></p> 
+                <div class="recipe-rating">
+                  <div class="static-star-rating">
+                    <% 
+                      const avgRating = recipe.averageRating;
+                      for(let i = 1; i <= 5; i++) { 
+                        if(i <= avgRating) { %>
+                          <span class="static-star filled">★</span>
+                        <% } else if(i - avgRating < 1 && i - avgRating > 0) { %>
+                          <span class="static-star half-filled">★</span>
+                        <% } else { %>
+                          <span class="static-star">★</span>
+                        <% } 
+                      } 
+                    %>
+                  </div>
+                  <span class="review-count">(<%= recipe.reviews.length %> reviews)</span>
+                </div>
                 <div style="display: flex; justify-content: space-between ; gap: 10px;">
                   <a style="text-decoration: none;" href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
                   <% if(locals.user){ %>

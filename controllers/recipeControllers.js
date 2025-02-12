@@ -197,6 +197,10 @@ const recipe_add_review = async (req, res) => {
     if (!recipe) {
       return res.status(404).json({ error: "Recipe not found" });
     }
+    const userAlreadyReviewed = recipe.reviews.find(review=>review.userId.toString() === req.userId);
+    if(userAlreadyReviewed){
+      return res.status(403).json({ error: "you have already reviewed this recipe" });
+    }
 
     //add review
     recipe.reviews.push({ userId: req.userId, rating, comment });

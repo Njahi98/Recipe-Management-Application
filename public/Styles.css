@@ -1393,3 +1393,45 @@ gap: 2rem;
 .edit-back-btn:hover {
   background-color: var(--primary-color);
 }
+
+/* recipe index page star-related */
+.recipe-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.static-star-rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.static-star {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.static-star.filled {
+  color: #ffd700;
+}
+
+.static-star.half-filled {
+  position: relative;
+  display: inline-block;
+  color: #ccc;
+}
+
+.static-star.half-filled::before {
+  content: '★';
+  position: absolute;
+  color: #ffd700;
+  width: 50%;
+  overflow: hidden;
+}
+
+.review-count {
+  color: #666;
+  font-size: 0.9rem;
+}

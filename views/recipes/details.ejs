@@ -10,70 +10,79 @@
           <p>RECIPES</p>
         </div>
         <div class="recipe-details">
-          <div class="recipe-header">
-            <h2><%= recipe.title %></h2>
-            <div class="recipe-meta">
-              <span>🕛 <%= recipe.cookingTime %> minutes</span>
-              <span>Difficulty: <%= recipe.difficulty %></span>
-              <span>Category: <%= recipe.category %></span>
-
-            </div>
-          </div>
-
-          <div class="recipe-body">
-            <div class="recipe-section">
-              <h3>Description</h3>
-              <p><%= recipe.description %></p>
-            </div>
-            <div class="recipe-section">
+          <div class="recipe-main">
+              <div class="recipe-header">
+                  <h2><%= recipe.title %></h2>
+                  <div class="recipe-meta">
+                      <span>🕒 <%= recipe.cookingTime %> minutes</span>
+                      <span>🎯 <%= recipe.difficulty %></span>
+                      <span>📑 <%= recipe.category %></span>
+                  </div>
+              </div>
+  
+              <div class="recipe-section">
+                  <h3>Description</h3>
+                  <p><%= recipe.description %></p>
+              </div>
+  
               <% if (recipe.imageId) { %>
                   <img 
                       class="recipe-image"
-                      src="/recipes/image/<%= recipe.imageId %>" 
+                      src="/recipes/image/<%= recipe.imageId %>"
                       alt="<%= recipe.title %>"
                       loading="lazy"
                   >
               <% } %>
-          </div>
-
-            <div class="recipe-section">
-              <h3>Ingredients</h3>
-              <ul>
-                <% recipe.ingredients.forEach(ingredient => { %>
-                <li style="list-style-type: none;">
-                  <%= ingredient.amount %> <%= ingredient.unit %> <%=
-                  ingredient.item %>
-                </li>
-                <% }) %>
-              </ul>
-            </div>
-
-            <div class="recipe-section">
-              <h3>Instructions</h3>
-              <% recipe.instructions.forEach((instruction, index) => { %>
-              <div class="instruction-step">
-                <span class="step-number"><%= index + 1 %></span>
-                <p><%= instruction.text %></p>
+  
+              <div class="recipe-section">
+                  <h3>Ingredients</h3>
+                  <ul class="ingredients-list">
+                      <% recipe.ingredients.forEach(ingredient => { %>
+                          <li>
+                              🔸 <%= ingredient.amount %> <%= ingredient.unit %> <%= ingredient.item %>
+                          </li>
+                      <% }) %>
+                  </ul>
               </div>
-              <% }) %>
-            </div>
+  
+              <div class="recipe-section">
+                  <h3>Instructions</h3>
+                  <% recipe.instructions.forEach((instruction, index) => { %>
+                      <div class="instruction-step">
+                          <span class="step-number"><%= index + 1 %></span>
+                          <p><%= instruction.text %></p>
+                      </div>
+                  <% }) %>
+              </div>
+  
+              <div class="recipe-actions">
+                  <a href="/recipes" class="back-btn">Back to Recipes</a>
+                  <% if(locals.user){ %>
+                      <a href="/recipes/<%= recipe._id %>/edit" class="edit-recipe-btn">Edit Recipe</a>
+                      <button class="delete-btn" data-doc="<%= recipe._id %>">Delete Recipe</button>
+                  <% } else { %>
+                      <a href="#" class="edit-recipe-btn" style="opacity: 0.6; cursor: not-allowed;">Edit Recipe</a>
+                      <button class="delete-btn" disabled style="opacity: 0.6; cursor: not-allowed;">Delete Recipe</button>
+                  <% } %>
+              </div>
           </div>
-
-          <div class="recipe-actions">
-            <a href="/recipes" class="back-btn">Back to Recipes</a>
-            <% if(locals.user){ %>
-            <a href="/recipes/<%= recipe._id %>/edit" class="edit-recipe-btn">Edit Recipe</a>
-            <button class="delete-btn" data-doc="<%= recipe._id %>">
-              Delete Recipe
-            </button>
-            <% }else{ %>
-              <a href="#" class="edit-recipe-btn" style="opacity: 0.6; cursor: not-allowed;">Edit Recipe</a>
-              <button class="delete-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
-                Delete Recipe
-              </button>
-            <% } %>
+  
+          <div class="reviews-section">
+              <h3>Reviews</h3>
+              <% if (recipe.reviews && recipe.reviews.length > 0) { %>
+                  <% recipe.reviews.forEach(review => { %>
+                      <div class="review-card">
+                          <div class="review-rating">
+                              <%= "⭐".repeat(review.rating) %>
+                          </div>
+                          <p class="review-comment"><%= review.comment %></p>
+                      </div>
+                  <% }) %>
+              <% } else { %>
+                  <p>No reviews yet. Be the first to review this recipe!</p>
+              <% } %>
           </div>
-        </div>
+      </div>
       </div>
     </div>
     <%-include('../partials/notification.ejs')%>

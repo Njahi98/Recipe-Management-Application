@@ -84,6 +84,11 @@ reviews.forEach(review=>{
               modal.remove();
               const errorData = await response.json();
               showNotification(errorData.error,'var(--error-color)');
+              if(errorData.redirect){
+                setTimeout(() => {
+                  window.location.href=errorData.redirect
+                }, 1500);
+              }
             }
             } catch (error) {
               const modal = document.querySelector('.modal-backdrop'); 

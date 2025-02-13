@@ -34,7 +34,6 @@ export function createReviewModal(confirmCallback) {
 
   document.body.appendChild(modal);
 
-  // Get DOM elements
   const closeModal = modal.querySelector(".modal-close-action");
   const confirmBtn = modal.querySelector(".modal-confirm-action");
   const cancelBtn = modal.querySelector(".modal-cancel-action");
@@ -45,7 +44,6 @@ export function createReviewModal(confirmCallback) {
   // Initialize rating
   let currentRating = 0;
 
-  // Star rating functionality
   stars.forEach(star => {
     // Hover effect
     star.addEventListener("mouseover", () => {
@@ -53,7 +51,6 @@ export function createReviewModal(confirmCallback) {
       highlightStars(rating);
     });
 
-    // Click handler
     star.addEventListener("click", () => {
       currentRating = parseInt(star.dataset.rating);
       highlightStars(currentRating);

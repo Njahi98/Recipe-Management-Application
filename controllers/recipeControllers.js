@@ -188,7 +188,7 @@ const recipe_image_get = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
+ 
 const recipe_add_review = async (req, res) => {
   try {
     const { rating, comment } = req.body;
@@ -199,7 +199,7 @@ const recipe_add_review = async (req, res) => {
     }
     const userAlreadyReviewed = recipe.reviews.find(review=>review.userId.toString() === req.userId);
     if(userAlreadyReviewed){
-      return res.status(403).json({ error: "you have already reviewed this recipe" });
+      return res.status(403).json({ error: "you have already reviewed this recipe",redirect:`/recipes/${recipe._id}` });
     }
 
     //add review

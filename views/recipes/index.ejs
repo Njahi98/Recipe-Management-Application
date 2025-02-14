@@ -80,7 +80,7 @@
                   </span>
                 </div>   
                 <% if(locals.user && recipe.reviews.some(review => review.userId.toString() === locals.user._id.toString())) { %>
-                  <span class="review-indicator" data-recipe-id="<%= recipe._id %>">Your review ✎</span>
+                  <a href="/recipes/<%= recipe._id %>">  <span class="review-indicator" data-recipe-id="<%= recipe._id %>">Your review ✎ </span></a>
                 <% } %>
                 <div class="recipe-index-action-buttons">
                   <a style="text-decoration: none;" href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>

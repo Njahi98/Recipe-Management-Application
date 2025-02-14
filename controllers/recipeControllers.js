@@ -87,17 +87,36 @@ const recipe_create_post = (req, res) => {
 
 const recipe_details = async (req, res) => {
   const id = req.params.id;
-  Recipe.findById(id)
-    .then((result) => {
-      res.render("recipes/details", {
-        recipe: result,
-        title: "recipe details",
+
+  try {
+    const recipe = await Recipe.findById(id)
+      .populate({
+        //we populate userId with the User's details and we select only what we need, username and profile picture
+        path: "reviews.userId",
+        select: "username profilePicture" 
       });
-    })
-    .catch((err) => {
-      res.status(404).render("404", { title: "recipe not found" });
+
+    if (!recipe) {
+      return res.status(404).render("404", { title: "Recipe Not Found" });
+    }
+
+    // we ensure locals.user is available
+    const loggedInUserId = res.locals.user ? res.locals.user._id.toString() : null;
+
+    // we Sort reviews Logged-in user's review appears first
+    recipe.reviews.sort((a, b) => {
+      return (b.userId._id.toString() === loggedInUserId) - (a.userId._id.toString() === loggedInUserId);
     });
+
+    res.render("recipes/details", {
+      recipe,
+      title: "Recipe Details",
+    });
+  } catch (err) {
+    res.status(500).render("404", { title: "Recipe Not Found" });
+  }
 };
+
 
 const recipe_delete = async (req, res) => {
   const id = req.params.id;
@@ -262,11 +281,11 @@ same thing we will simplify this logic by using mongoose methods instead of manu
       await recipe.save();
       return res.status(200).json({ message: "Review deleted successfully" });
 */
-  const review = recipe.reviews.id(recipe.params.reviewId);
+  const review = recipe.reviews.id(req.params.reviewId);
     if(!review){
       return res.status(404).json({ error: "Review not found" });
     }
-    review.remove();
+    recipe.reviews.pull({_id:req.params.reviewId})
     await recipe.save();
     return res.status(200).json({ message: "Review deleted successfully",recipe });
 

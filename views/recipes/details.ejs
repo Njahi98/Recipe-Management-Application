@@ -68,20 +68,36 @@
           </div>
   
           <div class="reviews-section">
-              <h3>Reviews</h3>
-              <% if (recipe.reviews && recipe.reviews.length > 0) { %>
-                  <% recipe.reviews.forEach(review => { %>
-                      <div class="review-card">
-                          <div class="review-rating">
-                              <%= "⭐".repeat(review.rating) %>
-                          </div>
-                          <p class="review-comment"><%= review.comment %></p>
-                      </div>
-                  <% }) %>
-              <% } else { %>
-                  <p>No reviews yet. Be the first to review this recipe!</p>
-              <% } %>
-          </div>
+            <h3>Reviews</h3>
+            <% if (recipe.reviews && recipe.reviews.length > 0) { %>
+                <% recipe.reviews.forEach(review => { %>
+                    <div class="review-card">
+                        <div class="review-user">
+                            <a href="/profile/<%= review.userId._id %>">
+                            <img src="<%= review.userId.profilePicture %>" alt="<%= review.userId.username %>'s profile picture"></a>
+                            <a href="/profile/<%= review.userId._id %>">  <p><%= review.userId.username %></p> </a>
+
+                        </div>
+                        <div class="review-content">
+                            <div class="review-rating">
+                                <span class="stars"><%= "⭐".repeat(review.rating) %></span>
+                            </div>
+                            <p class="review-comment"><%= review.comment %></p>
+                        </div>
+                        <% if(locals.user && locals.user._id.toString() === review.userId._id.toString() ){ %>
+                            <div class="review-btn-actions"></div>
+                            <button class="reviewRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>">Edit Review</button>
+                            <button class="deleteRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>">Delete Review</button>
+
+                        <%  } %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="no-reviews">
+                    <p>No reviews yet. Be the first to review this recipe!</p>
+                </div>
+            <% } %>
+        </div>
       </div>
       </div>
     </div>

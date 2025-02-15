@@ -258,8 +258,8 @@ I tried to do this using manual array operations
     }
     review.rating = rating;
     review.comment = comment;
-    await review.save();
-    res.json({ message: "Review updated successfully", recipe });
+    await recipe.save();
+    res.status(200).json({ message: "Review updated successfully", recipe });
   } catch (error) {
     return res.status(500).json({ error: "Error updating review" });
   }

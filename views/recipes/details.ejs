@@ -86,7 +86,7 @@
                         </div>
                         <% if(locals.user && locals.user._id.toString() === review.userId._id.toString() ){ %>
                             <div class="review-btn-actions"></div>
-                            <button class="reviewRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>">Edit Review</button>
+                            <button class="reviewRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>" data-ratingdoc="<%= review.rating %>" data-commentdoc="<%= review.comment %>">Edit Review</button>
                             <button class="deleteRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>">Delete Review</button>
 
                         <%  } %>

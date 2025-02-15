@@ -1,5 +1,5 @@
 // Star rating implementation with modal
-export function createReviewModal(confirmCallback) {
+export function createReviewModal(confirmCallback, existingReview = null) {
   const modal = document.createElement("div");
   modal.classList.add("modal-backdrop");
   
@@ -8,7 +8,7 @@ export function createReviewModal(confirmCallback) {
       <div style="display: flex; justify-content: flex-end;">
         <button class="modal-close-action">×</button>
       </div>
-      <h3>Review</h3>
+      <h3>${existingReview ? 'Edit Review' : 'New Review'}</h3>
       <p>Please fill in the review below.</p>
       <div class="review-modal-group">
         <p>Rating:</p>
@@ -26,7 +26,7 @@ export function createReviewModal(confirmCallback) {
         <textarea name="comment" id="comment" rows="4" placeholder="Your Comment"></textarea>
       </div>
       <div class="modal-actions">
-        <button class="modal-confirm-action">Confirm</button>
+        <button class="modal-confirm-action">${existingReview ? 'Update' : 'Confirm'}</button>
         <button class="modal-cancel-action">Cancel</button>
       </div>
     </div>
@@ -42,7 +42,14 @@ export function createReviewModal(confirmCallback) {
   const commentInput = modal.querySelector("#comment");
 
   // Initialize rating
-  let currentRating = 0;
+  let currentRating = existingReview ? parseInt(existingReview.rating) : 0;
+  
+  // If editing, pre-fill the form with existing data
+  if (existingReview) {
+    highlightStars(currentRating);
+    updateRatingText(currentRating);
+    commentInput.value = existingReview.comment || '';
+  }
 
   stars.forEach(star => {
     // Hover effect

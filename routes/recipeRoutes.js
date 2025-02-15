@@ -26,7 +26,7 @@ router.put('/:id',auth,isRecipeOwner,upload.single("image"), processImage, recip
 
 router.post('/:id/reviews',auth,recipeController.recipe_add_review)
 
-router.put(':recipeId/reviews/:reviewId',auth,isReviewOwner,recipeController.recipe_update_review)
+router.put('/:recipeId/reviews/:reviewId',auth,isReviewOwner,recipeController.recipe_update_review)
 
 router.delete('/:recipeId/reviews/:reviewId',auth,isReviewOwner,recipeController.recipe_delete_review)
 

@@ -4,6 +4,7 @@
 const notification = document.querySelector('.notification');
 // Function to show notification
 function showNotification(message,color) {
+  notification.style.zIndex=1500; 
   notification.textContent = message;
   notification.style.display = 'block';
   notification.style.background =color;

@@ -138,7 +138,7 @@ body {
 
 .page-container {
   margin: 2rem auto;
-  max-width: 1400px;
+  max-width: 1200px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1413,14 +1413,26 @@ body {
 }
 
 /* profile page design */
+.profile-page-container{
+  display: grid;
+  grid-template-columns: 40% 20% 40%;
+  gap: 2rem;
+}
+
+
+
 .profile-container {
-  max-width: 800px;
-  margin: 2rem auto;
+  margin: 2rem auto ;
   padding: 2rem;
   background-color: var(--base-variant);
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.profile-reviews-container{
+  max-width: 415px;
+  min-width: 415px
+}
+
 
 .profile-header {
   text-align: center;
@@ -1435,7 +1447,9 @@ body {
   margin-bottom: 1rem;
 }
 
-.profile-header h1 {
+.profile-header h1,
+.profile-recipes-container h1,
+.profile-reviews-container h1{
   color: var(--text-color);
   font-size: 2rem;
   margin-bottom: 0.5rem;
@@ -1611,3 +1625,5 @@ body {
 .review-indicator:hover {
   opacity: 0.8;
 }
+
+/* profile review styling */

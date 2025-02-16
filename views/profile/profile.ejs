@@ -3,48 +3,113 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-
-    <div class="profile-container">
-      <div class="profile-header">
-        <img src="<%= profile.profilePicture %>" alt="Profile Picture" class="profile-picture">
-        <h1><%= profile.username %></h1>
-        <p class="bio"><%= profile.bio || 'No bio yet.' %></p>
-        <div class="social-links">
-          <% if (profile.socialMedia.twitter) { %>
-            <a href="<%= profile.socialMedia.twitter %>" target="_blank" class="social-link">Twitter</a>
-          <% } %>
-          <% if (profile.socialMedia.instagram) { %>
-            <a href="<%= profile.socialMedia.instagram %>" target="_blank" class="social-link">Instagram</a>
-          <% } %>
-          <% if (profile.socialMedia.facebook) { %>
-            <a href="<%= profile.socialMedia.facebook %>" target="_blank" class="social-link">Facebook</a>
-          <% } %>
-        </div>
+    <div class="profile-page-container">
+ 
+      <div class="profile-recipes-container">
+        <h1>My recipes</h1>
+      
       </div>
-
-      <div class="profile-details">
-        <div class="detail">
-          <span class="label">Location:</span>
-          <span class="value"><%= profile.location || 'Not specified' %></span>
-        </div>
-        <div class="detail">
-          <span class="label">Website:</span>
-          <span class="value">
-            <% if (profile.website) { %>
-              <a href="<%= profile.website %>" target="_blank"><%= profile.website %></a>
-            <% } else { %>
-              Not specified
+      <div class="profile-container">
+        <div class="profile-header">
+          <img src="<%= profile.profilePicture %>" alt="Profile Picture" class="profile-picture">
+          <h1><%= profile.username %></h1>
+          <p class="bio"><%= profile.bio || 'No bio yet.' %></p>
+          <div class="social-links">
+            <% if (profile.socialMedia.twitter) { %>
+              <a href="<%= profile.socialMedia.twitter %>" target="_blank" class="social-link">Twitter</a>
             <% } %>
-          </span>
+            <% if (profile.socialMedia.instagram) { %>
+              <a href="<%= profile.socialMedia.instagram %>" target="_blank" class="social-link">Instagram</a>
+            <% } %>
+            <% if (profile.socialMedia.facebook) { %>
+              <a href="<%= profile.socialMedia.facebook %>" target="_blank" class="social-link">Facebook</a>
+            <% } %>
+          </div>
         </div>
+  
+        <div class="profile-details">
+          <div class="detail">
+            <span class="label">Location:</span>
+            <span class="value"><%= profile.location || 'Not specified' %></span>
+          </div>
+          <div class="detail">
+            <span class="label">Website:</span>
+            <span class="value">
+              <% if (profile.website) { %>
+                <a href="<%= profile.website %>" target="_blank"><%= profile.website %></a>
+              <% } else { %>
+                Not specified
+              <% } %>
+            </span>
+          </div>
+        </div>
+  
+        <!-- only visible to the profile owner -->
+        <% if (locals.user && locals.user._id.toString() === profile._id.toString()) { %>
+          <a href="/profile/<%= profile._id %>/edit" class="edit-profile-btn">Edit Profile</a>
+        <% } %>
       </div>
+      <div class="profile-reviews-container">
+        <h1>My reviews</h1>
 
-      <!-- only visible to the profile owner -->
-      <% if (locals.user && locals.user._id.toString() === profile._id.toString()) { %>
-        <a href="/profile/<%= profile._id %>/edit" class="edit-profile-btn">Edit Profile</a>
-      <% } %>
+
+      </div>
     </div>
 
+
     <%- include('../partials/footer.ejs') %>
+    <%-include('../partials/notification.ejs')%>
+
+    <script>
+      const profileReviews = document.querySelector('.profile-reviews-container');
+      window.addEventListener('load',async(e)=>{
+        e.preventDefault();
+        try {
+          const response = await fetch(`/profile/<%=profile._id %>/reviews`,{
+          method:'GET',
+          headers:{
+            'content-type':'application/json',
+          }
+        });
+        if(response.ok){
+          const data = await response.json();
+          if(data.userReviews.length >0){            
+            const reviews = data.userReviews.map(userReview=>{
+              const html = document.createElement('div');
+              html.classList.add('review-card')
+              html.innerHTML=
+               `
+                  <div class="reviews-section">
+                  <div class="review-user">
+                  <a href="/recipes/${userReview.recipe.id}">  <p>Recipe: ${userReview.recipe.title} </p></a>  
+                  </div>
+                  <div class="review-content">
+                      <div class="review-rating">
+                          <span class="stars"></span>
+                      </div>
+                      <p class="review-comment"> ${userReview.reviews[0].comment}</p>
+                  </div></div>`;
+                  const stars = html.querySelector('.stars')
+                  stars.textContent="⭐".repeat(userReview.reviews[0].rating)
+                  profileReviews.appendChild(html)
+
+            })
+          }
+        }else{
+            const html = document.createElement('div');
+           html.innerHTML=
+               `
+            <div class="no-reviews">
+                    <p>No reviews yet. add your first to review a recipe!</p>
+                </div>`
+                profileReviews.appendChild(html)
+
+          }
+        } catch (error) {
+          showNotification(error,'var(--error-color)');
+        }
+   
+      })
+    </script>
   </body>
 </html>

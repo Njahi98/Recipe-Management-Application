@@ -9,6 +9,9 @@ const isRecipeOwner= async(req,res,next) => {
         }
         //we make sure that the userId stored in creator is the same as the userId in the incoming request
         // we make sure that the user isn't a guest (recipe.isGuest shouldn't be true)
+        if (recipe.isGuest){
+            return res.status(401).json({error:'This recipe is made by a guest user.'})
+        }
         if (recipe.creator.toString() !== userId && !recipe.isGuest){
             return res.status(401).json({error:'you are not the recipe owner'})
         }

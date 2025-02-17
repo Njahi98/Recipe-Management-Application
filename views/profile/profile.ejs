@@ -3,7 +3,7 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <div class="profile-page-container">
+    <div class="profile-page-container" data-profileid="<%= profile._id %>">
  
       <div class="profile-recipes-container">
         <h1>My recipes</h1>
@@ -60,56 +60,6 @@
     <%- include('../partials/footer.ejs') %>
     <%-include('../partials/notification.ejs')%>
 
-    <script>
-      const profileReviews = document.querySelector('.profile-reviews-container');
-      window.addEventListener('load',async(e)=>{
-        e.preventDefault();
-        try {
-          const response = await fetch(`/profile/<%=profile._id %>/reviews`,{
-          method:'GET',
-          headers:{
-            'content-type':'application/json',
-          }
-        });
-        if(response.ok){
-          const data = await response.json();
-          if(data.userReviews.length >0){            
-            const reviews = data.userReviews.map(userReview=>{
-              const html = document.createElement('div');
-              html.classList.add('review-card')
-              html.innerHTML=
-               `
-                  <div class="reviews-section">
-                  <div class="review-user">
-                  <a href="/recipes/${userReview.recipe.id}">  <p>Recipe: ${userReview.recipe.title} </p></a>  
-                  </div>
-                  <div class="review-content">
-                      <div class="review-rating">
-                          <span class="stars"></span>
-                      </div>
-                      <p class="review-comment"> ${userReview.reviews[0].comment}</p>
-                  </div></div>`;
-                  const stars = html.querySelector('.stars')
-                  stars.textContent="⭐".repeat(userReview.reviews[0].rating)
-                  profileReviews.appendChild(html)
-
-            })
-          }
-        }else{
-            const html = document.createElement('div');
-           html.innerHTML=
-               `
-            <div class="no-reviews">
-                    <p>No reviews yet. add your first to review a recipe!</p>
-                </div>`
-                profileReviews.appendChild(html)
-
-          }
-        } catch (error) {
-          showNotification(error,'var(--error-color)');
-        }
-   
-      })
-    </script>
+    <script src="/scripts/profile.js"></script>
   </body>
 </html>

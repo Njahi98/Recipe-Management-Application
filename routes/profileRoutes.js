@@ -69,10 +69,23 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-router.get('/:id/reviews', async(req,res)=>{
+router.get('/:id/reviewsRecipes', async(req,res)=>{
   try {
     const userId=req.params.id;
     const recipes = await Recipe.find();
+
+    const userRecipes= recipes
+    .filter(recipe=>{
+      return !recipe.isGuest && recipe.creator.toString()===userId
+    })
+    .map(recipe=>{
+       return {id:recipe._id,
+               title:recipe.title,
+               description:recipe.description,
+               imageId:recipe.imageId,
+               imageName:recipe.imageName
+       } 
+    });
 
     const userReviews= recipes.map(recipe => {
       return {
@@ -82,13 +95,11 @@ router.get('/:id/reviews', async(req,res)=>{
     }).filter(recipe => recipe.reviews.length > 0); // we only include recipes with reviews from the user
 
 
-    if(!userReviews.length){
-      return res.status(404).json({error:'Reviews not found'});
-    }
     
-    return res.status(200).json({message:'Reviews fetched successfully',userReviews});
+    return res.status(200).json({message:'Reviews fetched successfully',userReviews,userRecipes});
   } catch (error) {
     return res.status(500).json({error:'Error fetching Reviews'});
   }
 })
+
 module.exports = router;

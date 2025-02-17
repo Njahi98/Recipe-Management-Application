@@ -556,13 +556,17 @@ body {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-.review-user {
+.review-user,.recipe-user {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(164, 165, 184, 0.2);
+}
+.review-user a,.recipe-user a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .review-user img {
@@ -574,7 +578,7 @@ body {
   padding: 2px;
 }
 
-.review-user p {
+.review-user,.recipe-user p {
   color: var(--text-color);
   font-weight: 600;
   font-size: 1rem;
@@ -1445,6 +1449,14 @@ body {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
+}
+
+.profile-recipe-image{
+  width: 50%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin: 1rem 0;
 }
 
 .profile-header h1,

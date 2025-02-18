@@ -245,6 +245,7 @@ body {
   border-radius: 4px;
 }
 .recipe-card {
+  margin: 1rem auto;
   border: 1px solid var(--secondary-text);
   border-radius: 1.5rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -277,8 +278,18 @@ body {
 
 .recipe-description {
   color: var(--secondary-text);
-  line-height: 1.5;
-  margin: 0.5rem 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 1rem;
+  text-align: left;
+}
+.no-content {
+  text-align: center;
+  padding: 2rem;
+  color: var(--secondary-text);
+  background: var(--base-variant);
+  border-radius: 8px;
+  font-style: italic;
 }
 
 .recipe-info {
@@ -394,12 +405,54 @@ body {
   background-color: var(--accent-color);
   opacity: 0.6;
   cursor: not-allowed;
+  position: relative;
 }
 
 .deleteRecipeBtnDisabled {
   background-color: var(--error-color);
   opacity: 0.6;
   cursor: not-allowed;
+  position: relative;
+}
+.denied::before,
+.denied::after {
+  --scale: 0;
+  --arrow-size: 10px;
+  --tooltip-color: var(--accent-color);
+
+  position: absolute;
+  top: -.25rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+  transition: 150ms transform;
+  transform-origin: bottom center;
+}
+
+.denied::before {
+  --translate-y: calc(-100% - var(--arrow-size));
+
+  content: attr(data-tooltip);
+  color: var(--base-color);
+  padding: .5rem;
+  border-radius: .3rem;
+  text-align: center;
+  width: max-content;
+  max-width: 100%;
+  background: var(--tooltip-color);
+}
+
+.denied:hover::before,
+.denied:hover::after {
+  --scale: 1;
+}
+
+.denied::after {
+  --translate-y: calc(-1 * var(--arrow-size));
+
+  content: '';
+  border: var(--arrow-size) solid transparent;
+  border-top-color: var(--tooltip-color);
+  transform-origin: top center;
 }
 
 .recipe-details {
@@ -533,6 +586,7 @@ body {
 }
 
 .review-card {
+  border: 1px solid var(--secondary-text);
   background: var(--base-variant);
   padding: 1.5rem;
   border-radius: 12px;
@@ -546,7 +600,7 @@ body {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-.review-user,.recipe-user {
+.review-user {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -554,7 +608,22 @@ body {
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(164, 165, 184, 0.2);
 }
-.review-user a,.recipe-user a {
+.recipe-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(164, 165, 184, 0.2);
+}
+.recipe-content {
+  padding: 0.5rem;
+}
+.recipe-user a {
+  text-decoration: none;
+  color: inherit;
+}
+.review-user a {
   text-decoration: none;
   color: inherit;
 }
@@ -567,8 +636,13 @@ body {
   border: 2px solid var(--primary-color);
   padding: 2px;
 }
-
-.review-user,.recipe-user p {
+.recipe-user p {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+.review-user p {
   color: var(--text-color);
   font-weight: 600;
   font-size: 1rem;
@@ -600,6 +674,9 @@ body {
   font-size: 0.95rem;
   margin: 1rem;
   text-align:  left;
+}
+.review-content {
+  padding: 0.5rem;
 }
 
 .no-reviews {
@@ -1409,8 +1486,20 @@ body {
 /* profile page design */
 .profile-page-container{
   display: grid;
-  grid-template-columns: 40% 20% 40%;
+  grid-template-columns: 30% 30% 40%;
   gap: 2rem;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-page-container {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-reviews-container,
+  .profile-recipes-container {
+    max-width: 100%;
+    min-width: unset;
+  }
 }
 .profile-image-nav{
   height: 40px;
@@ -1433,6 +1522,7 @@ body {
 
 .profile-container {
   margin: 2rem auto ;
+  height: fit-content;
   padding: 2rem;
   background-color: var(--base-variant);
   border-radius: 0.75rem;
@@ -1457,7 +1547,14 @@ body {
   margin-bottom: 1rem;
 }
 
-.profile-recipe-image{
+.profile-recipe-section {
+  padding: 2rem;
+  background: var(--base-color);
+  border-radius: 12px;
+  height: fit-content;
+}
+
+.profile-recipe-image {
   width: 50%;
   height: 200px;
   object-fit: cover;
@@ -1495,6 +1592,7 @@ body {
   margin-top: 2rem;
 }
 
+
 .detail {
   display: flex;
   justify-content: space-between;
@@ -1510,21 +1608,29 @@ body {
 .detail .value {
   color: var(--secondary-text);
 }
-
+.detail .value a {
+text-decoration: none;
+color: inherit;
+}
 .edit-profile-btn {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 2rem;
   background-color: var(--accent-color);
   color: white;
   text-align: center;
-  border-radius: 0.25rem;
+  border-radius: 2rem;
   text-decoration: none;
   margin-top: 2rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
 }
 
 .edit-profile-btn:hover {
-  background-color: var(--primary-color);
+  background-color: transparent;
+  border-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 /* edit profile page */

@@ -18,18 +18,20 @@
             const reviews = data.userReviews.map(userReview=>{
               const html = document.createElement('div');
               html.classList.add('review-card')
-              html.innerHTML=
-               `
-                  <div class="reviews-section">
+              html.innerHTML = `
+                <div class="reviews-section">
                   <div class="review-user">
-                  <a href="/recipes/${userReview.recipe.id}">  <p>Recipe: ${userReview.recipe.title} </p></a>  
+                    <a href="/recipes/${userReview.recipe.id}">
+                      <p>Recipe: ${userReview.recipe.title}</p>
+                    </a>
                   </div>
                   <div class="review-content">
-                      <div class="review-rating">
-                          <span class="stars"></span>
-                      </div>
-                      <p class="review-comment"> ${userReview.reviews[0].comment}</p>
-                  </div></div>`;
+                    <div class="review-rating">
+                      <span class="stars"></span>
+                    </div>
+                    <p class="review-comment">${userReview.reviews[0].comment}</p>
+                  </div>
+                </div>`;
                   const stars = html.querySelector('.stars')
                   stars.textContent="⭐".repeat(userReview.reviews[0].rating)
                   profileReviews.appendChild(html)
@@ -37,7 +39,7 @@
             })
           }else{
             const html = document.createElement('div');
-            html.classList.add('no-reviews')
+            html.classList.add('no-content')
             html.innerHTML=
                `<p>No reviews yet. add your first review  to a recipe!</p>`
                 profileReviews.appendChild(html)
@@ -45,25 +47,25 @@
           if(data.userRecipes.length >0){            
           const recipes = data.userRecipes.map(userRecipe=>{
             const html = document.createElement('div');
-              html.classList.add('review-card')
-              html.innerHTML=
-               `
-                  <div class="reviews-section">
-           <img class="profile-recipe-image" src="/recipes/image/${userRecipe.imageId}" alt="Current recipe image" style="max-width: 200px;">
-                    
-                    <div class="recipe-user">
-                    <a href="/recipes/${userRecipe.id}">  <p>Recipe: ${userRecipe.title} </p></a>  
-                    </div>
-                    <div class="review-content">
-                        <p class="review-comment"> ${userRecipe.description}</p>
-                    </div>
-                </div>`; 
+            html.classList.add('recipe-card')
+            html.innerHTML = `
+              <div class="profile-recipe-section">
+                <img class="profile-recipe-image" src="/recipes/image/${userRecipe.imageId}" alt="Current recipe image">
+                <div class="recipe-user">
+                  <a href="/recipes/${userRecipe.id}">
+                    <p>Recipe: ${userRecipe.title}</p>
+                  </a>
+                </div>
+                <div class="recipe-content">
+                  <p class="recipe-description">${userRecipe.description}</p>
+                </div>
+              </div>`;
                   profileRecipes.appendChild(html)
           }
         )}else{
           const html = document.createElement('div');
-            html.classList.add('no-reviews')
-            html.innerHTML=
+          html.classList.add('no-content')
+          html.innerHTML=
                `<p>No recipes yet. add your first recipe!</p>`
                 profileRecipes.appendChild(html)
         }

@@ -61,8 +61,8 @@
                       <a href="/recipes/<%= recipe._id %>/edit" class="edit-recipe-btn">Edit Recipe</a>
                       <button class="delete-btn" data-doc="<%= recipe._id %>">Delete Recipe</button>
                   <% } else { %>
-                      <a href="#" class="edit-recipe-btn" style="opacity: 0.6; cursor: not-allowed;">Edit Recipe</a>
-                      <button class="delete-btn" disabled style="opacity: 0.6; cursor: not-allowed;">Delete Recipe</button>
+                      <a href="#" class="edit-recipe-btn denied" data-tooltip="You cannot update a Recipe as a guest. please register." style="opacity: 0.6; cursor: not-allowed;">Edit Recipe</a>
+                      <button class="delete-btn denied" disabled data-tooltip="You cannot delete a Recipe as a guest. please register." style="opacity: 0.6; cursor: not-allowed;">Delete Recipe</button>
                   <% } %>
               </div>
           </div>

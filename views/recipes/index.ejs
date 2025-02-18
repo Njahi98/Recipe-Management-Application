@@ -81,15 +81,17 @@
                 </div>   
                 <% if(locals.user && recipe.reviews.some(review => review.userId.toString() === locals.user._id.toString())) { %>
                   <a href="/recipes/<%= recipe._id %>">  <span class="review-indicator" data-recipe-id="<%= recipe._id %>">Your review ✎ </span></a>
-                <% } %>
+                <% }else{ %>
+                  <span class="review-indicator" style="visibility: hidden;">Your review ✎</span>
+               <% } %> 
                 <div class="recipe-index-action-buttons">
                   <a style="text-decoration: none;" href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
                   <% if(locals.user){ %>
                     <button class="reviewRecipeBtn" data-doc="<%= recipe._id %>">Review</button>
                     <button class="deleteRecipeBtn" data-doc="<%= recipe._id %>">Delete</button>
                   <% }else { %>
-                    <button class="reviewRecipeBtnDisabled" style="opacity: 0.6;" disabled >Review</button>
-                    <button class="deleteRecipeBtnDisabled" style="opacity: 0.6;" disabled>Delete</button>
+                    <button class="reviewRecipeBtnDisabled denied" data-tooltip="You cannot review a Recipe as a guest. please register." style="opacity: 0.6;" disabled >Review</button>
+                    <button class="deleteRecipeBtnDisabled denied" data-tooltip="You cannot delete a Recipe as a guest. please register." style="opacity: 0.6;" disabled>Delete</button>
                   <% }  %>
 
                 </div>

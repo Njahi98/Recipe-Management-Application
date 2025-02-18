@@ -2,50 +2,40 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
-  /* Background Colors */
-  --base-color: #fff;
-  --base-variant: rgb(241, 236, 236);
+  --base-color: #f8f8f8; 
+  --base-variant: #f0e6d6; 
 
-  /* Text Colors */
-  --text-color: #333;
-  --secondary-text: #555;
-  --emoji-color: black;
+  --text-color: #2c2c2c; 
+  --secondary-text: #5a5a5a; 
+  --emoji-color: #2c2c2c; 
 
-  /* Primary Colors */
-  --primary-color: #4a90e2;
-  --primary-variant: #357abd;
+  --primary-color: #ff6f61; 
+  --primary-variant: #e65a50; 
 
-  /* Accent/Error Colors */
-  --accent-color: #4caf50;
-  --error-color: #ff4444;
+  --accent-color: #ffb74d;
+  --error-color: #ff4444; 
 
-  /* Additional Colors */
-  --success-color: #7ac142;
-  --info-color: #4c9eaf;
-  --warning-color: #cc0000;
+  --success-color: #81c784; 
+  --info-color: #64b5f6; 
+  --warning-color: #ffcc80;
 }
 .darkmode {
-  /* Background Colors */
-  --base-color: #070b1d;
-  --base-variant: #101425;
+  --base-color: #1a1a1a; 
+  --base-variant: #2a2a2a; 
 
-  /* Text Colors */
-  --text-color: #fff;
-  --secondary-text: #a4a5b8;
-  --emoji-color: white;
+  --text-color: #f8f8f8; 
+  --secondary-text: #b0b0b0; 
+  --emoji-color: #f8f8f8;
 
-  /* Primary Colors */
-  --primary-color: #4a90e2;
-  --primary-variant: #357abd;
+  --primary-color: #ff6f61; 
+  --primary-variant: #e65a50; 
 
-  /* Accent/Error Colors */
-  --accent-color: #4caf50;
-  --error-color: #ff4444;
+  --accent-color: #ffb74d; 
+  --error-color: #ff4444; 
 
-  /* Additional Colors */
-  --success-color: #7ac142;
-  --info-color: #4c9eaf;
-  --warning-color: #cc0000;
+  --success-color: #81c784; 
+  --info-color: #64b5f6; 
+  --warning-color: #ffcc80; 
 }
 #theme-switch {
   height: 50px;

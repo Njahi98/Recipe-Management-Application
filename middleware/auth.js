@@ -21,7 +21,8 @@ const auth = async(req, res, next) => {
     // we fetch the user from the database
     // we use the `userId` from the decoded token to find the user
     // if the user doesn't exist, treat it as an invalid token
-    const user = await User.findById(decoded.userId);
+    // we exclude password to guarantee security
+    const user = await User.findById(decoded.userId).select("-password");
 
     if (!user) {
       // No user found

@@ -11,7 +11,7 @@
       </div>
       <div class="profile-container">
         <div class="profile-header">
-          <img src="<%= profile.profilePicture %>" alt="Profile Picture" class="profile-picture">
+          <img src="/profile/image/<%= profile.imageId %>" alt="Profile Picture" class="profile-picture">
           <h1><%= profile.username %></h1>
           <p class="bio"><%= profile.bio || 'No bio yet.' %></p>
           <div class="social-links">

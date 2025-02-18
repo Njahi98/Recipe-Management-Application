@@ -93,7 +93,7 @@ const recipe_details = async (req, res) => {
       .populate({
         //we populate userId with the User's details and we select only what we need, username and profile picture
         path: "reviews.userId",
-        select: "username profilePicture" 
+        select: "username imageId imageName" 
       });
 
     if (!recipe) {

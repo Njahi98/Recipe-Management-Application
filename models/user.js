@@ -22,9 +22,13 @@ bio: {
     type: String,
     default: '',
   },
-  profilePicture: {
+  imageId: {
     type: String,
     default: '/images/default-profile.png', // Default profile picture
+  },
+  imageName: {
+    type: String,
+    default:"",
   },
   location: {
     type: String,

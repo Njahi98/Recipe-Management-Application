@@ -12,13 +12,19 @@
           <textarea id="bio" name="bio" rows="4"><%= profile.bio %></textarea>
         </div>
         <div class="form-group">
-          <label for="profilePicture">Profile Picture URL</label>
-          <input
-            type="text"
-            id="profilePicture"
-            name="profilePicture"
-            value="<%= profile.profilePicture %>"
-          />
+          <label for="image">Profile Picture Image</label>
+          <input type="file" id="image" name="image" accept="image/*">
+          <% if (profile.imageId==="/images/default-profile.png") { %>
+            <div class="current-profile-image">
+              <img src="<%= profile.imageId %>" alt="Current profile image" style="max-width: 200px;">
+              <p>Current image</p>
+            </div>
+          <% }else{ %>
+            <div class="current-profile-image">
+              <img src="/profile/image/<%= profile.imageId %>" alt="Current profile image" style="max-width: 200px;">
+              <p>Current image</p>
+            </div>
+          <% } %>
         </div>
         <div class="form-group">
           <label for="location">Location</label>
@@ -81,12 +87,28 @@
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         try {
-            const formData = {
-          bio: form.bio.value,
-          profilePicture: form.profilePicture.value,
-          location: form.location.value,
-          website: form.website.value,
-          socialMedia: {
+          // if there is an image, use formData
+          const formData = new FormData(form);
+
+          if (formData.get('image').size > 0) {
+
+          const response = await fetch("/profile/<%= profile._id %>", {
+          method:"PUT",
+          body:formData,
+        });
+        if(response.ok){
+         window.location.href="/profile/<%= profile._id %>"
+        }else {
+        const errorData = await response.json();
+        throw new Error(errorData.error);
+      }
+          }else{
+            //there is no new image, use this formData
+            const jsonData = {
+            bio: form.bio.value,
+            location: form.location.value,
+            website: form.website.value,
+            socialMedia: {
             twitter: form.twitter.value,
             instagram: form.instagram.value,
             facebook: form.facebook.value,
@@ -96,13 +118,17 @@
           method:"PUT",
           headers: {'content-type':'application/json',            
           },
-          body:JSON.stringify(formData),
+          body:JSON.stringify(jsonData),
         });
         if(response.ok){
          window.location.href="/profile/<%= profile._id %>"
-        }
+        }else {
+        const errorData = await response.json();
+        throw new Error(errorData.error);
+      }
+          }
         } catch (error) {
-            console.log(error);
+          showNotification(error,'var(--error-color)');
         }
 
         

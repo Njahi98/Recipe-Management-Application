@@ -3,6 +3,10 @@ const User = require("../models/user");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const Recipe = require("../models/recipe");
+const { upload,processImage } = require("../middleware/uploadMiddleware");
+const { getGfs } = require("../middleware/uploadMiddleware");
+const mongoose = require("mongoose");
+
 
 router.get("/:id", async (req, res) => {
   try {
@@ -37,7 +41,7 @@ router.get("/:id/edit",auth,async(req,res)=>{
     }
    
 })
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", auth,upload.single("image"), processImage, async (req, res) => {
   try {
     const userId = req.params.id;
 
@@ -46,16 +50,33 @@ router.put("/:id", auth, async (req, res) => {
         .status(403)
         .json({ error: "You are not authorized to update this profile" });
     }
+    const formData =   {
+      bio: req.body.bio,
+      location: req.body.location,
+      website: req.body.website,
+      socialMedia: req.body.socialMedia,
+    }
+        // If new image was uploaded
+        if (req.file) {
+          // Delete old image if exists
+          const oldProfileImage = await User.findById(userId);
+          if (oldProfileImage.imageId) {
+            const gfs = await getGfs();
+            try {
+              await gfs.delete(new mongoose.Types.ObjectId(oldProfileImage.imageId));
+            } catch (err) {
+              console.log("Error deleting old image:", err);
+            }
+          }
+    
+          // Add new image details to formData
+          formData.imageId = req.file.id;
+          formData.imageName = req.file.filename;
+        }
 
     const updatedProfile = await User.findByIdAndUpdate(
       userId,
-      {
-        bio: req.body.bio,
-        profilePicture: req.body.profilePicture,
-        location: req.body.location,
-        website: req.body.website,
-        socialMedia: req.body.socialMedia,
-      },
+      formData,
       // Return the updated document
       { new: true } 
     ).select("-password");
@@ -66,6 +87,30 @@ router.put("/:id", auth, async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: "Error updating profile" });
+  }
+});
+
+router.get("/image/:id", async (req, res) => {
+  try {
+    // we ensure gfs is initialized
+    const gfs = await getGfs(); 
+    const fileId = req.params.id;
+
+    const file = await gfs
+      .find({ _id: new mongoose.Types.ObjectId(fileId) })
+      .toArray();
+
+    if (!file || file.length === 0) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
+    const readStream = gfs.openDownloadStream(
+      new mongoose.Types.ObjectId(fileId)
+    );
+    readStream.pipe(res);
+  } catch (error) {
+    console.error("Error fetching profile image:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

@@ -1422,8 +1422,24 @@ body {
   grid-template-columns: 40% 20% 40%;
   gap: 2rem;
 }
+.profile-image-nav{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+  padding: 2px;
+}
 
 
+.current-profile-image{
+  margin: 1rem auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   color: var(--text-color);
+}
 
 .profile-container {
   margin: 2rem auto ;

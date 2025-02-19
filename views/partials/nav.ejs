@@ -11,7 +11,11 @@
   <ul class="Navitems">
     <% if (locals.user) { %>
       <a href="/profile/<%= user._id %>">
+    <% if(locals.user.imageId==="/images/default-profile.png"){ %>
+      <img src="/images/default-profile.png" alt="<%= user.username %>'s profile picture" class="profile-image-nav"></a>
+  <%  }else{ %>
       <img src="/profile/image/<%= user.imageId %>" alt="<%= user.username %>'s profile picture" class="profile-image-nav"></a>
+  <%  } %>
       <li style="color: var(--text-color);">Welcome, <%= locals.user.username %></li>
       <li><a href="/profile/<%=locals.user._id %>">profile</a></li>
       <li><a href="/auth/logout">Logout</a></li>

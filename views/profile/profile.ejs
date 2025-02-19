@@ -6,12 +6,20 @@
     <div class="profile-page-container" data-profileid="<%= profile._id %>">
  
       <div class="profile-recipes-container">
-        <h1>My recipes</h1>
+        <% if(locals.user){ %>
+          <h1>My recipes</h1>
+        <% } else{ %>
+          <h1>Recipes</h1>
+       <%  } %>
       
       </div>
       <div class="profile-container">
         <div class="profile-header">
-          <img src="/profile/image/<%= profile.imageId %>" alt="Profile Picture" class="profile-picture">
+          <% if(profile.imageId==="/images/default-profile.png"){ %>
+            <img src="/images/default-profile.png" alt="Profile Picture" class="profile-picture">
+         <% }else{ %>
+            <img src="/profile/image/<%= profile.imageId %>" alt="Profile Picture" class="profile-picture">
+        <%  } %>
           <h1><%= profile.username %></h1>
           <p class="bio"><%= profile.bio || 'No bio yet.' %></p>
           <div class="social-links">
@@ -50,7 +58,11 @@
         <% } %>
       </div>
       <div class="profile-reviews-container">
-        <h1>My reviews</h1>
+        <% if(locals.user){ %>
+          <h1>My reviews</h1>
+        <% } else{ %>
+          <h1>Reviews</h1>
+       <%  } %>
 
 
       </div>

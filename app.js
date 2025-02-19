@@ -1,14 +1,15 @@
 const express = require('express');
 var morgan = require('morgan');
 const mongoose = require('mongoose');
-const recipeRoutes=require('./routes/recipeRoutes')
 const authRoutes=require('./routes/authRoutes')
 const contactRoutes=require('./routes/contactRoutes')
-const profileRoutes= require('./routes/profileRoutes')
-const auth=require('./middleware/auth')
-const Contact = require('./models/contact')
+const isAuthenticated=require('./middleware/isAuthenticated')
 const app = express();
 const cookieParser = require('cookie-parser');
+
+const userRecipeRoutes = require('./routes/user/recipe.routes');
+const userProfileRoutes = require('./routes/user/profile.routes');
+const userReviewRoutes = require('./routes/user/review.routes');
 
 
 const dbURI=process.env.dbURI
@@ -40,7 +41,7 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 
 // we put auth middleware in the beginning so it runs on ALL routes
-app.use(auth);
+app.use(isAuthenticated);
 
 app.get('/',(req,res)=>{
     res.render('index',{title:'Welcome to Recipes'
@@ -51,11 +52,12 @@ app.get('/about',(req,res)=>{
     res.render('about',{title:'About Page'
     })
 })
-
-app.use("/profile",profileRoutes)
-app.use("/contact",contactRoutes);
-app.use("/recipes",recipeRoutes);
 app.use("/auth",authRoutes);
+app.use("/profile",userProfileRoutes);
+app.use("/recipes",userRecipeRoutes);
+app.use("/recipes",userReviewRoutes);
+
+app.use("/contact",contactRoutes);
 
 app.use((req,res)=>{
     res.status(404).render('404',{title:'404 Not found'})

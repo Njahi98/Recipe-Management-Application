@@ -74,7 +74,11 @@
                     <div class="review-card">
                         <div class="review-user">
                             <a href="/profile/<%= review.userId._id %>">
-                            <img src="/profile/image/<%= review.userId.imageId %>" alt="<%= review.userId.username %>'s profile picture"></a>
+                                <%if(review.userId.imageId="/images/default-profile.png"){ %>
+                                    <img src="/images/default-profile.png" alt="<%= review.userId.username %>'s profile picture"></a>
+                            <%    }else{  %>
+                                    <img src="/profile/image/<%= review.userId.imageId %>" alt="<%= review.userId.username %>'s profile picture"></a>
+                             <%   } %>
                             <a href="/profile/<%= review.userId._id %>">  <p><%= review.userId.username %></p> </a>
 
                         </div>
@@ -88,7 +92,6 @@
                             <div class="review-btn-actions"></div>
                             <button class="reviewRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>" data-ratingdoc="<%= review.rating %>" data-commentdoc="<%= review.comment %>">Edit Review</button>
                             <button class="deleteRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>">Delete Review</button>
-
                         <%  } %>
                     </div>
                 <% }) %>

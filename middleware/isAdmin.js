@@ -8,8 +8,7 @@ const isAdmin= async(req,res,next)=>{
         return res.status(404).json({error:'User not found'});
     }
     if(user.role==="ADMIN"){
-        req.isAdmin=true;
-        next();
+      return  next();
     }
     return res.status(403).json({error:'insufficient privileges'});
     
@@ -18,4 +17,4 @@ const isAdmin= async(req,res,next)=>{
     }
 }
 
-module.exports=isAdmin;
+module.exports= isAdmin;

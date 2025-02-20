@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-const auth = async(req, res, next) => {
+const isAuthenticated = async(req, res, next) => {
   //  we get the token from the request header 'Authorization' or we check for the token in cookies  
   // The ?.replace removes the word 'Bearer' from the token if it exists
   const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
@@ -44,4 +44,4 @@ const auth = async(req, res, next) => {
   }
 };
 
-module.exports = auth;
+module.exports = isAuthenticated;

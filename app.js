@@ -11,6 +11,9 @@ const userRecipeRoutes = require('./routes/user/recipe.routes');
 const userProfileRoutes = require('./routes/user/profile.routes');
 const userReviewRoutes = require('./routes/user/review.routes');
 
+const adminRecipeRoutes = require('./routes/admin/recipe.routes');
+const adminUserRoutes = require('./routes/admin/user.routes');
+
 
 const dbURI=process.env.dbURI
 mongoose.connect(dbURI)
@@ -53,9 +56,14 @@ app.get('/about',(req,res)=>{
     })
 })
 app.use("/auth",authRoutes);
+
 app.use("/profile",userProfileRoutes);
 app.use("/recipes",userRecipeRoutes);
 app.use("/recipes",userReviewRoutes);
+
+app.use("/admin/recipes",adminRecipeRoutes);
+app.use("/admin/users",adminUserRoutes);
+
 
 app.use("/contact",contactRoutes);
 

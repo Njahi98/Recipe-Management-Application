@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const isAuthenticated = require('../middleware/isAuthenticated');
 //Register
 router.post('/register',async(req,res)=>{
     try {
@@ -70,10 +71,16 @@ router.get('/logout', (req, res) => {
   });
 
 router.get('/login',(req,res)=>{
-    res.render('auth/login',{title:'Login Page'})
+    if(req.userId){
+       return res.redirect('/');
+    }
+   return res.render('auth/login',{title:'Login Page'}); 
 })
 router.get('/register',(req,res)=>{
-    res.render('auth/register',{title:'Register Page'})
+    if(req.userId){
+       return res.redirect('/');
+    }
+   return res.render('auth/register',{title:'Register Page'}) ; 
 })
 
 

@@ -16,10 +16,17 @@
   <%  }else{ %>
       <img src="/profile/image/<%= user.imageId %>" alt="<%= user.username %>'s profile picture" class="profile-image-nav"></a>
   <%  } %>
-      <li style="color: var(--text-color);">Welcome, <%= locals.user.username %></li>
-      <li><a href="/profile/<%=locals.user._id %>">profile</a></li>
-      <li><a href="/auth/logout">Logout</a></li>
-    <% } else { %>
+   <%   if(locals.user.role === 'ADMIN'){ %>
+        <li style="color: var(--text-color);">Welcome, Admin <%= locals.user.username %></li>
+        <li><a href="/profile/<%=locals.user._id %>">profile</a></li>
+        <li><a href="/admin/">Admin Panel</a></li>
+        <li><a href="/auth/logout">Logout</a></li>
+  <%    }else{ %>
+        <li style="color: var(--text-color);">Welcome, <%= locals.user.username %></li>
+        <li><a href="/profile/<%=locals.user._id %>">profile</a></li>
+        <li><a href="/auth/logout">Logout</a></li>
+      
+    <% }} else { %>
       <li style="color: var(--text-color);">Welcome, Guest</li>
       <li><a href="/auth/login">Login</a></li>
       <li><a href="/auth/register">Register</a></li>

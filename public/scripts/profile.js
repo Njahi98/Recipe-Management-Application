@@ -75,3 +75,12 @@
           showNotification(error,'var(--error-color)');
         }
       })
+      //if user tries to enter the edit page of another user we'll redirect him to the user's profile with an error
+      document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        
+        if (error === 'unauthorized') {
+            showNotification("You don't have permission to edit this profile.", 'var(--error-color)');
+        }
+    });

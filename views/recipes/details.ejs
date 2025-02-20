@@ -74,7 +74,7 @@
                     <div class="review-card">
                         <div class="review-user">
                             <a href="/profile/<%= review.userId._id %>">
-                                <%if(review.userId.imageId="/images/default-profile.png"){ %>
+                                <%if(review.userId.imageId==="/images/default-profile.png"){ %>
                                     <img src="/images/default-profile.png" alt="<%= review.userId.username %>'s profile picture"></a>
                             <%    }else{  %>
                                     <img src="/profile/image/<%= review.userId.imageId %>" alt="<%= review.userId.username %>'s profile picture"></a>

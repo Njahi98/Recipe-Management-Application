@@ -20,9 +20,7 @@ const user_profile_edit_get = async(req,res)=>{
     try {
         const userId=req.params.id;
         if (userId !== req.userId) {
-          return res
-            .status(403)
-            .json({ error: "You are not authorized to update this profile" });
+          return res.redirect(`/profile/${userId}?error=unauthorized`);
         }
         const profile = await User.findById(userId).select('-password');
         if(!profile){

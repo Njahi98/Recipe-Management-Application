@@ -5,15 +5,17 @@ const isAdmin= async(req,res,next)=>{
     const userId = req.userId;
     const user = await User.findById(userId);
     if(!user){
-        return res.status(404).json({error:'User not found'});
+        return res.redirect('/auth/login');
     }
     if(user.role==="ADMIN"){
       return  next();
     }
-    return res.status(403).json({error:'insufficient privileges'});
-    
+    return res.status(403).render('403', {
+            title: 'Access Denied',
+            error: 'Insufficient privileges'
+        });    
     } catch (error) {
-        return res.status(500).json({error:'Error verifiying User Role'})    
+        return res.status(500).render('505',{title:'error occured',error:'Error verifiying User Role'})    
     }
 }
 

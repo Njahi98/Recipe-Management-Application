@@ -10,7 +10,7 @@ router.get('/:recipeId', isAuthenticated, isAdmin, adminRecipeController.admin_r
 
 router.delete('/:recipeId', isAuthenticated, isAdmin, adminRecipeController.admin_recipe_delete)
 
-router.get("/image/:id", adminRecipeController.recipe_image_get);
+router.get("/image/:id", isAuthenticated, isAdmin, adminRecipeController.recipe_image_get);
 
 
 

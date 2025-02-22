@@ -13,7 +13,7 @@ const userReviewRoutes = require('./routes/user/review.routes');
 
 const adminRecipeRoutes = require('./routes/admin/recipe.routes');
 const adminUserRoutes = require('./routes/admin/user.routes');
-
+const adminRoutes = require('./routes/admin/admin.routes');
 
 const dbURI=process.env.dbURI
 mongoose.connect(dbURI)
@@ -56,6 +56,10 @@ app.get('/about',(req,res)=>{
     })
 })
 app.use("/auth",authRoutes);
+app.use((req, res, next) => {
+    res.locals.path = req.path;
+    next();
+});
 
 app.use("/profile",userProfileRoutes);
 app.use("/recipes",userRecipeRoutes);
@@ -63,7 +67,7 @@ app.use("/recipes",userReviewRoutes);
 
 app.use("/admin/recipes",adminRecipeRoutes);
 app.use("/admin/users",adminUserRoutes);
-
+app.use('/admin/',adminRoutes);
 
 app.use("/contact",contactRoutes);
 

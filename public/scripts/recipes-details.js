@@ -67,11 +67,10 @@ try {
               const result = await response.json();
               setTimeout(() => {
                 modal.remove();
-                showNotification(result.message,'var(--success-color)')
+                showNotification(result.message,'var(--success-color)');
+                const reviewCard = document.querySelector(`.review-card[data-id="${deleteRecipeBtn.dataset.reviewdoc}"]`);
+                reviewCard.remove();
               }, 1500);
-              setTimeout(() => {
-                window.location.href=`/recipes/${deleteRecipeBtn.dataset.recipedoc}`
-              }, 3000);
             }else{
               modal.remove();
               const errorData = await response.json();
@@ -90,7 +89,60 @@ try {
 }
 }
 
+//add a review
+const reviews = document.querySelectorAll('.newReviewRecipeBtn');
 
+reviews.forEach(review=>{
+  review.addEventListener('click',(e)=>{
+    e.preventDefault();
+    createReviewModal(async(reviewData) => {
+            try {
+              const formData={
+                rating:reviewData.rating,
+                comment:reviewData.comment}
+              const response = await fetch(`/recipes/${review.dataset.doc}/reviews`,{
+                method:'POST',
+                headers:{'content-type':'application/json'},
+                body: JSON.stringify(formData),
+              },
+            );
+            const modal = document.querySelector('.modal-backdrop'); 
+            if(response.ok){
+              setTimeout(() => {
+                modal.innerHTML = `
+                        <div class="modal-container">
+                            <div style="display: flex; justify-content: center;">
+                          <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        </div>
+                          `;
+              }, 1000);
+              setTimeout(() => {
+                modal.remove();
+                showNotification('Review added successfully. redirecting to Recipe page','var(--success-color)');
+              }, 1500);
+              setTimeout(() => {
+                window.location.href = `/recipes/${review.dataset.doc}`
+              }, 3000);
+            }else{
+              modal.remove();
+              const errorData = await response.json();
+              showNotification(errorData.error,'var(--error-color)');
+              if(errorData.redirect){
+                setTimeout(() => {
+                  window.location.href=errorData.redirect
+                }, 1500);
+              }
+            }
+            } catch (error) {
+              const modal = document.querySelector('.modal-backdrop'); 
+              modal.remove();
+              showNotification(error,'var(--error-color)');
+            }
+          
+  });
+  })
+})
 
 //edit review
 const reviewRecipeBtns = document.querySelectorAll('.reviewRecipeBtn');
@@ -134,11 +186,13 @@ reviewRecipeBtns.forEach(btn => {
         }, 1000);
         setTimeout(() => {
           modal.remove();
-          showNotification('Review added successfully. redirecting to Recipe page','var(--success-color)');
+          showNotification('Review updated successfully.','var(--success-color)');
+          const reviewCard = document.querySelector(`.review-card[data-id="${btn.dataset.reviewdoc}"]`);
+          const stars = reviewCard.querySelector('.stars');
+          const comment = reviewCard.querySelector('.review-comment');
+          stars.textContent= "⭐".repeat(reviewData.rating);
+          comment.textContent=reviewData.comment;
         }, 1500);
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
       } catch (error) {
         showNotification(error.message, 'var(--error-color)');
       }

@@ -14,7 +14,8 @@ trashcans.forEach((trashcan) => {
       "Do you really want to delete this recipe? This action cannot be undone.",
       async() => {
         try {
-        const endpoint = `/recipes/${trashcan.dataset.doc}`;
+        const recipeId = trashcan.dataset.doc;
+        const endpoint = `/recipes/${recipeId}`;
         const response = await fetch(endpoint, {
           method: "DELETE",
         });
@@ -30,7 +31,10 @@ trashcans.forEach((trashcan) => {
                         `;
             }, 1000);
             setTimeout(() => {
-              window.location.href = '/recipes'
+              modal.remove();
+              const recipeCard = document.querySelector(`.recipe-card[data-id="${recipeId}"]`);
+              recipeCard.classList.remove('visible');
+              recipeCard.classList.add('hidden');
             }, 2000);
           }else{
             modal.remove();
@@ -78,7 +82,7 @@ reviews.forEach(review=>{
                 showNotification('Review added successfully. redirecting to Recipe page','var(--success-color)');
               }, 1500);
               setTimeout(() => {
-                window.location.href = '/recipes'
+                window.location.href = `/recipes/${review.dataset.doc}`
               }, 3000);
             }else{
               modal.remove();

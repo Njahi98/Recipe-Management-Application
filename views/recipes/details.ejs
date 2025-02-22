@@ -59,9 +59,11 @@
                   <a href="/recipes" class="back-btn">Back to Recipes</a>
                   <% if(locals.user){ %>
                       <a href="/recipes/<%= recipe._id %>/edit" class="edit-recipe-btn">Edit Recipe</a>
+                      <button class="newReviewRecipeBtn" data-doc="<%= recipe._id %>">Review</button>
                       <button class="delete-btn" data-doc="<%= recipe._id %>">Delete Recipe</button>
                   <% } else { %>
                       <a href="#" class="edit-recipe-btn denied" data-tooltip="You cannot update a Recipe as a guest. please register." style="opacity: 0.6; cursor: not-allowed;">Edit Recipe</a>
+                      <button class="reviewRecipeBtn denied" disabled data-tooltip="You cannot review a Recipe as a guest. please register." style="opacity: 0.6; cursor: not-allowed;">Delete Recipe</button>
                       <button class="delete-btn denied" disabled data-tooltip="You cannot delete a Recipe as a guest. please register." style="opacity: 0.6; cursor: not-allowed;">Delete Recipe</button>
                   <% } %>
               </div>
@@ -71,7 +73,7 @@
             <h3>Reviews</h3>
             <% if (recipe.reviews && recipe.reviews.length > 0) { %>
                 <% recipe.reviews.forEach(review => { %>
-                    <div class="review-card">
+                    <div class="review-card" data-id="<%=review._id %>">
                         <div class="review-user">
                             <a href="/profile/<%= review.userId._id %>">
                                 <%if(review.userId.imageId==="/images/default-profile.png"){ %>
@@ -101,7 +103,7 @@
                 </div>
             <% } %>
         </div>
-      </div>
+      </div>  
       </div>
     </div>
     <%-include('../partials/notification.ejs')%>

@@ -363,6 +363,7 @@ body {
 
 .viewRecipeBtn,
 .reviewRecipeBtn,
+.newReviewRecipeBtn,
 .deleteRecipeBtn,
 .reviewRecipeBtnDisabled,
 .deleteRecipeBtnDisabled {
@@ -384,11 +385,11 @@ body {
   opacity: 0.9;
   transform: translateY(-2px);
 }
-.reviewRecipeBtn {
+.reviewRecipeBtn,.newReviewRecipeBtn {
   background-color: var(--accent-color);
   color: white;
 }
-.reviewRecipeBtn:hover {
+.reviewRecipeBtn:hover,.newReviewRecipeBtn:hover {
   opacity: 0.9;
   transform: translateY(-2px);
 }
@@ -702,7 +703,7 @@ body {
 
 .back-btn, .edit-recipe-btn, .delete-btn {
   padding: 0.8rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.75rem;
   text-decoration: none;
   border: none;
   cursor: pointer;
@@ -1737,7 +1738,7 @@ color: inherit;
   color: #666;
   font-size: 0.9rem;
 }
-/* check if the user has reviewed the specific recipe */
+/* we check if the user has reviewed the specific recipe */
 .review-indicator {
   color: var(--success-color);
   text-decoration: underline;
@@ -1748,4 +1749,190 @@ color: inherit;
 
 .review-indicator:hover {
   opacity: 0.8;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 20% 70%;
+  width: 1200px;
+  gap: 2rem;
+  margin-top: 1rem;
+  /* we account for navbar, margins and footer */
+  min-height: calc(100vh - 200px); 
+}
+
+.admin-sidebar {
+  width: 200px;
+  background-color: var(--base-variant);
+  padding: 2rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.admin-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-menu-item {
+  margin-bottom: 1rem;
+}
+
+.admin-menu-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.admin-menu-link:hover {
+  background-color: var(--primary-color);
+  color: var(--base-color);
+  transform: translateX(5px);
+}
+
+.admin-menu-link.active {
+  background-color: var(--primary-variant);
+  color: var(--base-color);
+}
+
+.admin-menu-icon {
+  margin-right: 0.75rem;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.admin-content {
+  flex: 1;
+  background-color: var(--base-variant);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  min-height: 500px;
+}
+
+.admin-title {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+  text-align: left;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--secondary-text);
+}
+
+/* admin/recipes.ejs */
+.admin-recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.admin-recipe-card {
+  background-color: var(--base-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.admin-recipe-card:hover {
+  transform: translateY(-5px);
+}
+
+.admin-recipe-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.admin-recipe-content {
+  padding: 1rem;
+}
+
+.admin-recipe-title {
+  color: var(--text-color);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-recipe-creator {
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.admin-recipe-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--base-variant);
+}
+
+.admin-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.admin-btn-view {
+  background-color: var(--info-color);
+  color: white;
+}
+
+.admin-btn-delete {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.admin-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.admin-modal-content {
+  position: relative;
+  background-color: var(--base-color);
+  margin: 15% auto;
+  padding: 2rem;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+}
+
+.admin-modal-close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.admin-modal-container{
+  background: var(--base-variant);
+  border-radius: 12px;
+  width: 600px;
+  max-height: 600px;
+  max-width: 90%;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
 }

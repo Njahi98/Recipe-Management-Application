@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('../partials/head.ejs')%>
+
+  <body>
+<%-include('../partials/nav.ejs') %>
+<div class="page-container">
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <nav>
+          <ul class="admin-menu">
+            <li class="admin-menu-item">
+              <a href="/admin/users" class="admin-menu-link <%= path === '/admin/users' ? 'active' : '' %>">
+                <svg class="admin-menu-icon" viewBox="0 0 24 24">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                Users
+              </a>
+            </li>
+            <li class="admin-menu-item">
+              <a href="/admin/recipes" class="admin-menu-link <%= path === '/admin/recipes' ? 'active' : '' %>">
+                <svg class="admin-menu-icon" viewBox="0 0 24 24">
+                  <path d="M15.5 14l-0.8 2.9-3.5-2.1-3.7 1.2-0.2-3.2-3.2-1 2.2-2.3-1.2-3 3.2-0.2 1.8-2.6 2.3 2.3 3-0.9 0.1 3.2 2.8 1.5-2.4 2.2 0.6 3z"/>
+                </svg>
+                Recipes
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      
+      <main class="admin-content">
+        <h1 class="admin-title"><%- title %></h1>
+        <% if(users.length>0){  %>
+
+            <div class="admin-users-grid">
+              <% users.forEach(user => { %>
+                <div class="admin-user-card" data-id="<%= user._id %>">
+                  <img 
+                    src="users/image/<%= user.imageId %>" 
+                    alt="<%= user.title %>" 
+                    class="admin-user-image"
+                    onerror="this.src='/images/default-profile.png'"
+                  >
+                  <div class="admin-user-content">
+                    <h3 class="admin-user-title"><%= user.username %></h3>
+                          <p class="admin-user-details">Email: <%= user.email %></p>
+                          <p class="admin-user-details" id="roleParagraph">Role: <%= user.role %></p>
+                          <p class="admin-user-details">bio: <%= user.bio %></p>
+                          <p class="admin-user-details">location: <%= user.location %></p>
+                  </div>
+                  <div class="admin-user-actions">
+                    <button class="admin-btn admin-btn-view" data-userdata="<%= user._id %>">View Details</button>
+                    <button class="admin-btn admin-btn-update-role" data-userdata="<%= user._id %>" data-userrole="<%= user.role %>">Update Role </button>
+                    <button class="admin-btn admin-btn-delete" data-userdata="<%= user._id %>" >Delete</button>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+
+          <% }else{ %>
+
+            <div class="no-reviews">
+              <p>No users have been added yet.</p>
+          </div>
+          
+        <%  } %>
+      </main>
+    </div>
+</div>>
+</div>
+<%-include('../partials/footer.ejs') %>
+
+<script type="module" src="/scripts/admin-user.js">
+
+</script>
+<%-include('../partials/notification.ejs')%>
+
+</body>
+</html>
+

@@ -30,34 +30,44 @@
         
         <main class="admin-content">
           <h1 class="admin-title">Recipe Management</h1>
-          
-          <div class="admin-recipes-grid">
-            <% recipes.forEach(recipe => { %>
-              <div class="admin-recipe-card" data-id="<%= recipe._id %>">
-                <img 
-                  src="/recipes/image/<%= recipe.imageId %>" 
-                  alt="<%= recipe.title %>" 
-                  class="admin-recipe-image"
-                  onerror="this.src='/images/default-recipe.png'"
-                >
-                <div class="admin-recipe-content">
-                  <h3 class="admin-recipe-title"><%= recipe.title %></h3>
-                    <%if(recipe.creator){ %>
-                        <p class="admin-recipe-creator">Created by: <%= recipe.creator.username %></p>
-               <%   }else{ %>
-                        <p class="admin-recipe-creator">Created by Guest</p>
+          <% if(recipes.length>0){  %>
 
-                 <%   } %>
-
-
+            <div class="admin-recipes-grid">
+              <% recipes.forEach(recipe => { %>
+                <div class="admin-recipe-card" data-id="<%= recipe._id %>">
+                  <img 
+                    src="/recipes/image/<%= recipe.imageId %>" 
+                    alt="<%= recipe.title %>" 
+                    class="admin-recipe-image"
+                    onerror="this.src='/images/default-recipe.png'"
+                  >
+                  <div class="admin-recipe-content">
+                    <h3 class="admin-recipe-title"><%= recipe.title %></h3>
+                      <%if(recipe.creator){ %>
+                          <p class="admin-recipe-details">Created by: <%= recipe.creator.username %></p>
+                 <%   }else{ %>
+                          <p class="admin-recipe-details">Created by Guest</p>
+  
+                   <%   } %>
+  
+                  </div>
+                  <div class="admin-recipe-actions">
+                    <button class="admin-btn admin-btn-view" data-recipedata="<%= recipe._id %>">View Details</button>
+                    <button class="admin-btn admin-btn-delete" data-recipedata="<%= recipe._id %>" >Delete</button>
+                  </div>
                 </div>
-                <div class="admin-recipe-actions">
-                  <button class="admin-btn admin-btn-view" data-recipedata="<%= recipe._id %>">View Details</button>
-                  <button class="admin-btn admin-btn-delete" data-recipedata="<%= recipe._id %>" >Delete</button>
-                </div>
-              </div>
-            <% }) %>
+              <% }) %>
+            </div>
+
+          <% }else{ %>
+
+            <div class="no-reviews">
+              <p>No recipes have been added yet.</p>
           </div>
+          
+        <%  } %>
+
+
         </main>
       </div>
     </div>

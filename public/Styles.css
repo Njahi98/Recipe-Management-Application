@@ -473,19 +473,19 @@ body {
   border-right: 1px solid var(--secondary-text);
 }
 
-.recipe-header {
+.recipe-header,.user-header {
   text-align: left;
   margin-bottom: 2rem;
 }
 
-.recipe-header h2 {
+.recipe-header h2,.user-header h2 {
   font-size: 2.5rem;
   margin: 0 0 1rem 0;
   color: var(--text-color);
   font-weight: 700;
 }
 
-.recipe-meta {
+.recipe-meta,.user-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
@@ -493,7 +493,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.recipe-meta span {
+.recipe-meta span,.user-meta span {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -511,11 +511,11 @@ body {
   margin: 1rem 0 2rem 0;
 }
 
-.recipe-section {
+.recipe-section,.user-section {
   margin-bottom: 2.5rem;
 }
 
-.recipe-section h3 {
+.recipe-section h3,.user-section h3 {
   color: var(--text-color);
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
@@ -523,7 +523,7 @@ body {
   border-bottom: 2px solid var(--info-color);
 }
 
-.recipe-section p {
+.recipe-section p,.user-section p {
   color: var(--text-color);
   line-height: 1.6;
 }
@@ -1827,15 +1827,15 @@ color: inherit;
   border-bottom: 1px solid var(--secondary-text);
 }
 
-/* admin/recipes.ejs */
-.admin-recipes-grid {
+/* admin/recipes.ejs and admin/users.ejs */
+.admin-recipes-grid,.admin-users-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
 }
 
-.admin-recipe-card {
+.admin-recipe-card,.admin-user-card  {
   background-color: var(--base-color);
   border-radius: 8px;
   overflow: hidden;
@@ -1843,33 +1843,33 @@ color: inherit;
   transition: transform 0.3s ease;
 }
 
-.admin-recipe-card:hover {
+.admin-recipe-card:hover,.admin-user-card:hover {
   transform: translateY(-5px);
 }
 
-.admin-recipe-image {
+.admin-recipe-image,.admin-user-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.admin-recipe-content {
+.admin-recipe-content,.admin-user-content {
   padding: 1rem;
 }
 
-.admin-recipe-title {
+.admin-recipe-title,.admin-user-title {
   color: var(--text-color);
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
-.admin-recipe-creator {
+.admin-recipe-details,.admin-user-details{
   color: var(--secondary-text);
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
-.admin-recipe-actions {
+.admin-recipe-actions,.admin-user-actions {
   display: flex;
   gap: 1rem;
   padding: 1rem;
@@ -1887,41 +1887,15 @@ color: inherit;
 
 .admin-btn-view {
   background-color: var(--info-color);
-  color: white;
+  color: var(--text-color);
 }
 
 .admin-btn-delete {
   background-color: var(--error-color);
-  color: white;
+  color: var(--text-color);
 }
-
-.admin-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.admin-modal-content {
-  position: relative;
-  background-color: var(--base-color);
-  margin: 15% auto;
-  padding: 2rem;
-  width: 80%;
-  max-width: 600px;
-  border-radius: 8px;
-}
-
-.admin-modal-close {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
+.admin-btn-update-role{
+  background-color: var(--accent-color);
   color: var(--text-color);
 }
 

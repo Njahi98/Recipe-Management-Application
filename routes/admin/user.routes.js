@@ -10,6 +10,9 @@ router.get('/:userId', isAuthenticated, isAdmin,adminUserController.admin_user_d
 
 router.put('/:userId', isAuthenticated, isAdmin, adminUserController.admin_user_update);
 
-router.delete('/:userId', isAuthenticated, isAdmin, adminUserController.admin_user_delete)
+router.delete('/:userId', isAuthenticated, isAdmin, adminUserController.admin_user_delete);
+//decided to remove the two authentication middlewares for faster image fetching, because these images are public data anyway
+router.get("/image/:id", adminUserController.user_image_get);
+
 
 module.exports=router;

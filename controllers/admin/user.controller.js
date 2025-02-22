@@ -1,5 +1,6 @@
 const User = require("../../models/user")
-
+const { getGfs } = require("../../middleware/uploadMiddleware");
+const mongoose = require("mongoose");
 
 
 const admin_user_index = async(req,res)=>{
@@ -7,9 +8,11 @@ const admin_user_index = async(req,res)=>{
         const users = await User.find().select('-password');
         if(users.length === 0 ){
             return res.status(404).json({error:'no users available'});
-        }
-        return res.status(200).json({message:'users fetched successfully',users});
-
+        }        
+        return res.status(200).render('admin/users', {
+            title:'Users management',
+            users:users || []}
+        );
     } catch (error) {
         return res.status(500).json({error:'error fetching users'});
     }
@@ -76,6 +79,29 @@ const admin_user_delete = async(req,res)=>{
 
 }
 
+const user_image_get = async (req, res) => {
+    try {
+      // we ensure gfs is initialized
+      const gfs = await getGfs(); 
+      const fileId = req.params.id;
+  
+      const file = await gfs
+        .find({ _id: new mongoose.Types.ObjectId(fileId) })
+        .toArray();
+  
+      if (!file || file.length === 0) {
+        return res.status(404).json({ message: "File not found" });
+      }
+  
+      const readStream = gfs.openDownloadStream(
+        new mongoose.Types.ObjectId(fileId)
+      );
+      readStream.pipe(res);
+    } catch (error) {
+      console.error("Error fetching profile image:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  } 
 
 
 module.exports={
@@ -83,4 +109,5 @@ module.exports={
     admin_user_details,
     admin_user_update,
     admin_user_delete,
+    user_image_get,
 }

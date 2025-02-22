@@ -10,7 +10,8 @@ router.get('/:recipeId', isAuthenticated, isAdmin, adminRecipeController.admin_r
 
 router.delete('/:recipeId', isAuthenticated, isAdmin, adminRecipeController.admin_recipe_delete)
 
-router.get("/image/:id", isAuthenticated, isAdmin, adminRecipeController.recipe_image_get);
+//decided to remove the two authentication middlewares for faster image fetching, because these images are public data anyway
+router.get("/image/:id", adminRecipeController.recipe_image_get);
 
 
 

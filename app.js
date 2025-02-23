@@ -18,10 +18,11 @@ const adminRoutes = require('./routes/admin/admin.routes');
 const dbURI=process.env.dbURI
 mongoose.connect(dbURI)
 .then((result)=>{
-    // Only listen directly when not running on Vercel
-    if (process.env.NODE_ENV !== 'production') {
-        app.listen(3000);
-    }   
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`listening on port ${port}`)
+      })
+
 })
 .catch((error)=>console.log(error));
 

@@ -23,8 +23,10 @@ import { createModal } from "./modal.js";
         
                               <p class="review-comment">${contact.message}</p>
                           </div>
-                              <div class="review-btn-actions"></div>
-                              <button class="deleteRecipeBtn" data-contactdoc="${contact._id}">Delete</button>
+                              <div class="review-btn-actions">
+                               <button class="deleteRecipeBtn" data-contactdoc="${contact._id}">Delete</button>
+
+                              </div>
         `;
         contactGrid.appendChild(html);
       });

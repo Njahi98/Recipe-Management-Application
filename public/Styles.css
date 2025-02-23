@@ -594,6 +594,9 @@ width: 100%;}
   margin-bottom: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
+  display: flex;         
+  flex-direction: column; 
+  justify-content: space-between;
 }
 
 .review-card:hover {
@@ -651,7 +654,8 @@ width: 100%;}
 }
 .review-btn-actions{
   display: flex;
-  justify-content: flex-end;
+  gap:1rem;
+  margin-top: auto; 
 }
 
 
@@ -1836,6 +1840,9 @@ color: inherit;
 }
 
 .admin-recipe-card,.admin-user-card  {
+  display: flex;         
+  flex-direction: column; 
+  justify-content: space-between; 
   background-color: var(--base-color);
   border-radius: 8px;
   overflow: hidden;
@@ -1874,6 +1881,7 @@ color: inherit;
   gap: 1rem;
   padding: 1rem;
   background-color: var(--base-variant);
+  margin-top: auto;
 }
 
 .admin-btn {
@@ -1909,4 +1917,38 @@ color: inherit;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-in-out;
   position: relative;
+}
+/* stats styling */
+.stats-card {
+  border: 1px solid var(--secondary-text);
+  background: var(--base-variant);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  display: flex;         
+  justify-content: space-between;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stats-user {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+.stats-user p {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
 }

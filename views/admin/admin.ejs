@@ -47,11 +47,29 @@
       
       <main class="admin-content">
         <h1 class="admin-title"><%- title %></h1>
+                    <div class="stats-card">
+                  
+                            <div class="stats-user">
+                              <p> Recipes</p> 
+                              <p class="review-comment"><%=stats.recipes %></p>
+                            </div>
+                            <div class="stats-user">
+                              <p> Users</p> 
+                              <p class="review-comment"><%=stats.users %></p>
+                            </div>          <div class="stats-user">
+                              <p> Contact mails</p> 
+                              <p class="review-comment"><%=stats.contacts %></p>
+                            </div>
+        
+             
+                    </div>
+                         
       </main>
     </div>
 </div>>
 </div>
 <%-include('../partials/footer.ejs') %>
+<%-include('../partials/notification.ejs')%>
 
 </body>
 </html>

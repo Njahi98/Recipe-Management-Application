@@ -33,6 +33,14 @@
                 Recipes
               </a>
             </li>
+            <li class="admin-menu-item">
+              <a href="/admin/contact" class="admin-menu-link <%= path === '/admin/contact' ? 'active' : '' %>">
+                <svg class="admin-menu-icon" viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                Contact mail
+              </a>
+            </li>
           </ul>
         </nav>
       </aside>
@@ -55,7 +63,7 @@
                           <p class="admin-user-details">Email: <%= user.email %></p>
                           <p class="admin-user-details" id="roleParagraph">Role: <%= user.role %></p>
                           <p class="admin-user-details">bio: <%= user.bio %></p>
-                          <p class="admin-user-details">location: <%= user.location %></p>
+                          <p class="admin-user-details">location: <% user.location %></p>
                   </div>
                   <div class="admin-user-actions">
                     <button class="admin-btn admin-btn-view" data-userdata="<%= user._id %>">View Details</button>

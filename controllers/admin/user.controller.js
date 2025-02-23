@@ -40,6 +40,11 @@ const admin_user_update = async(req,res)=>{
     try {
 
     const userId = req.params.userId;
+    // an admin user cannot update his role to for example "USER"
+    if(userId === req.userId){
+        return res.status(403).json({error:'You cannot update your own Role as you have admin privileges'});
+    }
+
     const formData = req.body;
 
    // we add validation for formData
@@ -61,6 +66,13 @@ const admin_user_update = async(req,res)=>{
 const admin_user_delete = async(req,res)=>{
     try {
         const userId = req.params.userId;
+
+        //logged-in admin-user cannot delete his own account as he's logged-in 
+
+        if(userId === req.userId){
+            return res.status(403).json({error:'The logged-in User cannot delete his own account.'})
+        }
+
         const user = await User.findById(userId).select('-password');
     
         if(!user){

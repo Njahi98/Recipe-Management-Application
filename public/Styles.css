@@ -513,7 +513,7 @@ body {
 
 .recipe-section,.user-section {
   margin-bottom: 2.5rem;
-}
+width: 100%;}
 
 .recipe-section h3,.user-section h3 {
   color: var(--text-color);
@@ -1828,7 +1828,7 @@ color: inherit;
 }
 
 /* admin/recipes.ejs and admin/users.ejs */
-.admin-recipes-grid,.admin-users-grid {
+.admin-recipes-grid,.admin-users-grid,.admin-contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;

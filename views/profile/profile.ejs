@@ -24,13 +24,13 @@
           <p class="bio"><%= profile.bio || 'No bio yet.' %></p>
           <div class="social-links">
             <% if (profile.socialMedia.twitter) { %>
-              <a href="<%= profile.socialMedia.twitter %>" target="_blank" class="social-link">Twitter</a>
+              <a href="http://x.com/<%= profile.socialMedia.twitter %>" target="_blank" class="social-link">Twitter</a>
             <% } %>
             <% if (profile.socialMedia.instagram) { %>
-              <a href="<%= profile.socialMedia.instagram %>" target="_blank" class="social-link">Instagram</a>
+              <a href="http://instagram.com/<%= profile.socialMedia.instagram %>" target="_blank" class="social-link">Instagram</a>
             <% } %>
             <% if (profile.socialMedia.facebook) { %>
-              <a href="<%= profile.socialMedia.facebook %>" target="_blank" class="social-link">Facebook</a>
+              <a href="http://facebook.com/<%= profile.socialMedia.facebook %>" target="_blank" class="social-link">Facebook</a>
             <% } %>
           </div>
         </div>
@@ -44,7 +44,7 @@
             <span class="label">Website:</span>
             <span class="value">
               <% if (profile.website) { %>
-                <a href="<%= profile.website %>" target="_blank"><%= profile.website %></a>
+                <a href="http://<%= profile.website %>" target="_blank"><%= profile.website %></a>
               <% } else { %>
                 Not specified
               <% } %>

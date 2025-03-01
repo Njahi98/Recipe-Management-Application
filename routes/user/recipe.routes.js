@@ -15,7 +15,7 @@ router.get('/:id',recipeController.recipe_details);
 
 router.delete('/:id',isAuthenticated,isRecipeOwner,recipeController.recipe_delete)
 
-router.get('/:id/edit',recipeController.recipe_edit_get)
+router.get('/:id/edit',isAuthenticated,recipeController.recipe_edit_get)
 
 router.get("/image/:id", recipeController.recipe_image_get);
 

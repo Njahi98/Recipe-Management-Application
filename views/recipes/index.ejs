@@ -15,7 +15,7 @@
               <p style="transform: translateX(250%);">🔍</p>
               <input class="search-bar" type="text" name="search" placeholder="Search by title...">
               <select style="margin-left: 1rem;" class="category-bar">
-                <option value="">category</option>
+                <option value="">Category</option>
                 <option value="Breakfast">Breakfast</option>
                 <option value="Lunch">Lunch</option>
                 <option value="Dinner">Dinner</option>
@@ -23,7 +23,7 @@
                 <option value="Snack">Snack</option>
               </select>
               <select style="margin-left: 1rem;" class="difficulty-bar">
-                <option value="">difficulty</option>
+                <option value="">Difficulty</option>
                 <option value="Easy">Easy</option>
                 <option value="Medium">Medium</option>
                 <option value="Hard">Hard</option>
@@ -88,10 +88,11 @@
                   <a style="text-decoration: none;" href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
                   <% if(locals.user){ %>
                     <button class="reviewRecipeBtn" data-doc="<%= recipe._id %>">Review</button>
-                    <button class="deleteRecipeBtn" data-doc="<%= recipe._id %>">Delete</button>
+                    <% if(locals.user._id.toString() === recipe.creator._id.toString()){ %>
+                      <button class="deleteRecipeBtn" data-doc="<%= recipe._id %>">Delete</button>
+                    <%} %>
                   <% }else { %>
-                    <button class="reviewRecipeBtnDisabled denied" data-tooltip="You cannot review a Recipe as a guest. please register." style="opacity: 0.6;" disabled >Review</button>
-                    <button class="deleteRecipeBtnDisabled denied" data-tooltip="You cannot delete a Recipe as a guest. please register." style="opacity: 0.6;" disabled>Delete</button>
+                    <button class="reviewRecipeBtn" data-doc="<%= recipe._id %>">Review</button>
                   <% }  %>
 
                 </div>

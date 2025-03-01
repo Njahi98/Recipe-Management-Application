@@ -69,7 +69,7 @@ async function ValidateAndSubmit(e) {
       if (messageInput.value.trim().split(" ").length < 3) {
         displayError(
           messageInput,
-          "you need to provide a name with at least three words"
+          "you need to provide a message with at least three words"
         );
 
         return false;

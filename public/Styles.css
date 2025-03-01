@@ -367,7 +367,7 @@ body {
 .deleteRecipeBtn,
 .reviewRecipeBtnDisabled,
 .deleteRecipeBtnDisabled {
-  padding: 0.2rem 1.5rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 0.75rem;
   border: none;
   cursor: pointer;

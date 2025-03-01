@@ -22,6 +22,11 @@ const recipe_edit_get = (req, res) => {
   const id = req.params.id;
   Recipe.findById(id)
     .then((result) => {
+  //if the user is not the creator of the recipe we'll redirect him to the recipe details page with an error
+      if(result.creator.toString() !== req.userId){ 
+        return res.redirect(`/recipes/${id}?error=unauthorized`)
+      }
+
       res.render("recipes/edit", {
         recipe: result,
         title: "recipe details",

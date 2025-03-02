@@ -1428,23 +1428,57 @@ width: 100%;}
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
+  font-weight: 500;
   color: var(--text-color);
+  font-size: 1.1rem;
 }
 
 .form-group input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 0.5rem;
   background-color: var(--base-color);
   color: var(--text-color);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-size: 1rem;
 }
+
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 0.5rem;
+  background-color: var(--base-color);
+  color: var(--text-color);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  resize: vertical;
+  min-height: 120px;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.2);
+}
+
+.form-group input[type="file"] {
+  padding: 0.5rem;
+  background-color: transparent;
+  border: 2px dashed var(--primary-color);
+  cursor: pointer;
+}
+
+
+
 
 .auth-form button {
   width: 80%;
@@ -1516,14 +1550,35 @@ width: 100%;}
 }
 
 
-.current-profile-image{
-  margin: 1rem auto;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   color: var(--text-color);
+.current-profile-image {
+  margin: 1.5rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
 }
+
+.current-profile-image img {
+  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+  object-fit: cover;
+  height: 200px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.current-profile-image img:hover {
+  transform: scale(1.05);
+}
+
+.current-profile-image p {
+  margin-top: 0.75rem;
+  font-style: italic;
+  color: var(--secondary-text);
+}
+
 
 .profile-container {
   margin: 2rem auto ;
@@ -1640,65 +1695,75 @@ color: inherit;
 
 /* edit profile page */
 .edit-profile-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
+  min-width: 600px;
+  margin: 3rem auto;
+  padding: 3rem;
   background-color: var(--base-variant);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .edit-profile-container h1 {
   color: var(--text-color);
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.75rem;
 }
 
-.form-group {
-  margin-bottom: 1rem;
-}
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: var(--text-color);
-}
 
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid var(--primary-color);
-  border-radius: 0.25rem;
-  background-color: var(--base-color);
-  color: var(--text-color);
-}
 
 .save-btn {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.85rem;
   background-color: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .edit-back-btn {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.85rem;
   background-color: var(--secondary-text);
   color: white;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .save-btn:hover {
   background-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
+
 .edit-back-btn:hover {
   background-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.save-btn:active,
+.edit-back-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form div[style="display: flex; gap: 10px;"] {
+  margin-top: 2rem;
 }
 
 /* recipe index page star-related */

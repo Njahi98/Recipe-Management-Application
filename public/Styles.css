@@ -1415,7 +1415,7 @@ width: 100%;}
 .auth-form {
   max-width: 400px;
   margin: 2rem auto;
-  padding: 2rem;
+  padding: 2rem 3rem;
   background-color: var(--base-variant);
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -1428,7 +1428,7 @@ width: 100%;}
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin: 1.5rem auto;
 }
 
 .form-group label {

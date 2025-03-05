@@ -12,4 +12,4 @@ router.put('/:recipeId/reviews/:reviewId',isAuthenticated,isReviewOwner,reviewCo
 
 router.delete('/:recipeId/reviews/:reviewId',isAuthenticated,isReviewOwner,reviewControllers.recipe_delete_review)
 
-module.exports=router;
+module.exports=router; 

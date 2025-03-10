@@ -81,6 +81,27 @@ body {
   background-color: var(--base-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+.navbar-mobile{
+  display: none;
+}
+@media screen and (max-width:940px) {
+  .navbar {
+    display: none;
+  }
+  .navbar-mobile{
+    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    color: var(--text-color);
+    padding: 0.5rem;
+    background-color: var(--base-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1)
+  }
+  
+}
+
 .nav-main-titles {
   display: flex;
   gap: 2rem;

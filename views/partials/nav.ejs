@@ -38,14 +38,74 @@
   </ul>
 </nav>
 <nav class="navbar-mobile">
-  <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 12H20" stroke="var(--text-color)" stroke-width="2" stroke-linecap="round"/>
-    <path d="M5 17H20" stroke="var(--text-color" stroke-width="2" stroke-linecap="round"/>
-    <path d="M5 7H20" stroke="var(--text-color" stroke-width="2" stroke-linecap="round"/>
+  <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 12H20" stroke="var(--text-color)" stroke-width="1" stroke-linecap="round"/>
+    <path d="M3 17H20" stroke="var(--text-color" stroke-width="1" stroke-linecap="round"/>
+    <path d="M3 7H20" stroke="var(--text-color" stroke-width="1" stroke-linecap="round"/>
     </svg>
     <a href="/"><img src="/images/logo.png" alt="site logo" /></a>
-    <button id="theme-switch">
+    <button id="theme-switch-mobile">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z"/></svg>
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Z"/></svg>
     </button>
 </nav>
+
+<script>
+  const navbarMobile = document.querySelector('.navbar-mobile')
+  const navbarMobileToggle = document.querySelector('.navbar-mobile svg');
+  navbarMobileToggle.addEventListener('click',()=>{
+    const navMenu = document.createElement('div');
+    navMenu.classList.add('modal-backdrop');
+    navMenu.innerHTML=`
+    <div class="navbar-mobile-menu">
+      <div class="close-button-container">
+<svg class="close-button" width="35px" height="35px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+    </g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="var(--text-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> 
+      <path d="M3 3.32001L21 21.32" stroke="var(--text-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> 
+      </g></svg>
+</div>
+    <% if (locals.user) { %>
+      <a href="/profile/<%= user._id %>">
+    <% if(locals.user.imageId==="/images/default-profile.png"){ %>
+      <img src="/images/default-profile.png" alt="<%= user.username %>'s profile picture" class="profile-image-nav"></a>
+  <%  }else{ %>
+      <img src="/profile/image/<%= user.imageId %>" alt="<%= user.username %>'s profile picture" class="profile-image-nav"></a>
+  <%  } %>
+   <%   if(locals.user.role === 'ADMIN'){ %>
+        <li style="color: var(--text-color);">Welcome, Admin <%= locals.user.username %></li>
+        <li class="mobile-auth-btns"><a href="/profile/<%=locals.user._id %>">Profile</a></li>
+        <li class="mobile-auth-btns"><a href="/admin/">Admin Panel</a></li>
+        <li class="mobile-auth-btns"><a href="/auth/logout">Logout</a></li>
+  <%    }else{ %>
+        <li style="color: var(--text-color);">Welcome, <%= locals.user.username %></li>
+        <li><a href="/profile/<%=locals.user._id %>">profile</a></li>
+        <li><a href="/auth/logout">Logout</a></li>
+      
+    <% }} else { %>
+          <img src="/images/default-profile.png" alt="default profile picture" class="profile-image-nav"></a>
+      <li style="color: var(--text-color);">Welcome, Guest</li>
+      <li class="mobile-auth-btns"><a href="/auth/login">Login</a></li>
+      <li class="mobile-auth-btns"><a href="/auth/register">Register</a></li>
+    <% } %>
+      <ul class="mobileNavItems">
+      <li><a href="/">Home</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+      </div>`   
+     document.body.appendChild(navMenu);
+     navMenu.addEventListener('click',(e)=>{
+      if(e.target=== navMenu){
+        navMenu.remove();
+      }; 
+    });
+    const closeButton = document.querySelector('.close-button');
+    closeButton.addEventListener('click',()=>{
+      navMenu.remove();
+    });
+  })
+
+
+</script>

@@ -1,5 +1,6 @@
 let darkmode = localStorage.getItem('darkmode')
 const themeSwitch = document.getElementById('theme-switch')
+const themeSwitchMobile = document.getElementById('theme-switch-mobile')
 
 const enableDarkmode = () => {
   document.body.classList.add('darkmode')
@@ -17,3 +18,10 @@ themeSwitch.addEventListener("click", () => {
   darkmode = localStorage.getItem('darkmode')
   darkmode !== "active" ? enableDarkmode() : disableDarkmode()
 })
+
+if(themeSwitchMobile) {
+  themeSwitchMobile.addEventListener("click", () => {
+    darkmode = localStorage.getItem('darkmode')
+    darkmode !== "active" ? enableDarkmode() : disableDarkmode()
+  })
+}

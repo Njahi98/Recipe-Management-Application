@@ -176,12 +176,17 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.aboutCenterImgText {
+.contactCenterImgText {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -120%);
+  transform: translate(-50%, -140%);
 }
-.aboutCenterImgText :first-child {
+.aboutCenterImgText{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -110%);
+}
+.aboutCenterImgText :first-child,.contactCenterImgText :first-child {
   color: white;
   font-size: 3rem;
 }
@@ -1406,6 +1411,7 @@ width: 100%;}
   background-color: var(--base-variant);
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; 
 }
 
 .auth-form h2 {
@@ -1416,6 +1422,10 @@ width: 100%;}
 
 .form-group {
   margin: 1.5rem auto;
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .form-group label {
@@ -1424,6 +1434,7 @@ width: 100%;}
   font-weight: 500;
   color: var(--text-color);
   font-size: 1.1rem;
+  align-self: flex-start; 
 }
 
 .form-group input {
@@ -1435,6 +1446,9 @@ width: 100%;}
   color: var(--text-color);
   transition: border-color 0.3s, box-shadow 0.3s;
   font-size: 1rem;
+  box-sizing: border-box; 
+  display: block; 
+  margin: 0 auto; 
 }
 
 .form-group textarea {
@@ -1448,6 +1462,7 @@ width: 100%;}
   resize: vertical;
   min-height: 120px;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -1462,6 +1477,13 @@ width: 100%;}
   background-color: transparent;
   border: 2px dashed var(--primary-color);
   cursor: pointer;
+}
+
+.auth-form button[type="submit"] {
+  display: block;
+  margin: 0 auto;
+  width: 100%; 
+  box-sizing: border-box;
 }
 
 
@@ -1983,6 +2005,13 @@ form div[style="display: flex; gap: 10px;"] {
   font-size: 1rem;
   margin: 0;
 }
+.contact-img{
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 /* Navbar mobile menu */
 .navbar-mobile-menu {
@@ -2144,34 +2173,76 @@ form div[style="display: flex; gap: 10px;"] {
   }
 }
 
-@media screen and (max-width: 845px) {
+@media screen and (max-width:1052px) {
+  .profile-page-container {
+    grid-template-columns: 1fr;
+  }
+  .profile-container{
+    order: 1;
+  }
+  .profile-recipes-container{
+  order: 2;
+  }
+  .profile-reviews-container{
+    order: 3;
+  }
+  .profile-reviews-container,
+  .profile-recipes-container {
+    max-width: 100%;
+    min-width: unset;
+  }
+
+}
+
+@media screen and (max-width: 913px) {
   .indexCenterImgText {
+  transform: translate(-50%, -120%) scale(0.9);
+}
+.aboutCenterImgText {
+  transform: translate(-50%, -20%) scale(0.7);
+  display: inline;
+  white-space: nowrap;
+}
+.para{
+  padding: 0.5rem;
+  width: 100%;
+}
+.contactCenterImgText{
   transform: translate(-50%, -120%) scale(0.9);
 }
 
 }
 
-@media screen and (max-width: 486px) {
-  .indexCenterImgText {
-    transform: translate(-50%, -120%) scale(0.7);
-  }
-}
-@media screen and (max-width: 376px) {
-  .indexCenterImgText {
-    transform: translate(-50%, -130%) scale(0.6);
-  }
-}
-
-
 @media screen and (max-width: 768px) {
-  .profile-page-container {
-    grid-template-columns: 1fr;
+  .page-container {
+    padding: 0 1rem;
+    margin: 1rem auto;
   }
-
-  .profile-reviews-container,
-  .profile-recipes-container {
-    max-width: 100%;
-    min-width: unset;
+  
+  .contact-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  
+  .contact-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .contact-name, .contact-email {
+    width: 100%;
+  }
+  
+  .contact-form-action {
+    justify-content: center;
+  }
+  
+  .contact-form-action button {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+  }
+  .contactCenterImgText{
+    transform: translate(-50%, -110%) scale(0.9);
   }
 
   .recipe-details {
@@ -2188,5 +2259,45 @@ form div[style="display: flex; gap: 10px;"] {
 .review-content {
   padding-left: 0;
 }
+}
+
+@media screen and (max-width: 539px) {
+  .indexCenterImgText {
+    transform: translate(-50%, -120%) scale(0.7);
+  }
+  .aboutCenterImgText {
+    transform: translate(-50%, -30%) scale(0.5);
+  }
+  .contactCenterImgText{
+    transform: translate(-50%, -90%) scale(0.6);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .page-container {
+    padding: 0 0.5rem;
+  }
   
+  .contact-container {
+    width: 95%;
+    padding: 1rem;
+  }
+  
+  .contact-container p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .contactCenterImgText{
+    transform: translate(-50%, -80%) scale(0.6);
+  }
+  
+}
+
+@media screen and (max-width: 436px) {
+  .indexCenterImgText {
+    transform: translate(-50%, -130%) scale(0.6);
+  }
+  .aboutCenterImgText {
+    transform: translate(-50%, -40%) scale(0.5);
+  }
 }

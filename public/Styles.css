@@ -1799,16 +1799,14 @@ form div[style="display: flex; gap: 10px;"] {
 
 .admin-layout {
   display: grid;
-  grid-template-columns: 20% 70%;
+  grid-template-columns: 250px 1fr;
   width: 1200px;
   gap: 2rem;
   margin-top: 1rem;
-  /* we account for navbar, margins and footer */
   min-height: calc(100vh - 200px); 
 }
 
 .admin-sidebar {
-  width: 200px;
   background-color: var(--base-variant);
   padding: 2rem 1rem;
   border-radius: 8px;
@@ -1855,7 +1853,6 @@ form div[style="display: flex; gap: 10px;"] {
 }
 
 .admin-content {
-  flex: 1;
   background-color: var(--base-variant);
   padding: 1rem 2rem;
   border-radius: 8px;
@@ -1924,6 +1921,7 @@ form div[style="display: flex; gap: 10px;"] {
   padding: 1rem;
   background-color: var(--base-variant);
   margin-top: auto;
+  flex-wrap: wrap;
 }
 
 .admin-btn {
@@ -1959,6 +1957,64 @@ form div[style="display: flex; gap: 10px;"] {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-in-out;
   position: relative;
+}
+
+.admin-contact-card {
+  border: 1px solid var(--secondary-text);
+  background: var(--base-variant);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  display: flex;         
+  flex-direction: column; 
+  justify-content: space-between;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.admin-contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-contact-user {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(164, 165, 184, 0.2);
+}
+
+.admin-contact-user p {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.admin-contact-content {
+  overflow: hidden;
+}
+
+.admin-contact-message {
+  color: var(--secondary-text);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 1rem 0;
+  text-align: left;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+.admin-contact-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
 }
 /* stats styling */
 .stats-card {
@@ -2129,7 +2185,6 @@ form div[style="display: flex; gap: 10px;"] {
   to { transform: translateX(0); }
 }
 
-/* Responsive adjustments */
 @media (max-width: 350px) {
   .navbar-mobile-menu {
     padding: 1rem;
@@ -2141,7 +2196,6 @@ form div[style="display: flex; gap: 10px;"] {
 }
 
 
-/* Responsive Design */
 @media screen and (max-width:1220px) {
   .navbar {
     display: none;
@@ -2161,9 +2215,15 @@ form div[style="display: flex; gap: 10px;"] {
     text-align: center;
   }
   .admin-layout {
-    max-width: 100%;
-    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    width: 100%;
+    max-width: 1200px;
+    gap: 2rem;
+    margin-top: 1rem;
+    min-height: calc(100vh - 200px); 
   }
+  
 }
 
 @media screen and (max-width:1052px) {
@@ -2460,5 +2520,179 @@ width: 95%;
   
   .review-card {
     padding: 0.75rem;
+  }
+  .admin-layout{
+    width: 150px;
+  }
+}
+/* admin responsitivity  */
+@media (max-width: 1200px) {
+  .admin-layout {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .admin-layout {
+    grid-template-columns: 200px 1fr;
+    gap: 1.5rem;
+  }
+  
+  .admin-content {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .admin-sidebar {
+    padding: 1rem;
+  }
+  
+  .admin-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .admin-menu-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  .admin-menu-link {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .admin-menu-icon {
+    margin-right: 0.5rem;
+  }
+  
+  .admin-content {
+    padding: 1rem;
+  }
+  
+  .admin-recipes-grid, .admin-users-grid, .admin-contact-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-menu {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .admin-menu-item {
+    width: 100%;
+  }
+  
+  .admin-recipes-grid, .admin-users-grid, .admin-contact-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-recipe-actions, .admin-user-actions {
+    justify-content: center;
+  }
+  
+  .stats-card {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 420px) {
+  .page-container {
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  .admin-layout {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0.5rem;
+  }
+  
+  
+  .admin-menu-link {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .admin-menu-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .admin-content {
+    padding: 0.75rem;
+    min-height: auto;
+  }
+  
+  .admin-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .admin-contact-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .admin-contact-user {
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .admin-contact-user p {
+    font-size: 0.9rem;
+    width: 100%;
+  }
+  
+  .admin-contact-message {
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+  }
+  
+  .admin-contact-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .admin-contact-actions button {
+    width: 100%;
+  }
+  
+  .admin-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .stats-card {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .stats-user {
+    padding: 0.75rem;
+  }
+  
+  .admin-contact-grid,
+  .admin-recipes-grid,
+  .admin-users-grid {
+    display: block;
+  }
+  
+  div:has(> div.page-container) {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 }

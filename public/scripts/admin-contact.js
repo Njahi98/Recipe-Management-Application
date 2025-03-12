@@ -1,43 +1,38 @@
 import { createModal } from "./modal.js";
 
-  //get all the contacts
-  const contactGrid = document.querySelector('.admin-contact-grid');
+// Get all the contacts
+const contactGrid = document.querySelector('.admin-contact-grid');
 
-  function boss (){
-    try {
-    contactGrid.innerHTML=`<div class="wheel" style="display: flex; justify-content: center; display: none;">
-              <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-              </div>`
-  
-      data.map(contact=>{
-        const html = document.createElement('div');
-        html.className='review-card'
-        html.dataset.id=contact._id
-        html.innerHTML=`
-                          <div class="review-user">
-               <p> ${contact.name} </p> 
-               <p> ${contact.email} </p> 
-  
-                          </div>
-                          <div class="review-content">
-        
-                              <p class="review-comment">${contact.message}</p>
-                          </div>
-                              <div class="review-btn-actions">
-                               <button class="deleteRecipeBtn" data-contactdoc="${contact._id}">Delete</button>
+function loadContactData() {
+  try {
+    contactGrid.innerHTML = `<div class="admin-loader" style="display: flex; justify-content: center; display: none;">
+      <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>`;
 
-                              </div>
-        `;
-        contactGrid.appendChild(html);
-      });
-  
-    
-    
+    data.map(contact => {
+      const html = document.createElement('div');
+      html.className = 'admin-contact-card';
+      html.dataset.id = contact._id;
+      html.innerHTML = `
+        <div class="admin-contact-user">
+          <p>${contact.name}</p> 
+          <p>${contact.email}</p> 
+        </div>
+        <div class="admin-contact-content">
+          <p class="admin-contact-message">${contact.message}</p>
+        </div>
+        <div class="admin-contact-actions">
+          <button class="admin-btn admin-btn-delete" data-contactdoc="${contact._id}">Delete</button>
+        </div>
+      `;
+      contactGrid.appendChild(html);
+    });
   } catch (error) {
-    showNotification(error,'var(--error-color)');
+    showNotification(error, 'var(--error-color)');
   }
-  }
-  boss();
+}
+
+loadContactData();
   
   const deleteButtons = contactGrid.querySelectorAll('.deleteRecipeBtn');
   deleteButtons.forEach(deleteButton => {

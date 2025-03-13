@@ -1672,7 +1672,7 @@ color: inherit;
 
 /* edit profile page */
 .edit-profile-container {
-  min-width: 600px;
+  width: 70%;
   margin: 3rem auto;
   padding: 3rem;
   background-color: var(--base-variant);
@@ -2501,7 +2501,6 @@ width: 95%;
     flex-direction: column;
     gap: 0.75rem;
   }
-  
 }
 
 @media screen and (max-width: 436px) {

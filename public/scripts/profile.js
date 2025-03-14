@@ -29,6 +29,7 @@
                     <div class="review-rating">
                       <span class="stars"></span>
                     </div>
+                    <p class="review-date">📅 ${new Date(userReview.reviews[0].createdAt).toLocaleDateString()}</p>
                     <p class="review-comment">${userReview.reviews[0].comment}</p>
                   </div>
                 </div>`;

@@ -328,7 +328,7 @@ body {
 }
 .recipe-date {
   font-size: 0.85rem;
-  color: var(--text-muted); 
+  color: var(--text-color); 
   margin-top: 2px;
 }
 
@@ -686,7 +686,13 @@ width: 100%;}
   font-size: 1rem;
   letter-spacing: 2px;
 }
-
+.review-date{
+  color: var(--secondary-text);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 1rem 0;
+  text-align:  left;
+}
 .review-comment {
   color: var(--secondary-text);
   line-height: 1.6;

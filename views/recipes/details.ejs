@@ -93,6 +93,7 @@
                             <div class="review-rating">
                                 <span class="stars"><%= "⭐".repeat(review.rating) %></span>
                             </div>
+                            <p class="review-date">📅 <%= new Date(review.createdAt).toLocaleDateString() %></p>
                             <p class="review-comment"><%= review.comment %></p>
                         </div>
                         <% if(locals.user && !review.isGuest && locals.user._id.toString() === review.userId._id.toString() ){ %>

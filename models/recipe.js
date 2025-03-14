@@ -48,6 +48,7 @@ const recipeSchema = new Schema({
           isGuest:{type:Boolean,default:false},
           rating: { type: Number, required: true, min: 1, max: 5 },
           comment: { type: String },
+          createdAt: { type: Date, default: Date.now }
         }],
         creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         // we track if the creator is a guest

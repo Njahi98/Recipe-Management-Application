@@ -55,6 +55,7 @@
                   <a href="/recipes/${userRecipe.id}">
                     <p>Recipe: ${userRecipe.title}</p>
                   </a>
+              <p class="recipe-date">📅 Created on: ${new Date(userRecipe.createdAt).toLocaleDateString()}</p>
                 </div>
                 <div class="recipe-content">
                   <p class="recipe-description">${userRecipe.description}</p>

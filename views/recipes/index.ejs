@@ -54,6 +54,7 @@
                     Unknown
                   <% } %>
                 </p>
+                <p class="recipe-date">📅 Created on: <%= new Date(recipe.createdAt).toLocaleDateString() %></p>
              </div>
              <div style="display: flex; justify-content: center;">
               <img src="/recipes/image/<%= recipe.imageId %>" alt="Current recipe image" style="max-width: 200px;">
@@ -79,13 +80,13 @@
                 
                   </span>
                 </div>   
-                <% if(locals.user && recipe.reviews.some(review => review.userId.toString() === locals.user._id.toString())) { %>
+                <% if(locals.user && recipe.reviews.some(review => !review.isGuest && review.userId.toString() === locals.user._id.toString())) { %>
                   <a href="/recipes/<%= recipe._id %>">  <span class="review-indicator" data-recipe-id="<%= recipe._id %>">Your review ✎ </span></a>
                 <% }else{ %>
                   <span class="review-indicator" style="visibility: hidden;">Your review ✎</span>
                <% } %> 
                 <div class="recipe-index-action-buttons">
-                  <a style="text-decoration: none;" href="/recipes/<%= recipe._id %>" class="viewRecipeBtn">View Recipe</a>
+                  <button class="viewRecipeBtn" onclick="location.href='/recipes/<%= recipe._id %>'">View Recipe </button>
                   <% if(locals.user){ %>
                     <button class="reviewRecipeBtn" data-doc="<%= recipe._id %>">Review</button>
                     <% if(locals.user._id.toString() === recipe.creator._id.toString()){ %>

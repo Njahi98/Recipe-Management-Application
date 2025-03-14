@@ -16,7 +16,9 @@ function loadContactData() {
       html.innerHTML = `
         <div class="admin-contact-user">
           <p>${contact.name}</p> 
-          <p>${contact.email}</p> 
+          <p>${contact.email}</p>
+          <p class="recipe-date">📅 Sent on: ${new Date(contact.createdAt).toLocaleDateString()}</p>
+
         </div>
         <div class="admin-contact-content">
           <p class="admin-contact-message">${contact.message}</p>
@@ -26,6 +28,7 @@ function loadContactData() {
         </div>
       `;
       contactGrid.appendChild(html);
+      
     });
   } catch (error) {
     showNotification(error, 'var(--error-color)');
@@ -34,7 +37,7 @@ function loadContactData() {
 
 loadContactData();
   
-  const deleteButtons = contactGrid.querySelectorAll('.deleteRecipeBtn');
+  const deleteButtons = contactGrid.querySelectorAll('.admin-btn-delete');
   deleteButtons.forEach(deleteButton => {
     deleteButton.addEventListener('click',
         function () {
@@ -61,7 +64,7 @@ loadContactData();
                 }, 1000);
                 setTimeout(() => {
                   modal.remove();
-                  const card = document.querySelector(`.review-card[data-id="${contactId}"]`);
+                  const card = document.querySelector(`.admin-contact-card[data-id="${contactId}"]`);
                   card.remove();
                 }, 2000);
               }else{

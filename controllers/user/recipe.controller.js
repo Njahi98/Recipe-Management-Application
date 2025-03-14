@@ -96,21 +96,45 @@ const recipe_details = async (req, res) => {
   try {
     const recipe = await Recipe.findById(id)
       .populate({
-        //we populate userId with the User's details and we select only what we need, username and profile picture
         path: "reviews.userId",
-        select: "username imageId imageName" 
+        select: "username imageId imageName"
       });
 
     if (!recipe) {
       return res.status(404).render("404", { title: "Recipe Not Found" });
     }
 
-    // we ensure locals.user is available
     const loggedInUserId = res.locals.user ? res.locals.user._id.toString() : null;
-
-    // we Sort reviews Logged-in user's review appears first
+    /*THANK YOU DEEP SEEK. in here we had to sort reviews while prioritizing registered users
+     while also being careful of guest users who got a null userId */
+    // Sort the reviews
     recipe.reviews.sort((a, b) => {
-      return (b.userId._id.toString() === loggedInUserId) - (a.userId._id.toString() === loggedInUserId);
+      // Prioritize non-guest reviews over guest reviews
+      if (a.isGuest && !b.isGuest) {
+        return 1; // b (non-guest) comes first
+      } else if (!a.isGuest && b.isGuest) {
+        return -1; // a (non-guest) comes first
+      } else if (a.isGuest && b.isGuest) {
+        return 0; // maintain order among guests
+      } else {
+        // Both are non-guest reviews
+        if (loggedInUserId) {
+          // Safely access userId properties
+          const aUserId = a.userId ? a.userId._id.toString() : null;
+          const bUserId = b.userId ? b.userId._id.toString() : null;
+
+          const aIsUser = aUserId === loggedInUserId;
+          const bIsUser = bUserId === loggedInUserId;
+
+          if (aIsUser && !bIsUser) {
+            return -1; // a (user's review) comes first
+          } else if (!aIsUser && bIsUser) {
+            return 1; // b (user's review) comes first
+          }
+        }
+        // Maintain original order for other non-guest reviews
+        return 0;
+      }
     });
 
     res.render("recipes/details", {
@@ -118,7 +142,7 @@ const recipe_details = async (req, res) => {
       title: "Recipe Details",
     });
   } catch (err) {
-    res.status(500).render("404", { title: "Recipe Not Found" });
+    res.status(500).render("500", { title: "Error occurred" });
   }
 };
 

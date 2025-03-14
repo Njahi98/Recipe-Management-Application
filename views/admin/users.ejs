@@ -64,6 +64,8 @@
                           <p class="admin-user-details" id="roleParagraph">Role: <%= user.role %></p>
                           <p class="admin-user-details">bio: <%= user.bio %></p>
                           <p class="admin-user-details">location: <% user.location %></p>
+                          <p class="admin-user-details">📅 Created on: <%= new Date(user.createdAt).toLocaleDateString() %></p>
+
                   </div>
                   <div class="admin-user-actions">
                     <button class="admin-btn admin-btn-view" data-userdata="<%= user._id %>">View Details</button>

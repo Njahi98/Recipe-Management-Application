@@ -17,6 +17,7 @@
                       <span>🕒 <%= recipe.cookingTime %> minutes</span>
                       <span>🎯 <%= recipe.difficulty %></span>
                       <span>📑 <%= recipe.category %></span>
+                      <span>📅 Created on: <%= new Date(recipe.createdAt).toLocaleDateString() %></span>
                   </div>
               </div>
   
@@ -75,14 +76,18 @@
                 <% recipe.reviews.forEach(review => { %>
                     <div class="review-card" data-id="<%=review._id %>">
                         <div class="review-user">
-                            <a href="/profile/<%= review.userId._id %>">
+                            <%if(review.userId){ %>
+                                <a href="/profile/<%= review.userId._id %>">
                                 <%if(review.userId.imageId==="/images/default-profile.png"){ %>
                                     <img src="/images/default-profile.png" alt="<%= review.userId.username %>'s profile picture"></a>
                             <%    }else{  %>
                                     <img src="/profile/image/<%= review.userId.imageId %>" alt="<%= review.userId.username %>'s profile picture"></a>
                              <%   } %>
                             <a href="/profile/<%= review.userId._id %>">  <p><%= review.userId.username %></p> </a>
-
+                            <% }else{ %>
+                                <img src="/images/default-profile.png" alt="Guest profile picture"></a>
+                                <p>Guest</p>
+                             <%} %> 
                         </div>
                         <div class="review-content">
                             <div class="review-rating">
@@ -90,7 +95,7 @@
                             </div>
                             <p class="review-comment"><%= review.comment %></p>
                         </div>
-                        <% if(locals.user && locals.user._id.toString() === review.userId._id.toString() ){ %>
+                        <% if(locals.user && !review.isGuest && locals.user._id.toString() === review.userId._id.toString() ){ %>
                             <div class="review-btn-actions"></div>
                             <button class="reviewRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>" data-ratingdoc="<%= review.rating %>" data-commentdoc="<%= review.comment %>">Edit Review</button>
                             <button class="deleteRecipeBtn" data-recipedoc="<%= recipe._id %>" data-reviewdoc="<%= review._id %>">Delete Review</button>

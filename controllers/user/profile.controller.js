@@ -119,14 +119,15 @@ const user_profile_update = async (req, res) => {
                  title:recipe.title,
                  description:recipe.description,
                  imageId:recipe.imageId,
-                 imageName:recipe.imageName
+                 imageName:recipe.imageName,
+                 createdAt:recipe.createdAt,
          } 
       });
   
       const userReviews= recipes.map(recipe => {
         return {
           recipe:{title:recipe.title,id:recipe._id},
-          reviews:recipe.reviews.filter(review=> review.userId.toString()===userId)
+          reviews:recipe.reviews.filter(review=> !review.isGuest && review.userId.toString()===userId)
         };
       }).filter(recipe => recipe.reviews.length > 0); // we only include recipes with reviews from the user
   

@@ -61,9 +61,10 @@
                     <h3 class="admin-recipe-title"><%= recipe.title %></h3>
                       <%if(recipe.creator){ %>
                           <p class="admin-recipe-details">Created by: <%= recipe.creator.username %></p>
+                          <p class="admin-recipe-details">📅 Created on: <%= new Date(recipe.createdAt).toLocaleDateString() %></p>
+
                  <%   }else{ %>
                           <p class="admin-recipe-details">Created by Guest</p>
-  
                    <%   } %>
   
                   </div>

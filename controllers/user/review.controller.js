@@ -8,16 +8,24 @@ const recipe_add_review = async (req, res) => {
       if (!recipe) {
         return res.status(404).json({ error: "Recipe not found" });
       }
-      const userAlreadyReviewed = recipe.reviews.find(review=>review.userId.toString() === req.userId);
-      if(userAlreadyReviewed){
-        return res.status(403).json({ error: "you have already reviewed this recipe",redirect:`/recipes/${recipe._id}` });
-      }
-  
+      if(!req.userId){
+      //add review
+      recipe.reviews.push({userId: null, isGuest:true, rating, comment });
+      await recipe.save();
+      res.json({ message: "Review added successfully", recipe });
+      }else{
+        const userAlreadyReviewed = recipe.reviews.find(review=> !review.isGuest && review.userId.toString() === req.userId);
+        console.log("yeahssss");
+        if(userAlreadyReviewed){
+          return res.status(403).json({ error: "you have already reviewed this recipe",redirect:`/recipes/${recipe._id}` });
+        }
+        
       //add review
       recipe.reviews.push({ userId: req.userId, rating, comment });
       await recipe.save();
-  
       res.json({ message: "Review added successfully", recipe });
+      }
+
     } catch (error) {
       res.status(500).json({ error: "Error adding review" });
     }

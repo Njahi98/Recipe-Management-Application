@@ -9,7 +9,6 @@ viewButtons.forEach(viewButton =>
           const data = await response.json();
           
           if (data.recipe) {
-            console.log(data.recipe);
             
             const recipe = data.recipe;
             const modal = document.createElement("div");

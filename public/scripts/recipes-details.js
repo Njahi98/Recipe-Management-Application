@@ -86,8 +86,9 @@ try {
         }
   )})
 } catch (error) {
-  console.log(error);
-  
+  const modal = document.querySelector('.modal-backdrop'); 
+  modal.remove();
+  showNotification(error,'var(--error-color)');  
 }
 }
 

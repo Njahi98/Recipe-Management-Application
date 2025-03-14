@@ -1627,12 +1627,6 @@ width: 100%;}
 .profile-recipes-container{
   overflow-y: auto;
   max-height: 100vh;
-  direction: rtl;
-  text-align: right;
-}
-.profile-recipes-container > * {
-  direction: ltr;
-  text-align: left;
 }
 .profile-recipes-container::-webkit-scrollbar {
   width: 8px;

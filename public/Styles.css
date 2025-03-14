@@ -179,7 +179,7 @@ body {
 .contactCenterImgText {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -140%);
+  transform: translate(-50%, -100%);
 }
 .aboutCenterImgText{
   position: absolute;
@@ -2102,7 +2102,7 @@ form div[style="display: flex; gap: 10px;"] {
 }
 .contact-img{
   width: 100%;
-  height: auto;
+  height: 150px;
   max-width: 100%;
   object-fit: cover;
   display: block;
@@ -2324,9 +2324,7 @@ form div[style="display: flex; gap: 10px;"] {
   padding: 0.5rem;
   width: 100%;
 }
-.contactCenterImgText{
-  transform: translate(-50%, -120%) scale(0.9);
-}
+
 .recipeCenterImgText{
   transform: translate(-50%, -90%) scale(0.7);
 }
@@ -2360,9 +2358,7 @@ form div[style="display: flex; gap: 10px;"] {
     width: 100%;
     padding: 0.75rem 1.5rem;
   }
-  .contactCenterImgText{
-    transform: translate(-50%, -110%) scale(0.9);
-  }
+
 
   .recipe-details {
     grid-template-columns: 1fr;
@@ -2468,9 +2464,7 @@ width: 95%;
   .aboutCenterImgText {
     transform: translate(-50%, -30%) scale(0.5);
   }
-  .contactCenterImgText{
-    transform: translate(-50%, -90%) scale(0.6);
-  }
+
   .recipeCenterImgText{
     transform: translate(-50%, -70%) scale(0.5);
   }
@@ -2485,9 +2479,7 @@ width: 95%;
     font-size: 1rem;
     margin-bottom: 1.5rem;
   }
-  .contactCenterImgText{
-    transform: translate(-50%, -80%) scale(0.6);
-  }
+
   .page-container {
     padding: 0 1rem;
   }

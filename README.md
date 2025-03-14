@@ -4,39 +4,39 @@ A server-side rendered web application for managing cooking recipes, built with 
 
 ## Features
 
-### User Authentication
+### User Authentication & Roles
 - Register and log in with email and password
-- JWT-based authentication for secure access
-- Guest and user roles for recipe creation
+- JWT-based authentication with secure cookie storage
+- Three user types:
+  - **Guests**: Can create recipes and leave reviews without an account
+  - **Users**: Can create, edit, and delete their own recipes and reviews
+  - **Admins**: Have full access to manage all content and users
 
 ### Recipe Management
 - Create, read, update, and delete recipes
-- Upload recipe images using GridFS
-- Categorize recipes by difficulty and meal type (e.g., Breakfast, Lunch, Dinner)
+- Upload and store recipe images using GridFS
+- Categorize recipes by difficulty (Easy, Medium, Hard) and meal type (Breakfast, Lunch, Dinner, Dessert, Snack)
 - Add ingredients and step-by-step instructions
+- Track cooking time for each recipe
 
 ### Reviews and Ratings
-- Users can leave reviews and ratings for recipes
-- Average rating calculation for each recipe
-- Users can edit or delete their own reviews
+- Leave reviews and ratings (1-5 stars) for recipes
+- View average rating calculation for each recipe
+- Edit or delete your own reviews
 
 ### User Profiles
-- View and edit user profiles
-- Add a bio, profile picture, location, and social media links
-- Track recipes created by the user
+- Personalized user profiles with bio, profile picture, location, and social media links
+- Track recipes created by each user
+- View all reviews left by a specific user
 
-### Role-Based Access Control
-- Users can only edit or delete their own recipes and reviews
-- Guests can create recipes but cannot edit or delete them
+### Contact System
+- Contact form for users to send messages to administrators
+- Admin dashboard to manage and respond to contact messages
 
-### Server-Side Rendering
-- Dynamic content rendering with EJS templates
-- Responsive and modern UI design
-
-### Additional Features
-- Dark/Light mode toggle for better user experience
-- Request logging with Morgan
-- Environment variable configuration with dotenv
+### Admin Features
+- User management: View, update, and delete user accounts
+- Recipe moderation: Review and manage all recipes
+- Contact management: Handle user inquiries
 
 ## Technologies Used
 
@@ -56,6 +56,7 @@ A server-side rendered web application for managing cooking recipes, built with 
 - Morgan (HTTP request logger)
 - dotenv (Environment configuration)
 - bcryptjs (Password hashing)
+- Multer & Sharp (Image upload and processing)
 
 ## Installation
 
@@ -74,6 +75,7 @@ npm install
 ```
 dbURI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
+PORT=3000
 ```
 
 4. Start the application:
@@ -85,68 +87,73 @@ The application will be available at http://localhost:3000.
 
 ## Project Structure
 ```
-recipe-nodejs-app/
+Recipe-Management-Application/
 ├── public/            # Static files (CSS, images, scripts)
 ├── views/             # EJS templates for server-side rendering
-│   ├── partials/      # Reusable components (e.g., header, footer)
-│   ├── auth/          # Authentication-related pages (login, register)
+│   ├── partials/      # Reusable components (header, footer)
+│   ├── auth/          # Authentication pages (login, register)
 │   ├── profile/       # User profile pages
-│   └── recipes/       # Recipe-related pages
-├── models/            # MongoDB models (Recipe, User)
+│   ├── recipes/       # Recipe-related pages
+│   └── admin/         # Admin dashboard pages
+├── models/            # MongoDB models
+│   ├── user.js        # User model with authentication methods
+│   ├── recipe.js      # Recipe model with reviews
+│   └── contact.js     # Contact form model
 ├── routes/            # Route handlers
-│   ├── auth.js        # Authentication routes
-│   ├── recipeRoutes.js # Recipe-related routes
-│   └── profileRoutes.js # Profile-related routes
-├── middleware/        # Custom middleware (e.g., auth, isRecipeOwner)
+│   ├── authRoutes.js  # Authentication routes
+│   ├── contactRoutes.js # Contact form routes
+│   ├── user/          # User-specific routes
+│   └── admin/         # Admin-specific routes
+├── controllers/       # Business logic
+│   ├── user/          # User controllers
+│   └── admin/         # Admin controllers
+├── middleware/        # Custom middleware
+│   ├── isAuthenticated.js # Authentication middleware
+│   ├── isAdmin.js     # Admin role verification
+│   ├── isRecipeOwner.js # Recipe ownership verification
+│   └── uploadMiddleware.js # Image upload handling
 ├── app.js             # Application entry point
 ├── package.json       # Project configuration
 └── .env               # Environment variables
 ```
 
-## Routes
+## API Routes
 
 ### Authentication
-- `GET /auth/login` - Render login page
-- `POST /auth/login` - Log in a user
-- `GET /auth/register` - Render registration page
-- `POST /auth/register` - Register a new user
+- `GET/POST /auth/login` - Login page and authentication
+- `GET/POST /auth/register` - Registration page and user creation
 - `GET /auth/logout` - Log out a user
 
 ### Recipes
 - `GET /recipes` - View all recipes
+- `GET /recipes/create` - Recipe creation form
+- `POST /recipes` - Create a new recipe (guests allowed)
 - `GET /recipes/:id` - View a specific recipe
-- `POST /recipes` - Create a new recipe (protected)
-- `PUT /recipes/:id` - Update a recipe (protected)
-- `DELETE /recipes/:id` - Delete a recipe (protected)
+- `GET /recipes/:id/edit` - Edit recipe form (authenticated owner only)
+- `PUT /recipes/:id` - Update a recipe (authenticated owner only)
+- `DELETE /recipes/:id` - Delete a recipe (authenticated owner only)
+- `GET /recipes/image/:id` - Retrieve recipe image
 
 ### Reviews
-- `POST /recipes/:id/reviews` - Add a review to a recipe (protected)
-- `PUT /recipes/:recipeId/reviews/:reviewId` - Update a review (protected)
-- `DELETE /recipes/:recipeId/reviews/:reviewId` - Delete a review (protected)
+- `POST /recipes/:id/reviews` - Add a review to a recipe (guests allowed)
+- `PUT /recipes/:recipeId/reviews/:reviewId` - Update a review (authenticated owner only)
+- `DELETE /recipes/:recipeId/reviews/:reviewId` - Delete a review (authenticated owner only)
 
-### Profiles
+### User Profiles
 - `GET /profile/:id` - View a user's profile
-- `PUT /profile/:id` - Update a user's profile (protected)
+- `GET /profile/:id/edit` - Edit profile form (authenticated owner only)
+- `PUT /profile/:id` - Update a user's profile (authenticated owner only)
+- `GET /profile/image/:id` - Retrieve profile image
+- `GET /profile/:id/reviewsRecipes` - Get user's reviews and recipes
 
-## Usage
-
-### Register or Log In
-- Register a new account or log in to an existing one
-- Guests can create recipes but cannot edit or delete them
-
-### Create a Recipe
-- Fill out the recipe form with a title, description, ingredients, instructions, and an image
-- Categorize the recipe by difficulty and meal type
-
-### Manage Recipes
-- View all recipes on the homepage
-- Click on a recipe to view details, including reviews and ratings
-- Edit or delete your own recipes
-
-### Leave Reviews
-- Logged-in users can leave reviews and ratings for recipes
-- Edit or delete your own reviews
-
-### Update Your Profile
-- Add a bio, profile picture, location, and social media links
-- Track the recipes you've created
+### Admin Routes
+- `GET /admin` - Admin dashboard
+- `GET /admin/recipes` - Manage all recipes
+- `GET /admin/recipes/:recipeId` - View recipe details
+- `DELETE /admin/recipes/:recipeId` - Delete any recipe
+- `GET /admin/users` - Manage all users
+- `GET /admin/users/:userId` - View user details
+- `PUT /admin/users/:userId` - Update any user
+- `DELETE /admin/users/:userId` - Delete any user
+- `GET /admin/contact` - View contact messages
+- `DELETE /admin/contact/:id` - Delete contact message

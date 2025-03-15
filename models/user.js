@@ -48,7 +48,10 @@ bio: {
     instagram: { type: String, default: '' },
     facebook: { type: String, default: '' },
   },
-
+  refreshTokens: [{
+    token: String,
+    issuedAt: { type: Date, default: Date.now }
+  }]
 },{timestamps:true});
 
 //we hash the password before saving

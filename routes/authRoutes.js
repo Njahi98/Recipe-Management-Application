@@ -48,14 +48,25 @@ router.post('/login',async(req,res)=>{
             return res.status(400).json({error:'Invalid credentials'});
         }
 
-        //if the password match we create a JWT token valid for one hour
-        const token = jwt.sign({userId:user._id},process.env.JWT_SECRET,{expiresIn:'1h'});
+        //we will generate a 15m token and a 7 days refreshToken
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+        const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+
+            // we store refresh token in DB
+        user.refreshTokens.push({ token: refreshToken });
+        await user.save();
+
 
         // we set the token in a cookie
         res.cookie('token', token, {
         httpOnly: true, // Prevents JavaScript access
         secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
         maxAge: 3600000, // 1 hour
+      });
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true, // Prevents JavaScript access
+        secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
+        maxAge: 604800000, // 1 hour
       });
   
     return res.redirect('/');

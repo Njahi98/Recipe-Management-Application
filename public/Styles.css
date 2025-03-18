@@ -2245,7 +2245,6 @@ form div[style="display: flex; gap: 10px;"] {
     display: none;
   }
   .navbar-mobile{
-    display: block;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2267,7 +2266,54 @@ form div[style="display: flex; gap: 10px;"] {
     margin-top: 1rem;
     min-height: calc(100vh - 200px); 
   }
-  
+}
+
+@media screen and (max-width:1137px) {
+.recipe-container{
+  margin: 2rem auto;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.newRecipe {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.filter-inputs {
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.filter-inputs input,
+.filter-inputs select {
+  width: 100%;
+  margin-left: 0 !important;
+}
+
+
+.cooking-times-range-text {
+  transform: none !important;
+  text-align: center;
+}
+
+.newRecipeButton {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.recipe-card {
+  margin: 0;
+  padding: 1rem;
+}
+.searchicon{
+  display: none;
+}
+.search-bar{
+padding: 0;
+}
 }
 
 @media screen and (max-width:1052px) {
@@ -2302,7 +2348,7 @@ form div[style="display: flex; gap: 10px;"] {
   .recipe-header h2 {
     font-size: 2.2rem;
   }
-  
+
 }
 
 @media screen and (max-width: 913px) {
@@ -2353,7 +2399,6 @@ form div[style="display: flex; gap: 10px;"] {
     padding: 0.75rem 1.5rem;
   }
 
-
   .recipe-details {
     grid-template-columns: 1fr;
    
@@ -2386,6 +2431,7 @@ form div[style="display: flex; gap: 10px;"] {
   margin-left: 0 !important;
 }
 .search-bar{
+  padding: 0 1rem;
   width: 6rem;
 }
 
@@ -2397,12 +2443,6 @@ form div[style="display: flex; gap: 10px;"] {
 .newRecipeButton {
   width: 100%;
   margin-top: 1rem;
-}
-
-.recipe-container {
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  padding: 1rem;
-  gap: 1.5rem;
 }
 
 .recipe-card {
@@ -2448,6 +2488,9 @@ width: 95%;
 
 .reviews-section {
   padding: 1.5rem;
+}
+.recipe-container {
+  grid-template-columns: 1fr;
 }
 }
 

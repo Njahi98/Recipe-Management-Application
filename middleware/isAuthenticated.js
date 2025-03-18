@@ -2,46 +2,42 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const isAuthenticated = async(req, res, next) => {
-  //  we we check for the token & refreshToken in cookies  
+  //  we check for the token & refreshToken in cookies  
   const token = req.cookies.token;
   const refreshToken = req.cookies.refreshToken;
 
-  //  If no token is found, the user is not authenticated
-  // We attach `user = null` to `res.locals` so templates know no user is logged in
+  // we clear any existing authentication
+  res.locals.user = null;
+  req.userId = null;
+
+  //  if no tokens at all, user is not authenticated
   if (!token && !refreshToken) {
-    res.locals.user = null;
     return next();
   }
 
   try {
-    // we verify the token using our JWT_SECRET in .env
-    // If it's valid, it decodes the token that contains the userId
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // we fetch the user from the database
-    // we use the `userId` from the decoded token to find the user
-    // if the user doesn't exist, treat it as an invalid token
-    // we exclude password to guarantee security
-    const user = await User.findById(decoded.userId).select("-password");
-
-    if (!user) {
-      // No user found
-      res.locals.user = null; 
-      return next();
-    }
-    //we attach the user to res.locals for use in templates
-    res.locals.user=user;
-
-    //we attach the userId to req for use in route handlers
-    req.userId = decoded.userId;
-
-    //we continue to the next middleware/route handler
-    return next();
-  } catch (error) {
-
-    if (error.name === 'TokenExpiredError' && refreshToken) {
+    // try to verify the access token first
+    if (token) {
       try {
-        // we attempt token refresh
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.userId).select("-password");
+        
+        if (user) {
+          // we set authentication data
+          res.locals.user = user;
+          req.userId = user._id.toString(); 
+          return next();
+        }
+      } catch (tokenError) {
+        // token verification failed, will try refresh token
+        console.log('Access token invalid, trying refresh token');
+      }
+    }
+
+    // If we get here, either no token or token verification failed
+    // Try refresh token if available
+    if (refreshToken) {
+      try {
         const refreshDecoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
         const user = await User.findById(refreshDecoded.userId);
         
@@ -49,33 +45,36 @@ const isAuthenticated = async(req, res, next) => {
           throw new Error('Invalid refresh token');
         }
 
-        // we issue new access token
-        const newToken = jwt.sign(
-          { userId: user._id }, 
-          process.env.JWT_SECRET, 
-          { expiresIn: '15m' }
-        );
+        // we generate new access token
+        const newAccessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
 
-        // we set new token cookie
-        res.cookie('token', newToken, {
+        // we set new access token cookie
+        res.cookie('token', newAccessToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
-          maxAge: 900000 // 
+          sameSite: 'strict',
+          maxAge: 15 * 60 * 1000 // 15mins
         });
 
+
+        // we set authentication data
         res.locals.user = user;
-        req.userId = user._id;
+        req.userId = user._id.toString();
         return next();
       } catch (refreshError) {
-        // if the Refresh attempt fails we clear cookies
+        // refresh token is invalid, clear both cookies
+        console.log('Refresh token invalid, clearing cookies');
         res.clearCookie('token');
         res.clearCookie('refreshToken');
       }
     }
 
-    // No user is logged in
-    res.locals.user = null; 
-    next();
+    // If we get here, authentication failed
+    return next();
+  } catch (error) {
+    // Handle any unexpected errors
+    console.error('Authentication error:', error);
+    return next();
   }
 };
 

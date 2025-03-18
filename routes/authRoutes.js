@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const isAuthenticated = require('../middleware/isAuthenticated');
 //Register
 router.post('/register',async(req,res)=>{
     try {
@@ -52,22 +51,25 @@ router.post('/login',async(req,res)=>{
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
         const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
 
-            // we store refresh token in DB
+          // we store refresh token in DB
         user.refreshTokens.push({ token: refreshToken });
         await user.save();
 
 
         // we set the token in a cookie
         res.cookie('token', token, {
-        httpOnly: true, // Prevents JavaScript access
-        secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
-        maxAge: 900000, // 1 hour
-      });
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true, // Prevents JavaScript access
-        secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
-        maxAge: 604800000, // 1 hour
-      });
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 15 * 60 * 1000,
+        });
+        
+        res.cookie('refreshToken', refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 604800000,
+        });
   
     return res.redirect('/');
   
@@ -76,40 +78,8 @@ router.post('/login',async(req,res)=>{
     }
 })
 
-    // we add a refresh token route
-    router.post('/refresh-token', async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken){ 
-      return res.sendStatus(401);
-    }
-  
-    try {
-      // we verify refresh token signature
-      const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-      
-      // we find user and check if refresh token exists in DB
-      const user = await User.findById(decoded.userId);
-      if (!user || !user.refreshTokens.some(t => t.token === refreshToken)) {
-        return res.sendStatus(403);
-      }
-  
-      // we create new access token
-      const newToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-      
-      res.cookie('token', newToken, {
-        httpOnly: true, 
-        secure: process.env.NODE_ENV === 'production', 
-        maxAge: 900000, 
-      });
-      res.sendStatus(204);
-    } catch (error) {
-      res.sendStatus(403);
-    }
-  });
-
-  
-  //we upgrade logout to be more secure
-  router.get('/logout', async (req, res) => {
+//Logout
+router.get('/logout', async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (refreshToken && req.userId) {
       const user = await User.findById(req.userId);
@@ -120,7 +90,7 @@ router.post('/login',async(req,res)=>{
     res.clearCookie('token');
     res.clearCookie('refreshToken');
     res.redirect('/');
-  });
+});
 
 router.get('/login',(req,res)=>{
     if(req.userId){

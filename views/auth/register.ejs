@@ -79,7 +79,7 @@
           }, 2000);
         }
       } catch (error) {
-        showNotification('An unexpected error occurred','var(--error-color)');
+        showNotification(error,'var(--error-color)');
     } finally {
         // Reset form state if we haven't redirected
         submitBtn.style.display = 'block';

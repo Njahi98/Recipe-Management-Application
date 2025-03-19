@@ -3,8 +3,18 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const rateLimit = require('express-rate-limit');
+
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // limit each IP to 5 login attempts per 15 minutes
+    message: { error: "Too many login/register attempts, please try again after 15 minutes" },
+    standardHeaders: 'draft-8',
+    legacyHeaders: false,
+  });
+
 //Register
-router.post('/register',async(req,res)=>{
+router.post('/register',authLimiter,async(req,res)=>{
     try {
         /* we used array destructuring so the new user object only gets username, email, and password from the request's body
          we could have used this direct approach : const user = new User(req.body);
@@ -28,7 +38,7 @@ router.post('/register',async(req,res)=>{
 });
 
 //Login
-router.post('/login',async(req,res)=>{
+router.post('/login',authLimiter,async(req,res)=>{
     try {
         // we extract email and password from the body request
         const{email,password}=req.body;

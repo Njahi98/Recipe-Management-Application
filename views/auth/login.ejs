@@ -77,7 +77,7 @@
             return; 
         }
     } catch (error) {
-        showNotification('An unexpected error occurred','var(--error-color)');
+        showNotification(error,'var(--error-color)');
         submitBtn.style.display = 'block';
         loadingSpinner.style.display = 'none';
     }

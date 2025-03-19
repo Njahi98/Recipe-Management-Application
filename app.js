@@ -15,6 +15,8 @@ const adminRecipeRoutes = require('./routes/admin/recipe.routes');
 const adminUserRoutes = require('./routes/admin/user.routes');
 const adminRoutes = require('./routes/admin/admin.routes');
 
+const rateLimit = require('express-rate-limit');
+
 const dbURI=process.env.dbURI
 mongoose.connect(dbURI)
 .then((result)=>{
@@ -25,6 +27,15 @@ mongoose.connect(dbURI)
 
 })
 .catch((error)=>console.log(error));
+
+// Basic rate limiter for all routes to prevent DDOS or bruteForce attacks
+const globalLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+	standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+})
+app.use(globalLimiter);
 
 //needed for POST requests
 app.use(express.urlencoded({ extended: true }));

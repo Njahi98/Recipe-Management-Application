@@ -1,11 +1,13 @@
 const express = require('express');
-var morgan = require('morgan');
+const app = express();
+const morgan = require('morgan');
 const mongoose = require('mongoose');
+const isAuthenticated=require('./middleware/isAuthenticated')
+const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
+
 const authRoutes=require('./routes/authRoutes')
 const contactRoutes=require('./routes/contactRoutes')
-const isAuthenticated=require('./middleware/isAuthenticated')
-const app = express();
-const cookieParser = require('cookie-parser');
 
 const userRecipeRoutes = require('./routes/user/recipe.routes');
 const userProfileRoutes = require('./routes/user/profile.routes');
@@ -15,7 +17,6 @@ const adminRecipeRoutes = require('./routes/admin/recipe.routes');
 const adminUserRoutes = require('./routes/admin/user.routes');
 const adminRoutes = require('./routes/admin/admin.routes');
 
-const rateLimit = require('express-rate-limit');
 
 const dbURI=process.env.dbURI
 mongoose.connect(dbURI)
@@ -36,6 +37,7 @@ const globalLimiter = rateLimit({
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
 })
 app.use(globalLimiter);
+
 
 //needed for POST requests
 app.use(express.urlencoded({ extended: true }));

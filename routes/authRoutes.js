@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const rateLimit = require('express-rate-limit');
+const {body,validationResult} = require('express-validator');
 
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -38,23 +39,36 @@ router.post('/register',authLimiter,async(req,res)=>{
 });
 
 //Login
-router.post('/login',authLimiter,async(req,res)=>{
+router.post('/login',
+    //validated and sanitized data
+[
+  body('email').isEmail().withMessage('Please provide a valid email').normalizeEmail(),
+  body('password').not().isEmpty().withMessage('Password is required').trim().escape()
+],
+  authLimiter, async(req,res)=>{
     try {
-        // we extract email and password from the body request
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).render('login', { 
+            errors: errors.array() 
+          });
+        }
+        
+        // we extract validated/sanitized email and password from the body request
         const{email,password}=req.body;
 
-        // we find the user by email
+        // for security reasons, to prevent timing attacks we do a password comparison
+        // regardless if user exists or not
         const user = await User.findOne({email});
+        let isMatch = false;
         
         //if the user doesn't exist we throw an invalid credentials error
-        if(!user){
-            return res.status(400).json({error:'Invalid credentials'});
+        if(user){
+            isMatch = await user.comparePassword(password);
         }
 
-        // if the user exists we hash the provided password and compare it to the hashed password saved in mongodb
-        const isMatch = await user.comparePassword(password);
-        if(!isMatch){
-            return res.status(400).json({error:'Invalid credentials'});
+        if(!user || !isMatch){
+            return res.status(400).json({error:'Invalid email or password'});
         }
 
         //we will generate a 15m token and a 7 days refreshToken
@@ -84,7 +98,7 @@ router.post('/login',authLimiter,async(req,res)=>{
     return res.redirect('/');
   
     } catch (error) {
-        res.status(500).json({error:'Error logging in'});
+        res.status(500).json({errors: [{ msg: 'An error occurred during login. Please try again.' }]});
     }
 })
 

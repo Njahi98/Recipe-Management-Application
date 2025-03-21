@@ -1,6 +1,9 @@
 const form = document.querySelector(".edit-profile-container form");
       const inputs = form.querySelectorAll("textarea, input");
 
+      const pathParts = window.location.pathname.split("/"); 
+      const profileId = pathParts[2];
+
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         try {

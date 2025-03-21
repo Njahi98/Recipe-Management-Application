@@ -1096,6 +1096,19 @@ width: 100%;}
   align-items: center;
   backdrop-filter: blur(4px);
 }
+.mobile-menu-backdrop{
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1040;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
 
 .modal-container,
 .review-modal-container {
@@ -2133,12 +2146,12 @@ form div[style="display: flex; gap: 10px;"] {
   width: 100%;
 }
 
-.close-button {
+.close-button,.navbar-mobile svg {
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.close-button:hover {
+.close-button:hover,.navbar-mobile svg:hover {
   transform: scale(1.1);
 }
 

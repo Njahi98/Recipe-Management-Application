@@ -53,11 +53,10 @@
               <% users.forEach(user => { %>
                 <div class="admin-user-card" data-id="<%= user._id %>">
                   <img 
-                    src="users/image/<%= user.imageId %>" 
-                    alt="<%= user.title %>" 
-                    class="admin-user-image"
-                    onerror="this.src='/images/default-profile.png'"
-                  >
+                  src="<%= user.imageId.includes('/images/default-profile.png') ? '/images/default-profile.png' : 'users/image/' + user.imageId %>" 
+                  alt="<%= user.title %>" 
+                  class="admin-user-image"
+                >
                   <div class="admin-user-content">
                     <h3 class="admin-user-title"><%= user.username %></h3>
                           <p class="admin-user-details">Email: <%= user.email %></p>

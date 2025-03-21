@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const isAuthenticated=require('./middleware/isAuthenticated')
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const authRoutes=require('./routes/auth.routes')
 const contactRoutes=require('./routes/contact.routes')
@@ -19,7 +20,8 @@ const adminRoutes = require('./routes/admin/admin.routes');
 
 
 const dbURI=process.env.dbURI
-mongoose.connect(dbURI)
+mongoose.connect(dbURI,{
+})
 .then((result)=>{
     const port = process.env.PORT || 3000;
     app.listen(port, () => {
@@ -38,7 +40,8 @@ const globalLimiter = rateLimit({
 })
 app.use(globalLimiter);
 
-
+//helmet.js to further secure the app
+app.use(helmet());
 //needed for POST requests
 app.use(express.urlencoded({ extended: true }));
 

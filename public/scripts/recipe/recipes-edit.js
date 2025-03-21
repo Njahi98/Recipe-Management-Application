@@ -1,3 +1,27 @@
+async function getRecipeData() {
+  try {
+    const pathParts = window.location.pathname.split("/"); 
+    const recipeId = pathParts[2];
+    const response = await fetch(`/recipes/recipe/${recipeId}`);
+    const data = await response.json();
+
+      recipeData = {
+      category: data.recipe.category,
+      difficulty: data.recipe.difficulty,
+      ingredients: JSON.stringify(data.recipe.ingredients),
+      instructions:JSON.stringify(data.recipe.instructions),
+    }
+    updateForm();
+
+  } catch (error) {
+    showNotification(error,'var(--error-color)');
+    console.log(error); 
+  }
+}
+
+getRecipeData();
+
+function updateForm(){
 //choose default value for select tags from the fetched recipe
 document.getElementById('category').value=recipeData.category;
 document.getElementById('difficulty').value=recipeData.difficulty;
@@ -200,3 +224,5 @@ window.location.href = '/recipes';
 function handleError(error) {
 showNotification(error,'var(--error-color)');
 }
+}
+

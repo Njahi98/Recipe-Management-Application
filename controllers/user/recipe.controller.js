@@ -146,6 +146,20 @@ const recipe_details = async (req, res) => {
   }
 };
 
+const recipe_details_json = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const recipe = await Recipe.findById(id)
+
+    if (!recipe) {
+      return res.status(404).render("404", { title: "Recipe Not Found" });
+    }
+    res.status(200).json({recipe});
+  } catch (err) {
+    res.status(500).json({error: "Error occurred" });
+  }
+};
 
 const recipe_delete = async (req, res) => {
   const id = req.params.id;
@@ -245,6 +259,7 @@ module.exports = {
   recipe_create_post,
   recipe_edit_get,
   recipe_details,
+  recipe_details_json,
   recipe_delete,
   recipe_update,
   recipe_image_get,

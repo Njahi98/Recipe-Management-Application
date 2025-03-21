@@ -23,19 +23,18 @@ viewButtons.forEach((viewButton) =>
       <div class="user-header" style="margin-bottom:0;">
       <h2 >${user.username}</h2>
                   <div class="user-meta" style="margin-bottom:0;">
-                      <span>⚙️   ${user.role} </span>
+                      <span>⚙️  ${user.role} </span>
                       <span>🌎  ${user.location} </span>
                       <span>🌐  ${user.website} </span>
                       <span>✉️  ${user.email} </span>
                   </div>
         </div>
         <div style="display:flex; gap:1rem">
-              <img 
-                src="users/image/${user.imageId}" 
-                alt="${user.title}" 
-                style="max-width: 100%; max-height:180px; margin: 1rem 0;"
-                onerror="this.src='/images/default-profile.png'"
-              >
+<img 
+  src="${user.imageId.includes('/images/default-profile.png') ? '/images/default-profile.png' : 'users/image/' + user.imageId}" 
+  alt="${user.title}" 
+  style="max-width: 100%; max-height:180px; margin: 1rem 0;"
+>
              <div class="user-section" style="margin-bottom:0;">
                   <h3>Bio</h3>
                   <p>${user.bio ? user.bio : "(User did not add a bio Yet)"}</p>

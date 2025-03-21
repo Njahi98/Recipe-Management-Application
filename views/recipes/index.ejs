@@ -86,7 +86,10 @@
                   <span class="review-indicator" style="visibility: hidden;">Your review ✎</span>
                <% } %> 
                 <div class="recipe-index-action-buttons">
-                  <button class="viewRecipeBtn" onclick="location.href='/recipes/<%= recipe._id %>'">View Recipe </button>
+                    <a href="/recipes/<%= recipe._id %>">
+                      <button class="viewRecipeBtn">View Recipe </button>
+                    </a>
+
                   <% if(locals.user){ %>
                     <button class="reviewRecipeBtn" data-doc="<%= recipe._id %>">Review</button>
                     <% if(locals.user._id.toString() === recipe.creator._id.toString()){ %>

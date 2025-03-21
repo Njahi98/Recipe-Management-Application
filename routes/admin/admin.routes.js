@@ -10,7 +10,7 @@ router.get('/contact',isAuthenticated,isAdmin,adminController.admin_contact_inde
 
 router.delete('/contact/:id',isAuthenticated,isAdmin,adminController.admin_contact_delete);
 
-
+router.get('/contacts',isAuthenticated,isAdmin,adminController.admin_contacts);
 
 
 

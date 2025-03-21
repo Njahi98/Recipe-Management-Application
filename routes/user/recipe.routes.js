@@ -13,6 +13,8 @@ router.get('/create',recipeController.recipe_create_get);
 
 router.get('/:id',recipeController.recipe_details);
 
+router.get('/recipe/:id',recipeController.recipe_details_json);
+
 router.delete('/:id',isAuthenticated,isRecipeOwner,recipeController.recipe_delete)
 
 router.get('/:id/edit',isAuthenticated,recipeController.recipe_edit_get)

@@ -30,6 +30,15 @@ const admin_contact_index = async(req,res)=>{
     }
 }
 
+const admin_contacts = async(req,res)=>{
+    try {
+        const contacts = await Contact.find();
+        return res.status(200).json({contacts:contacts || []});
+    } catch (error) {
+        return res.status(500).json({error:'unable to fetch contact mails. Please try again later.'});
+    }
+}
+
 
 const admin_contact_delete = async(req,res)=>{
     try {
@@ -51,5 +60,6 @@ const admin_contact_delete = async(req,res)=>{
 module.exports={
     admin_index,
     admin_contact_index,
+    admin_contacts,
     admin_contact_delete
 }

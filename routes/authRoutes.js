@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const rateLimit = require('express-rate-limit');
 const {body,validationResult} = require('express-validator');
@@ -15,8 +14,32 @@ const authLimiter = rateLimit({
   });
 
 //Register
-router.post('/register',authLimiter,async(req,res)=>{
+router.post('/register', [
+    body('username')
+    .not().isEmpty().withMessage('Username is required')
+    .isLength({min:3,max:15}).withMessage('Username must be between 3 and 15 characters')
+    .matches(/^[a-zA-Z0-9_-]+$/).withMessage('Username can only contain letters, numbers, underscores and hyphens')
+    .trim().escape(),
+    body('email')
+    .isEmail().withMessage('please Provide a valid email')
+    .normalizeEmail(),
+    body('password')
+    .not().isEmpty().withMessage('password is required')
+    .isLength({min:8,max:15}).withMessage('password must be between 8 and 15 characters')
+    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
+    .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
+    .matches(/[0-9]/).withMessage('Password must contain at least one number')
+    .matches(/[^A-Za-z0-9]/).withMessage('Password must contain at least one special character')
+    .trim(),
+], authLimiter,async(req,res)=>{
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ 
+                error: errors.array()[0].msg,
+                 details: errors.array()
+            });
+          }
         /* we used array destructuring so the new user object only gets username, email, and password from the request's body
          we could have used this direct approach : const user = new User(req.body);
          but the user will get ALL properties, including hidden ones we don't want, like isAdmin for example */
@@ -32,7 +55,7 @@ router.post('/register',authLimiter,async(req,res)=>{
         //if the user doesn't exist we create our new user object and save it
         const user = new User({username,email,password});
         await user.save();
-        res.status(201).json({message:'User registered successfully'});
+        return res.status(201).json({message:'User registered successfully'});
     } catch (error) {
         res.status(500).json({error:'Error registering user'});
     }
@@ -49,11 +72,11 @@ router.post('/login',
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-          return res.status(400).render('login', { 
-            errors: errors.array() 
-          });
-        }
-        
+            return res.status(400).json({ 
+                error: errors.array()[0].msg,
+                details: errors.array() 
+            });
+          }
         // we extract validated/sanitized email and password from the body request
         const{email,password}=req.body;
 
@@ -68,7 +91,7 @@ router.post('/login',
         }
 
         if(!user || !isMatch){
-            return res.status(400).json({error:'Invalid email or password'});
+            return res.status(400).json({error:'Invalid credentials'});
         }
 
         //we will generate a 15m token and a 7 days refreshToken
@@ -98,7 +121,7 @@ router.post('/login',
     return res.redirect('/');
   
     } catch (error) {
-        res.status(500).json({errors: [{ msg: 'An error occurred during login. Please try again.' }]});
+        res.status(500).json({ error: 'An error occurred during login. Please try again.' });
     }
 })
 

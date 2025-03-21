@@ -10,15 +10,18 @@
         <form action="/auth/register" method="POST">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" required autocomplete="on"
+            >
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" required autocomplete="on"
+            >
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" minlength="7" maxlength="15" required>
+            <input type="password" id="password" name="password" minlength="8" maxlength="15" required autocomplete="off"
+            >
           </div>
           <button type="submit">Register</button>
           <div class="wheel" style="display: flex; justify-content: center; display: none;">
@@ -55,8 +58,8 @@
               loadingSpinner.style.display = 'flex';
 
               try {
-                if (formData.password.length < 6) {
-                  showNotification('Password must be at least 6 characters','var(--error-color)');
+                if (formData.password.length < 8) {
+                  showNotification('Password must be at least 8 characters','var(--error-color)');
                   return;
               }
                 const response = await fetch('/auth/register', {

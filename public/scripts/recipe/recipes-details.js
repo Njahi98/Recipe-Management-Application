@@ -1,5 +1,5 @@
-import { createModal } from "./modal.js";
-import { createReviewModal } from "./reviewModal.js";
+import { createModal } from "../utils/modal.js";
+import { createReviewModal } from "../utils/reviewModal.js";
 const trashcan = document.querySelector(".delete-btn");
 
 if(trashcan){

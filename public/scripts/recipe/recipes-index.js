@@ -1,5 +1,5 @@
-import { createModal } from "./modal.js";
-import { createReviewModal } from "./reviewModal.js";
+import { createModal } from "../utils/modal.js";
+import { createReviewModal } from "../utils/reviewModal.js";
 
 /* delete buttons' function
   since we have multiple recipe cards,

@@ -1,37 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const User = require("../models/user");
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const rateLimit = require('express-rate-limit');
-const {body,validationResult} = require('express-validator');
+const {validationResult} = require('express-validator');
 
-const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // limit each IP to 5 login attempts per 15 minutes
-    message: { error: "Too many login/register attempts, please try again after 15 minutes" },
-    standardHeaders: 'draft-8',
-    legacyHeaders: false,
-  });
 
-//Register
-router.post('/register', [
-    body('username')
-    .not().isEmpty().withMessage('Username is required')
-    .isLength({min:3,max:15}).withMessage('Username must be between 3 and 15 characters')
-    .matches(/^[a-zA-Z0-9_-]+$/).withMessage('Username can only contain letters, numbers, underscores and hyphens')
-    .trim().escape(),
-    body('email')
-    .isEmail().withMessage('please Provide a valid email')
-    .normalizeEmail(),
-    body('password')
-    .not().isEmpty().withMessage('password is required')
-    .isLength({min:8,max:15}).withMessage('password must be between 8 and 15 characters')
-    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
-    .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
-    .matches(/[0-9]/).withMessage('Password must contain at least one number')
-    .matches(/[^A-Za-z0-9]/).withMessage('Password must contain at least one special character')
-    .trim(),
-], authLimiter,async(req,res)=>{
+
+const register = async(req,res)=>{
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -59,16 +32,9 @@ router.post('/register', [
     } catch (error) {
         res.status(500).json({error:'Error registering user'});
     }
-});
+}
 
-//Login
-router.post('/login',
-    //validated and sanitized data
-[
-  body('email').isEmail().withMessage('Please provide a valid email').normalizeEmail(),
-  body('password').not().isEmpty().withMessage('Password is required').trim().escape()
-],
-  authLimiter, async(req,res)=>{
+const login = async(req,res)=>{
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -123,10 +89,9 @@ router.post('/login',
     } catch (error) {
         res.status(500).json({ error: 'An error occurred during login. Please try again.' });
     }
-})
+}
 
-//Logout
-router.get('/logout', async (req, res) => {
+const logout = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (refreshToken && req.userId) {
       const user = await User.findById(req.userId);
@@ -137,22 +102,27 @@ router.get('/logout', async (req, res) => {
     res.clearCookie('token');
     res.clearCookie('refreshToken');
     res.redirect('/');
-});
+}
 
-router.get('/login',(req,res)=>{
+const login_index = (req,res)=>{
     if(req.userId){
        return res.redirect('/');
     }
    return res.render('auth/login',{title:'Login Page'}); 
-})
-router.get('/register',(req,res)=>{
+}
+
+const register_index = (req,res)=>{
     if(req.userId){
        return res.redirect('/');
     }
    return res.render('auth/register',{title:'Register Page'}) ; 
-})
+}
 
 
-
-
-module.exports=router;
+module.exports={
+    register,
+    login,
+    logout,
+    login_index,
+    register_index
+}

@@ -6,8 +6,8 @@ const isAuthenticated=require('./middleware/isAuthenticated')
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 
-const authRoutes=require('./routes/authRoutes')
-const contactRoutes=require('./routes/contactRoutes')
+const authRoutes=require('./routes/auth.routes')
+const contactRoutes=require('./routes/contact.routes')
 
 const userRecipeRoutes = require('./routes/user/recipe.routes');
 const userProfileRoutes = require('./routes/user/profile.routes');

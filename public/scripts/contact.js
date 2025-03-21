@@ -1,4 +1,4 @@
-import {createModal} from '../scripts/modal.js'
+import {createModal} from './utils/modal.js'
 // simple input field validation
 const nameInput = document.querySelector(".contact-name input");
 const emailInput = document.querySelector(".contact-email input");

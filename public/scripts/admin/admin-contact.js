@@ -1,4 +1,4 @@
-import { createModal } from "./modal.js";
+import { createModal } from "../utils/modal.js";
 
 // Get all the contacts
 const contactGrid = document.querySelector('.admin-contact-grid');

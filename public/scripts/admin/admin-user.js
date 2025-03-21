@@ -1,4 +1,4 @@
-import { createModal } from "./modal.js";
+import { createModal } from "../utils/modal.js";
 
 //view user details
 const viewButtons = document.querySelectorAll(

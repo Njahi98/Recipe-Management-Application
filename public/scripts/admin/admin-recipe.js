@@ -1,4 +1,4 @@
-import { createModal } from "./modal.js";
+import { createModal } from "../utils/modal.js";
 
 const viewButtons = document.querySelectorAll('button[class="admin-btn admin-btn-view"]');
 viewButtons.forEach(viewButton => 

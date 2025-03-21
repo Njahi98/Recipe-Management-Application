@@ -47,6 +47,4 @@ const form = document.querySelector(".edit-profile-container form");
         } catch (error) {
           showNotification(error,'var(--error-color)');
         }
-
-        
       });

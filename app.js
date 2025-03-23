@@ -40,8 +40,12 @@ const globalLimiter = rateLimit({
 })
 app.use(globalLimiter);
 
+//Reduce fingerprinting
+app.disable('x-powered-by')
+
 //helmet.js to further secure the app
 app.use(helmet());
+
 //needed for POST requests
 app.use(express.urlencoded({ extended: true }));
 

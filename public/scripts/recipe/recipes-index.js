@@ -125,23 +125,13 @@ function applyFilters() {
   recipeNames.forEach((recipeName) => {
     const parentCard = recipeName.parentElement;
     const matchesTitle =
-      !filters.title ||
-      new RegExp(filters.title, "i").test(recipeName.textContent.trim());
+      !filters.title ||  new RegExp(filters.title, "i").test(recipeName.textContent.trim());
     const matchesCategory =
-      !filters.category ||
-      parentCard.querySelector(".recipe-category").textContent.trim() ===
-        filters.category;
+      !filters.category || parentCard.querySelector(".recipe-category").textContent.trim().slice(3) === filters.category;
     const matchesDifficulty =
-      !filters.difficulty ||
-      parentCard.querySelector(".recipe-difficulty").textContent.trim() ===
-        filters.difficulty;
+      !filters.difficulty || parentCard.querySelector(".recipe-difficulty").textContent.trim().slice(3) === filters.difficulty;
     const matchesTime =
-      !filters.cookingTime ||
-      parseInt(
-        parentCard
-          .querySelector(".cooking-times")
-          .textContent.replace(/[^0-9]/g, "")
-      ) <= filters.cookingTime;
+      !filters.cookingTime || parseInt(parentCard.querySelector(".cooking-times").textContent.replace(/[^0-9]/g, "")) <= filters.cookingTime;
 
     if (matchesTitle && matchesCategory && matchesDifficulty && matchesTime) {
       parentCard.classList.remove("hidden");

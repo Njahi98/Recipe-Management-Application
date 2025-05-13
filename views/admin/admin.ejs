@@ -47,28 +47,149 @@
       
       <main class="admin-content">
         <h1 class="admin-title"><%- title %></h1>
-                    <div class="stats-card">
-                  
-                            <div class="stats-user">
-                              <p> Recipes</p> 
-                              <p class="review-comment"><%=stats.recipes %></p>
-                            </div>
-                            <div class="stats-user">
-                              <p> Users</p> 
-                              <p class="review-comment"><%=stats.users %></p>
-                            </div>          
-                            <div class="stats-user">
-                              <p> Contact mails</p> 
-                              <p class="review-comment"><%=stats.contacts %></p>
-                            </div>
         
-             
-                    </div>
-                         
+        <!-- Overview Stats -->
+        <div class="stats-section">
+          <h2 class="stats-section-title">Overview</h2>
+          <div class="stats-grid">
+            <div class="stats-card">
+              <div class="stats-icon">📚</div>
+              <div class="stats-info">
+                <h3>Recipes</h3>
+                <p class="stats-number"><%= stats.recipes %></p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">👥</div>
+              <div class="stats-info">
+                <h3>Users</h3>
+                <p class="stats-number"><%= stats.users %></p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">✉️</div>
+              <div class="stats-info">
+                <h3>Contact Messages</h3>
+                <p class="stats-number"><%= stats.contacts %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Stats -->
+        <div class="stats-section">
+          <h2 class="stats-section-title">User Statistics</h2>
+          <div class="stats-grid">
+            <div class="stats-card">
+              <div class="stats-icon">👑</div>
+              <div class="stats-info">
+                <h3>Admin Users</h3>
+                <p class="stats-number"><%= stats.adminUsers %></p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">👤</div>
+              <div class="stats-info">
+                <h3>Regular Users</h3>
+                <p class="stats-number"><%= stats.regularUsers %></p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">🌐</div>
+              <div class="stats-info">
+                <h3>Users with Social Media</h3>
+                <p class="stats-number"><%= stats.usersWithSocialMedia %></p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">🖼️</div>
+              <div class="stats-info">
+                <h3>Custom Profile Pictures</h3>
+                <p class="stats-number"><%= stats.usersWithCustomProfile %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recipe Stats -->
+        <div class="stats-section">
+          <h2 class="stats-section-title">Recipe Statistics</h2>
+          <div class="stats-grid">
+            <div class="stats-card">
+              <div class="stats-icon">⭐</div>
+              <div class="stats-info">
+                <h3>Average Rating</h3>
+                <p class="stats-number"><%= stats.averageRating %></p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">⏱️</div>
+              <div class="stats-info">
+                <h3>Avg. Cooking Time</h3>
+                <p class="stats-number"><%= stats.averageCookingTime %> min</p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">💬</div>
+              <div class="stats-info">
+                <h3>Total Reviews</h3>
+                <p class="stats-number"><%= stats.totalReviews %></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Distribution -->
+          <div class="stats-subsection">
+            <h3>Recipe Categories</h3>
+            <div class="category-grid">
+              <% stats.categoryCounts.forEach(category => { %>
+                <div class="category-card">
+                  <h4><%= category._id %></h4>
+                  <p class="stats-number"><%= category.count %></p>
+                </div>
+              <% }); %>
+            </div>
+          </div>
+
+          <!-- Difficulty Distribution -->
+          <div class="stats-subsection">
+            <h3>Difficulty Levels</h3>
+            <div class="difficulty-grid">
+              <% stats.difficultyCounts.forEach(difficulty => { %>
+                <div class="difficulty-card">
+                  <h4><%= difficulty._id %></h4>
+                  <p class="stats-number"><%= difficulty.count %></p>
+                </div>
+              <% }); %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Stats -->
+        <div class="stats-section">
+          <h2 class="stats-section-title">Recent Contact Activity</h2>
+          <div class="stats-grid">
+            <div class="stats-card">
+              <div class="stats-icon">📨</div>
+              <div class="stats-info">
+                <h3>Last 24 Hours</h3>
+                <p class="stats-number"><%= stats.contactsLast24Hours %></p>
+              </div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-icon">📬</div>
+              <div class="stats-info">
+                <h3>Last 7 Days</h3>
+                <p class="stats-number"><%= stats.contactsLast7Days %></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
-</div>>
 </div>
+
+
 <%-include('../partials/footer.ejs') %>
 <%-include('../partials/notification.ejs')%>
 

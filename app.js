@@ -17,6 +17,7 @@ const userReviewRoutes = require('./routes/user/review.routes');
 const adminRecipeRoutes = require('./routes/admin/recipe.routes');
 const adminUserRoutes = require('./routes/admin/user.routes');
 const adminRoutes = require('./routes/admin/admin.routes');
+const compression = require('compression');
 
 
 const dbURI=process.env.dbURI
@@ -45,6 +46,9 @@ app.disable('x-powered-by')
 
 //helmet.js to further secure the app
 app.use(helmet());
+
+//compress all responses
+app.use(compression({filter:shouldCompress}));
 
 //needed for POST requests
 app.use(express.urlencoded({ extended: true }));

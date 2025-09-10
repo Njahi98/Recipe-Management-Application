@@ -5,13 +5,14 @@
   "scripts": {
     "build": "echo 'Build complete'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon app.js"
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "compression": "^1.8.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",

@@ -62,7 +62,9 @@ app.set('view engine','ejs');
 app.use(express.static('public'));
 
 //enable morgan for logs
-app.use(morgan('dev'));
+if(process.env.NODE_ENV!=='production'){
+    app.use(morgan('dev'));
+}
 
 // we put auth middleware in the beginning so it runs on ALL routes
 app.use(isAuthenticated);

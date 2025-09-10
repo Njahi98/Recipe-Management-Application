@@ -48,7 +48,7 @@ app.disable('x-powered-by')
 app.use(helmet());
 
 //compress all responses
-app.use(compression({filter:shouldCompress}));
+app.use(compression());
 
 //needed for POST requests
 app.use(express.urlencoded({ extended: true }));
